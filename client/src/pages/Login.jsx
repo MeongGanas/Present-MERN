@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
 
 export default function Selection() {
+  const navigate = useNavigate();
+
   return (
     <LayoutLogin>
       <div className="min-w-80">
@@ -29,7 +32,11 @@ export default function Selection() {
               <span className="text-primary font-bold"> click here</span>
             </h4>
           </div>
-          <button type="submit" className="button coloredButton">
+          <button
+            type="submit"
+            onClick={() => navigate("/home")}
+            className="button coloredButton"
+          >
             Login
           </button>
         </form>

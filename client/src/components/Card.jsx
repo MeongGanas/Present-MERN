@@ -1,14 +1,27 @@
 import { MoreHoriz } from "@mui/icons-material";
 import background from "../img/Mask group.png";
 import setting from "../img/4860084 1.svg";
+import { useNavigate } from "react-router-dom";
 
 function Card() {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full min-w-80 max-w-sm shadow-md rounded-md overflow-hidden">
-      <img src={background} alt="" className="w-full max-h-40" />
+      <img
+        src={background}
+        alt=""
+        onClick={() => navigate("/list/1")}
+        className="w-full max-h-40 cursor-pointer"
+      />
       <div className="px-5 py-3">
-        <div className="flex justify-between items-center ">
-          <h1 className="text-xl font-bold">List 1</h1>
+        <div className="flex justify-between items-center">
+          <h1
+            className="text-xl font-bold underline cursor-pointer"
+            onClick={() => navigate("/list/1")}
+          >
+            List 1
+          </h1>
           <button className="iconbutton">
             <MoreHoriz />
           </button>

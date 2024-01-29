@@ -9,13 +9,17 @@ export function ListHomeAsUser() {
     }, 1000);
   });
 
+  function padZero(num) {
+    return String(num).padStart(2, "0");
+  }
+
   return (
     <div className="p-5 listDetail text-white rounded-md">
       <h1 className="text-3xl">List 1</h1>
 
       <div className="py-10 text-center">
         <h1 className="mb-2 text-5xl font-bold">
-          {waktu.getHours()}:{waktu.getMinutes()}
+          {padZero(waktu.getHours())}:{padZero(waktu.getMinutes())}
         </h1>
         <p>Fri, 18 sep 2023</p>
       </div>

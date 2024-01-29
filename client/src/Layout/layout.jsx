@@ -20,7 +20,7 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <nav className="fixed z-50 bg-white flex justify-between items-center shadow-md border-b px-10 py-3 top-0 left-0 w-full">
+      <nav className="fixed z-50 bg-white flex justify-between items-center shadow-md border-b px-5 md:px-10 py-3 top-0 left-0 w-full">
         <div className="flex items-center gap-5 md:gap-10">
           <button onClick={() => setActive(!active)}>
             <Menu />
@@ -65,7 +65,7 @@ export default function Layout({ children }) {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <ul>
+                <ul className="mt-2">
                   <li>
                     <Link to="/list/1" className="sidemenu">
                       <span className="border h-6 w-6 rounded-full border-black"></span>
