@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.sidemenu {
+  @apply flex items-center gap-8 py-3 px-10 hover:bg-slate-100 duration-200 transition w-full font-bold;
+}
+
+.iconbutton {
+  @apply p-2 hover:bg-slate-50 rounded-full transition duration-200;
+}
+
+.listDetail {
+  background-image: url("./img/Mask\ group.png");
+}

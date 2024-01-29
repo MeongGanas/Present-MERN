@@ -1,0 +1,25 @@
+.loginLayout {
+  background-image: url("../img/Mask\ group.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.button {
+  @apply block w-full text-center border-2 border-black rounded-xl py-4 font-bold mb-5;
+}
+.coloredButton {
+  @apply bg-primary text-white;
+}
+
+.line {
+  @apply w-[30%] bg-black h-[2px];
+}
+
+label {
+  display: block;
+}
+
+input {
+  @apply w-full border-2 border-black px-5 py-3 rounded-xl;
+}
