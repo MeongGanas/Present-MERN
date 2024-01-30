@@ -57,10 +57,10 @@ export default function Layout({ children }) {
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <button className="flex items-center gap-8 py-3 px-10 font-bold">
+                  <div className="flex items-center gap-8 py-3 px-10 font-bold">
                     <img src={list} alt="" width="24" />
                     Lists
-                  </button>
+                  </div>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
@@ -87,7 +87,7 @@ export default function Layout({ children }) {
 
       <main
         className={`${
-          active ? "lg:pl-56" : "lg:pl-5"
+          active ? "lg:pl-56" : "lg:pl-0"
         } transition-all duration-300 pt-16 w-full h-screen`}
       >
         {children}

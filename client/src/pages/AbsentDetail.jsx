@@ -7,7 +7,7 @@ import {
   TabPanel,
   ChakraProvider,
 } from "@chakra-ui/react";
-import { ListHomeAsUser } from "../ui/Detail/User";
+import { ListHomeAsUser, ListPeopleAsUser } from "../ui/Detail/User";
 
 export default function AbsentDetail() {
   return (
@@ -30,7 +30,7 @@ export default function AbsentDetail() {
               <ListHomeAsUser />
             </TabPanel>
             <TabPanel>
-              <p>People</p>
+              <ListPeopleAsUser />
             </TabPanel>
           </TabPanels>
         </Tabs>
