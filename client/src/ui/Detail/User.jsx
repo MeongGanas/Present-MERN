@@ -24,7 +24,7 @@ export function ListHomeAsUser() {
   }
 
   return (
-    <div className="p-5 listDetail text-white rounded-md">
+    <div className="p-5 max-w-screen-lg mx-auto listDetail text-white rounded-md">
       <h1 className="text-3xl">List 1</h1>
 
       <div className="py-10 text-center">
@@ -53,7 +53,7 @@ export function ListHomeAsUser() {
 
 export function ListPeopleAsUser() {
   return (
-    <div>
+    <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
       <div className="flex justify-between items-center">
         <div className="relative">
