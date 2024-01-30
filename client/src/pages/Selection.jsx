@@ -13,12 +13,12 @@ export default function Selection() {
         </div>
         <div className="min-w-sm">
           <button
-            className="button coloredButton"
+            className="button coloredButton mb-5"
             onClick={() => navigate("/login")}
           >
             Login
           </button>
-          <button className="button" onClick={() => navigate("/register")}>
+          <button className="button mb-5" onClick={() => navigate("/register")}>
             Register
           </button>
           <div className="flex items-center gap-3 mb-5">
@@ -26,7 +26,7 @@ export default function Selection() {
             <span>or login with</span>
             <span className="line"></span>
           </div>
-          <button className="flex border-2 border-black py-2 w-full rounded-xl justify-center items-center">
+          <button className="flex border-2 border-black py-1 w-full rounded-xl justify-center items-center">
             <Google />
             <span className="mr-3">Google</span>
           </button>

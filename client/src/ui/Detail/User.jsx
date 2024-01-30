@@ -4,11 +4,9 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
 
@@ -42,7 +40,7 @@ export function ListHomeAsUser() {
           <h1 className="text-3xl font-bold my-4">08:30 - 10:00</h1>
           <p>Toleransi</p>
         </div>
-        <div className="flex px-5 sm:px-10 justify-center gap-5 pt-5">
+        <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
           <button className="button bg-[#0E2A47] max-w-72 text-white">
             Check-In
           </button>
@@ -64,7 +62,7 @@ export function ListPeopleAsUser() {
         </div>
         <h1 className="font-bold">1 People</h1>
       </div>
-      <div className="mt-5 border rounded-md">
+      <div className="mt-5 border border-[#C4C4C4] rounded-md">
         <TableContainer>
           <Table variant="striped">
             <Thead>

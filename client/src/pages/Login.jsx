@@ -35,7 +35,7 @@ export default function Selection() {
           <button
             type="submit"
             onClick={() => navigate("/home")}
-            className="button coloredButton"
+            className="button coloredButton mb-5"
           >
             Login
           </button>
