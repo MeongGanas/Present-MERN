@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { MoreHoriz, Search } from "@mui/icons-material";
+import {
+  ArrowForward,
+  DriveFileRenameOutline,
+  Edit,
+  MoreHoriz,
+  Search,
+} from "@mui/icons-material";
 import {
   Table,
   Thead,
@@ -56,7 +62,7 @@ export function ListPeopleAsUser() {
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
       <div className="flex justify-between items-center">
-        <div className="relative">
+        <div className="relative w-2/3 sm:w-1/2">
           <Search className="absolute left-3 top-3.5" />
           <input type="text" className="pl-10" placeholder="Search Name" />
         </div>
@@ -106,7 +112,163 @@ export function ListPeopleAsUser() {
                   2
                 </Td>
                 <Td align="center" justifyContent="center">
+                  <div className="circle"></div>
+                </Td>
+                <Td align="center" justifyContent="center">
+                  Farouk
+                </Td>
+                <Td align="center" justifyContent="center">
+                  Peserta
+                </Td>
+                <Td align="center" justifyContent="center">
+                  <button className="iconbutton">
+                    <MoreHoriz />
+                  </button>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
+  );
+}
+
+export function ListHomeAsAdmin() {
+  return (
+    <div>
+      <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between">
+        <div className="w-full flex justify-end">
+          <button className="bg-white py-2 px-3 rounded-md shadow-sm flex gap-2">
+            <DriveFileRenameOutline />
+            <span className="font-bold">Customize</span>
+          </button>
+        </div>
+        <h1 className="text-white text-3xl font-bold">List 1</h1>
+      </div>
+      <div className="block md:flex w-full gap-5">
+        <div className="w-full mb-5 md:mb-0 md:max-w-64 border border-[#c4c4c4] rounded-md pt-2 p-5 h-fit">
+          <div className="flex items-center justify-between mb-3">
+            <h1 className=" font-bold">List Code</h1>
+            <button className="iconbutton">
+              <MoreHoriz />
+            </button>
+          </div>
+          <h1 className="font-bold text-2xl">A9B58Z</h1>
+        </div>
+        <div className="w-full border border-[#c4c4c4] rounded-md">
+          <div className="flex items-center border-b border-[#c4c4c4] p-5 justify-between">
+            <div>
+              <h1 className="font-bold text-lg">Attendance Log</h1>
+              <p className="font-bold text-sm md:text-base mt-1">
+                Fri, 28 aug 2023
+              </p>
+            </div>
+            <button>
+              <ArrowForward />
+            </button>
+          </div>
+          <ul>
+            <li className="even:bg-[#F1F1F1] odd:bg-white">
+              <div className="flex justify-between p-5">
+                <div className="flex gap-5">
+                  <div className="circle"></div>
+                  <h1 className="font-bold text-sm md:text-base">
+                    Farouk Akhtar Ramadhan
+                  </h1>
+                </div>
+                <h3 className="font-bold text-sm md:text-base">
+                  Present <span className="text-green-500">(On-Time)</span>
+                </h3>
+              </div>
+            </li>
+            <li className="even:bg-[#F1F1F1] odd:bg-white">
+              <div className="flex justify-between p-5">
+                <div className="flex gap-5">
+                  <div className="circle"></div>
+                  <h1 className="font-bold text-sm md:text-base">
+                    Farrel Giovanni Jaohari
+                  </h1>
+                </div>
+                <h3 className="font-bold text-sm md:text-base">
+                  Present <span className="text-red-700">(Late)</span>
+                </h3>
+              </div>
+            </li>
+            <li className="even:bg-[#F1F1F1] odd:bg-white">
+              <div className="flex justify-between p-5">
+                <div className="flex gap-5">
+                  <div className="circle"></div>
+                  <h1 className="font-bold text-sm md:text-base">
+                    Farrel Giovanni Jaohari
+                  </h1>
+                </div>
+                <h3 className="font-bold text-sm md:text-base">Absent</h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function AttendanceLog() {
+  return (
+    <div className="max-w-screen-lg mx-auto">
+      <h1 className="text-2xl font-bold mt-3 mb-10">Attendance Log</h1>
+      <div className="flex justify-between items-center">
+        <div className="relative w-2/3 sm:w-1/2">
+          <Search className="absolute left-3 top-3.5" />
+          <input type="text" className="pl-10" placeholder="Search Name" />
+        </div>
+        <h1 className="font-bold">1 People</h1>
+      </div>
+      <div className="mt-5 border border-[#C4C4C4] rounded-md">
+        <TableContainer>
+          <Table variant="striped">
+            <Thead>
+              <Tr>
+                <Th paddingY="5" align="center" justifyContent="center">
+                  #
+                </Th>
+                <Th paddingY="5" align="center" justifyContent="center">
+                  Photo
+                </Th>
+                <Th paddingY="5" align="center" justifyContent="center">
+                  Name
+                </Th>
+                <Th paddingY="5" align="center" justifyContent="center">
+                  Position
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td align="center" justifyContent="center">
+                  1
+                </Td>
+                <Td align="center" justifyContent="center">
                   <div className="w-6 h-6 rounded-full border border-black"></div>
+                </Td>
+                <Td align="center" justifyContent="center">
+                  Farrel Giovanni Jaohari
+                </Td>
+                <Td align="center" justifyContent="center">
+                  Admin
+                </Td>
+                <Td align="center" justifyContent="center">
+                  <button className="iconbutton">
+                    <MoreHoriz />
+                  </button>
+                </Td>
+              </Tr>
+              <Tr>
+                <Td align="center" justifyContent="center">
+                  2
+                </Td>
+                <Td align="center" justifyContent="center">
+                  <div className="circle"></div>
                 </Td>
                 <Td align="center" justifyContent="center">
                   Farouk

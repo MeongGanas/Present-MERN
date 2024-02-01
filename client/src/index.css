@@ -18,4 +18,11 @@ body {
 
 .listDetail {
   background-image: url("./img/Mask\ group.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.circle {
+  @apply w-6 h-6 rounded-full border border-black;
 }

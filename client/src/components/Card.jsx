@@ -2,8 +2,10 @@ import { MoreHoriz } from "@mui/icons-material";
 import background from "../img/Mask group.png";
 import setting from "../img/4860084 1.svg";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Card() {
+  const [admin, setAdmin] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -22,17 +24,22 @@ function Card() {
           >
             List 1
           </h1>
-          <button className="iconbutton">
-            <MoreHoriz />
-          </button>
+          {!admin && (
+            <button className="iconbutton">
+              <MoreHoriz />
+            </button>
+          )}
         </div>
 
-        <div className="flex justify-between items-center">
-          <h1 className="">Nama yang punya</h1>
-          <button className="iconbutton">
-            <img src={setting} alt="" width="24" />
-          </button>
-        </div>
+        {!admin && <h1 className="my-2">Nama yang punya</h1>}
+
+        {admin && (
+          <div className="w-full flex justify-end">
+            <button className="iconbutton">
+              <img src={setting} alt="" width="24" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
