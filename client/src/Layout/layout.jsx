@@ -19,7 +19,7 @@ import Dialog from "../components/Dialog";
 
 export default function Layout({ children }) {
   const location = useLocation();
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const [dialogActive, setDialogActive] = useState(false);
   const [url, setUrl] = useState("");
 

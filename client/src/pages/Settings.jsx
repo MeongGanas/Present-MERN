@@ -4,7 +4,7 @@ import orang from "../img/4836491 1.svg";
 export default function Settings() {
   return (
     <div className=" pt-5 px-2 sm:p-5">
-      <div className="border-2 border-[#c4c4c4] min-w-80 w-1/2 mx-auto p-5 rounded-md">
+      <div className="border-2 border-[#c4c4c4] min-w-80 w-full md:w-1/2 mx-auto p-5 rounded-md">
         <h1 className="text-xl sm:text-2xl font-bold">Profile</h1>
         <div className="flex items-center gap-5 my-5">
           <div className="border-2 rounded-full p-2 border-black">
