@@ -19,6 +19,7 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -139,6 +140,7 @@ export function ListPeopleAsUser() {
 }
 
 export function ListHomeAsAdmin() {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between">

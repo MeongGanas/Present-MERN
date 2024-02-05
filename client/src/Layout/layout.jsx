@@ -14,11 +14,12 @@ import list from "../img/5504165 1.svg";
 
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import OutsideClickHandler from "react-outside-click-handler";
 import Dialog from "../components/Dialog";
 
 export default function Layout({ children }) {
   const location = useLocation();
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
   const [dialogActive, setDialogActive] = useState(false);
   const [url, setUrl] = useState("");
 
@@ -38,10 +39,7 @@ export default function Layout({ children }) {
 
       <nav className="fixed z-50 bg-white flex justify-between items-center shadow-md border-b px-5 md:px-10 py-3 top-0 left-0 w-full">
         <div className="flex items-center gap-5 md:gap-10">
-          <button onClick={() => setActive(!active)}>
-            <Menu />
-          </button>
-          <div className="flex items-center">
+          <div className="flex items-center ml-10">
             <Link
               to="/home"
               className="font-bold text-xl sm:text-2xl text-primary"
@@ -75,51 +73,62 @@ export default function Layout({ children }) {
         </div>
       </nav>
 
-      <div
-        className={`bg-white z-10 fixed left-0 top-0 ${
-          active
-            ? "block w-56 translate-x-0"
-            : "w-56 -translate-x-full lg:block"
-        } h-screen pt-16 border-r-2 border-[#D9D9D9] transition-all duration-300`}
+      <OutsideClickHandler
+        onOutsideClick={() => setActive(false)}
+        disabled={!active}
       >
-        <div className="border-b-2 pt-4 pb-3">
-          <Link to="/home" className="sidemenu">
-            <img src={home} alt="" width="24" />
-            <span>Home</span>
-          </Link>
+        <button
+          className="fixed top-5 left-7 z-[200] bg-white"
+          onClick={() => setActive(!active)}
+        >
+          <Menu />
+        </button>
+        <div
+          className={`bg-white z-10 fixed left-0 top-0 ${
+            active
+              ? "block w-56 translate-x-0"
+              : "w-56 -translate-x-full lg:block"
+          } h-screen pt-16 border-r-2 border-[#D9D9D9] transition-all duration-300`}
+        >
+          <div className="border-b-2 pt-4 pb-3">
+            <Link to="/home" className="sidemenu">
+              <img src={home} alt="" width="24" />
+              <span>Home</span>
+            </Link>
+          </div>
+          <div className="py-3">
+            <Accordion allowMultiple>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <div className="flex items-center gap-8 py-3 px-10 font-bold">
+                      <img src={list} alt="" width="24" />
+                      Lists
+                    </div>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <ul className="mt-2">
+                    <li>
+                      <Link to="/list1" className="sidemenu">
+                        <span className="border h-6 w-6 rounded-full border-black"></span>
+                        List 1
+                      </Link>
+                    </li>
+                  </ul>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          </div>
+          <div className="border-t-2 py-3">
+            <Link to="/settings" className="sidemenu">
+              <img src={setting} alt="" width="24" />
+              <span>Settings</span>
+            </Link>
+          </div>
         </div>
-        <div className="py-3">
-          <Accordion allowMultiple>
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <div className="flex items-center gap-8 py-3 px-10 font-bold">
-                    <img src={list} alt="" width="24" />
-                    Lists
-                  </div>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <ul className="mt-2">
-                  <li>
-                    <Link to="/list1" className="sidemenu">
-                      <span className="border h-6 w-6 rounded-full border-black"></span>
-                      List 1
-                    </Link>
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div className="border-t-2 py-3">
-          <Link to="/settings" className="sidemenu">
-            <img src={setting} alt="" width="24" />
-            <span>Settings</span>
-          </Link>
-        </div>
-      </div>
+      </OutsideClickHandler>
 
       <main
         className={`${
