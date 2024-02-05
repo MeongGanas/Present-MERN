@@ -34,13 +34,16 @@ export default function Layout({ children }) {
             <Menu />
           </button>
           <div className="flex items-center">
-            <Link to="/home" className="font-bold text-2xl text-primary">
+            <Link
+              to="/home"
+              className="font-bold text-xl sm:text-2xl text-primary"
+            >
               Present
             </Link>
             {url && (
               <div>
                 <ChevronRight className="mx-1" />
-                <span className="text-lg font-bold">
+                <span className="text-sm sm:text-lg font-bold">
                   {url.slice(1, url.length)}
                 </span>
               </div>

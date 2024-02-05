@@ -1,4 +1,3 @@
-import Layout from "../Layout/layout";
 import {
   Tabs,
   TabList,
