@@ -1,4 +1,4 @@
-import { Add, Menu } from "@mui/icons-material";
+import { Add, ChevronLeft, ChevronRight, Menu } from "@mui/icons-material";
 import orang from "../img/4836491 1.svg";
 import {
   Accordion,
@@ -12,11 +12,19 @@ import home from "../img/4836512 1.svg";
 import setting from "../img/4860084 1.svg";
 import list from "../img/5504165 1.svg";
 
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Layout({ children }) {
+  const location = useLocation();
   const [active, setActive] = useState(false);
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    const path = location.pathname;
+
+    setUrl(path);
+  }, [location]);
 
   return (
     <>
@@ -25,12 +33,28 @@ export default function Layout({ children }) {
           <button onClick={() => setActive(!active)}>
             <Menu />
           </button>
-          <Link to="/home" className="font-bold text-2xl text-primary">
-            Present
-          </Link>
+          <div className="flex items-center">
+            <Link to="/home" className="font-bold text-2xl text-primary">
+              Present
+            </Link>
+            {url && (
+              <div>
+                <ChevronRight className="mx-1" />
+                <span className="text-lg font-bold">
+                  {url.slice(1, url.length)}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <button className="iconbutton">
+          <button
+            className={`iconbutton ${
+              location.pathname === "/home" || location.pathname == "/settings"
+                ? "block"
+                : "hidden"
+            }`}
+          >
             <Add />
           </button>
           <button className="iconbutton">
@@ -67,7 +91,7 @@ export default function Layout({ children }) {
               <AccordionPanel pb={4}>
                 <ul className="mt-2">
                   <li>
-                    <Link to="/list/1" className="sidemenu">
+                    <Link to="/list1" className="sidemenu">
                       <span className="border h-6 w-6 rounded-full border-black"></span>
                       List 1
                     </Link>

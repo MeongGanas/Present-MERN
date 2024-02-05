@@ -13,14 +13,14 @@ function Card() {
       <img
         src={background}
         alt=""
-        onClick={() => navigate("/list/1")}
+        onClick={() => navigate("/list1")}
         className="w-full max-h-40 cursor-pointer"
       />
       <div className="px-5 py-3">
         <div className="flex justify-between items-center">
           <h1
             className="text-xl font-bold underline cursor-pointer"
-            onClick={() => navigate("/list/1")}
+            onClick={() => navigate("/list1")}
           >
             List 1
           </h1>

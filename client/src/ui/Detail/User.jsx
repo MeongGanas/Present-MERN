@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   ArrowForward,
   DriveFileRenameOutline,
-  Edit,
   MoreHoriz,
   Search,
 } from "@mui/icons-material";
@@ -14,6 +13,11 @@ import {
   Th,
   Td,
   TableContainer,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 
 export function ListHomeAsUser() {
@@ -213,10 +217,9 @@ export function ListHomeAsAdmin() {
   );
 }
 
-export function AttendanceLog() {
+function TableAttendance() {
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <h1 className="text-2xl font-bold mt-3 mb-10">Attendance Log</h1>
+    <>
       <div className="flex justify-between items-center">
         <div className="relative w-2/3 sm:w-1/2">
           <Search className="absolute left-3 top-3.5" />
@@ -286,6 +289,36 @@ export function AttendanceLog() {
           </Table>
         </TableContainer>
       </div>
+    </>
+  );
+}
+
+export function AttendanceLog() {
+  return (
+    <div className="max-w-screen-lg mx-auto">
+      <h1 className="text-2xl font-bold mt-3 mb-5">Attendance Log</h1>
+
+      <Tabs colorScheme="blue">
+        <TabList>
+          <div className="px-5 flex">
+            <Tab>
+              <div className="p-2">Daily</div>
+            </Tab>
+            <Tab>
+              <div className="p-2">Monthly</div>
+            </Tab>
+          </div>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>
+            <TableAttendance />
+          </TabPanel>
+          <TabPanel>
+            <TableAttendance />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </div>
   );
 }

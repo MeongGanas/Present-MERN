@@ -5,17 +5,27 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AbsentDetail from "./pages/AbsentDetail";
 import Settings from "./pages/Settings";
+import Layout from "./Layout/layout";
 
 export default function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Selection />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/list/:id" element={<AbsentDetail />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="*"
+          element={
+            <Layout>
+              <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/:listname" element={<AbsentDetail />} />
+                <Route path="/settings" element={<Settings />} />
+              </Routes>
+            </Layout>
+          }
+        />
       </Routes>
     </div>
   );
