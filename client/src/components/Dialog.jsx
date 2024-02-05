@@ -1,4 +1,4 @@
-export default function Dialog() {
+export default function Dialog({ handleClose }) {
   return (
     <div className="min-w-80 max-w-96 md:w-1/2 p-5 rounded-md bg-white">
       <h1 className="text-lg font-bold mb-5">Join an Absentee</h1>
@@ -23,7 +23,7 @@ export default function Dialog() {
         />
       </div>
       <div className="flex justify-end gap-5">
-        <button>Cancel</button>
+        <button onClick={handleClose}>Cancel</button>
         <button>Join</button>
       </div>
     </div>

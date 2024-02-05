@@ -31,10 +31,11 @@ export default function Layout({ children }) {
   return (
     <>
       {dialogActive && (
-        <div className="fixed top-0 left-0 bottom-0 right-0 z-[9999] bg-black bg-opacity-50 flex items-center justify-center ">
-          <Dialog />
+        <div className="fixed top-0 left-0 bottom-0 right-0 z-[9999] bg-black bg-opacity-50 flex items-center justify-center">
+          <Dialog handleClose={() => setDialogActive(false)} />
         </div>
       )}
+
       <nav className="fixed z-50 bg-white flex justify-between items-center shadow-md border-b px-5 md:px-10 py-3 top-0 left-0 w-full">
         <div className="flex items-center gap-5 md:gap-10">
           <button onClick={() => setActive(!active)}>
