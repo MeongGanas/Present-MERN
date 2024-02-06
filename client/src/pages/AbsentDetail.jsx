@@ -16,9 +16,12 @@ import { useState } from "react";
 
 export default function AbsentDetail() {
   const [admin, setAdmin] = useState(true);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <ChakraProvider>
-      <Tabs colorScheme="blue">
+      <Tabs index={activeIndex} onChange={setActiveIndex} colorScheme="blue">
         <TabList>
           <div className="px-5 flex">
             <Tab>
@@ -37,7 +40,7 @@ export default function AbsentDetail() {
 
         <TabPanels>
           <TabPanel>
-            {admin && <ListHomeAsAdmin />}
+            {admin && <ListHomeAsAdmin setActiveIndex={setActiveIndex} />}
             {!admin && <ListHomeAsUser />}
           </TabPanel>
           {admin && (

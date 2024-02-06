@@ -11,13 +11,9 @@ import setting from "../img/4860084 1.svg";
 import list from "../img/5504165 1.svg";
 import { Link } from "react-router-dom";
 
-export default function Sidebar({ active }) {
+export default function Sidebar() {
   return (
-    <div
-      className={`bg-white z-10 fixed left-0 top-0 ${
-        active ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
-      } h-screen pt-16 border-r-2 border-[#D9D9D9] transition-all duration-300`}
-    >
+    <>
       <div className="border-b-2 pt-4 pb-3">
         <Link to="/home" className="sidemenu">
           <img src={home} alt="" width="24" />
@@ -55,6 +51,6 @@ export default function Sidebar({ active }) {
           <span>Settings</span>
         </Link>
       </div>
-    </div>
+    </>
   );
 }

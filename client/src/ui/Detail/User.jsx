@@ -4,6 +4,7 @@ import {
   DriveFileRenameOutline,
   MoreHoriz,
   Search,
+  Share,
 } from "@mui/icons-material";
 import {
   Table,
@@ -139,8 +140,13 @@ export function ListPeopleAsUser() {
   );
 }
 
-export function ListHomeAsAdmin() {
+export function ListHomeAsAdmin({ setActiveIndex }) {
   const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    setActiveIndex(1);
+  };
+
   return (
     <div>
       <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between">
@@ -157,7 +163,7 @@ export function ListHomeAsAdmin() {
           <div className="flex items-center justify-between mb-3">
             <h1 className=" font-bold">List Code</h1>
             <button className="iconbutton">
-              <MoreHoriz />
+              <Share className="w-4 h-4" />
             </button>
           </div>
           <h1 className="font-bold text-2xl">A9B58Z</h1>
@@ -170,7 +176,7 @@ export function ListHomeAsAdmin() {
                 Fri, 28 aug 2023
               </p>
             </div>
-            <button>
+            <button onClick={handleButtonClick}>
               <ArrowForward />
             </button>
           </div>
