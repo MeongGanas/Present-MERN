@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
 import Dialog from "../components/Dialog";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/Sidebar";
 
 export default function Layout({ children }) {
   const location = useLocation();
