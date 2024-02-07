@@ -45,28 +45,44 @@ export default function Layout({ children }) {
         />
       )}
 
-      {selectionActive && (
-        <div className="fixed right-20 z-[9999] top-16 bg-white shadow-md">
+      <ClickAwayListener onClickAway={() => setSelectionActive(false)}>
+        <div>
           <button
-            className="selectButton"
-            onClick={() => {
-              setJoinActive(true);
-              setSelectionActive(false);
-            }}
+            className={`iconbutton ${
+              location.pathname === "/home" || location.pathname === "/settings"
+                ? "block"
+                : "hidden"
+            } fixed top-3 right-16 sm:right-24 z-[9999]`}
+            onClick={() => setSelectionActive(!selectionActive)}
           >
-            Join Absentee
+            <Add />
           </button>
-          <button
-            className="selectButton"
-            onClick={() => {
-              setCreateActive(true);
-              setSelectionActive(false);
-            }}
+          <div
+            className={`fixed right-0 ${
+              selectionActive ? "scale-100" : "scale-0"
+            } sm:right-20 z-[9999] top-16 bg-white shadow-md transition-all duration-200`}
           >
-            Create Absentee
-          </button>
+            <button
+              className="selectButton"
+              onClick={() => {
+                setJoinActive(true);
+                setSelectionActive(false);
+              }}
+            >
+              Join Absentee
+            </button>
+            <button
+              className="selectButton"
+              onClick={() => {
+                setCreateActive(true);
+                setSelectionActive(false);
+              }}
+            >
+              Create Absentee
+            </button>
+          </div>
         </div>
-      )}
+      </ClickAwayListener>
 
       <nav className="fixed z-50 bg-white flex justify-between items-center shadow-md border-b px-5 md:px-10 py-3 top-0 left-0 w-full">
         <div className="flex items-center gap-5 md:gap-10">
@@ -94,16 +110,6 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            className={`iconbutton ${
-              location.pathname === "/home" || location.pathname === "/settings"
-                ? "block"
-                : "hidden"
-            }`}
-            onClick={() => setSelectionActive(!selectionActive)}
-          >
-            <Add />
-          </button>
           <button className="iconbutton" onClick={() => navigate("/settings")}>
             <img src={orang} alt="" width={26} />
           </button>
