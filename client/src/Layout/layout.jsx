@@ -60,7 +60,7 @@ export default function Layout({ children }) {
           <div
             className={`fixed right-0 ${
               selectionActive ? "scale-100" : "scale-0"
-            } sm:right-20 z-[9999] top-16 bg-white shadow-md transition-all duration-200`}
+            } sm:right-20 z-[9999] top-16 bg-white shadow-md transition-all duration-200 rounded-md overflow-hidden`}
           >
             <button
               className="selectButton"
@@ -148,7 +148,7 @@ export default function Layout({ children }) {
       <main
         className={`${
           lgActive ? "lg:pl-56" : "lg:pl-0"
-        } transition-all duration-300 pt-16 w-full h-screen`}
+        } transition-all duration-300 pt-16 w-full min-h-screen bg-[#f8f8f9]`}
       >
         {children}
       </main>

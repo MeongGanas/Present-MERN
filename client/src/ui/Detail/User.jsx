@@ -75,7 +75,18 @@ export function ListPeopleAsUser() {
         </div>
         <h1 className="font-bold">1 People</h1>
       </div>
-      <TableAttendance />
+      <div>
+        <h1>Admin</h1>
+        <div className="flex justify-between">
+          <div className="flex">
+            <div className="w-6 h-6 rounded-full border border-black"></div>
+            <h1>Farrel Giovanni Jaohari</h1>
+          </div>
+          <button className="iconbutton">
+            <MoreHoriz />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -100,7 +111,7 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
         <h1 className="text-white text-3xl font-bold">List 1</h1>
       </div>
       <div className="block md:flex w-full gap-5">
-        <div className="w-full mb-5 md:mb-0 md:max-w-64 border border-[#c4c4c4] rounded-md pt-2 p-5 h-fit">
+        <div className="w-full mb-5 md:mb-0 bg-white md:max-w-64 border border-[#c4c4c4] rounded-md pt-2 p-5 h-fit">
           <div className="flex items-center justify-between mb-3">
             <h1 className=" font-bold">List Code</h1>
             <button className="iconbutton">
@@ -109,7 +120,8 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
           </div>
           <h1 className="font-bold text-2xl">A9B58Z</h1>
         </div>
-        <div className="w-full border border-[#c4c4c4] rounded-md">
+
+        <div className="w-full border bg-white border-[#c4c4c4] rounded-md">
           <div className="flex items-center border-b border-[#c4c4c4] p-5 justify-between">
             <div>
               <h1 className="font-bold text-lg">Attendance Log</h1>

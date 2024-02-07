@@ -9,24 +9,22 @@ import Layout from "./Layout/layout";
 
 export default function App() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Selection />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="*"
-          element={
-            <Layout>
-              <Routes>
-                <Route path="/home" element={<Home />} />
-                <Route path="/:listname" element={<AbsentDetail />} />
-                <Route path="/settings" element={<Settings />} />
-              </Routes>
-            </Layout>
-          }
-        />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Selection />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="*"
+        element={
+          <Layout>
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/:listname" element={<AbsentDetail />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </Layout>
+        }
+      />
+    </Routes>
   );
 }

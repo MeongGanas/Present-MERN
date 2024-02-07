@@ -23,7 +23,7 @@ export default function AbsentDetail() {
   return (
     <ChakraProvider>
       <Tabs index={activeIndex} onChange={setActiveIndex} colorScheme="blue">
-        <TabList>
+        <TabList bg={"white"}>
           <div className="sm:px-5 flex">
             <Tab>
               <div className="p-2">Home</div>
@@ -48,8 +48,10 @@ export default function AbsentDetail() {
 
         <TabPanels>
           <TabPanel>
-            {admin && <ListHomeAsAdmin setActiveIndex={setActiveIndex} />}
-            {!admin && <ListHomeAsUser />}
+            <div className="max-w-screen-lg mx-auto">
+              {admin && <ListHomeAsAdmin setActiveIndex={setActiveIndex} />}
+              {!admin && <ListHomeAsUser />}
+            </div>
           </TabPanel>
           {admin && (
             <TabPanel>

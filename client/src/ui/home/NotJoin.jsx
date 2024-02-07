@@ -7,7 +7,7 @@ export default function NotJoin() {
   const [createActive, setCreateActive] = useState(false);
 
   return (
-    <>
+    <div>
       {joinActive && (
         <Dialog
           title={"Join an absentee"}
@@ -28,7 +28,7 @@ export default function NotJoin() {
         />
       )}
 
-      <div className="h-full flex justify-center items-center">
+      <div className="h-screen -mt-16 flex justify-center items-center">
         <div className="w-full min-w-80 max-w-md md:w-1/2">
           <div className="flex justify-center mb-5">
             <img src={shape} alt="" className="w-1/2" />
@@ -52,6 +52,6 @@ export default function NotJoin() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
