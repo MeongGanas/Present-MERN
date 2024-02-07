@@ -11,7 +11,7 @@ import {
   ListHomeAsAdmin,
   ListHomeAsUser,
   ListPeopleAsUser,
-} from "../ui/Detail/User";
+} from "../ui/Detail/UI";
 import { useState } from "react";
 import setting from "../img/4860084 1.svg";
 

@@ -75,16 +75,49 @@ export function ListPeopleAsUser() {
         </div>
         <h1 className="font-bold">1 People</h1>
       </div>
-      <div>
-        <h1>Admin</h1>
-        <div className="flex justify-between">
-          <div className="flex">
-            <div className="w-6 h-6 rounded-full border border-black"></div>
-            <h1>Farrel Giovanni Jaohari</h1>
+      <div className="bg-white mt-5 rounded-md border">
+        <div className="p-5">
+          <h1 className="mb-5 border-b border-b-gray-300 py-2 text-xl font-bold">
+            Admin
+          </h1>
+          <div className="flex justify-between items-center">
+            <div className="flex gap-5 items-center">
+              <div className="w-6 h-6 rounded-full border border-black"></div>
+              <h1 className="text-lg">Farrel Giovanni Jaohari</h1>
+            </div>
+            <button className="iconbutton">
+              <MoreHoriz />
+            </button>
           </div>
-          <button className="iconbutton">
-            <MoreHoriz />
-          </button>
+        </div>
+        <div className="p-5">
+          <h1 className="border-b border-b-gray-300 py-2 text-xl font-bold">
+            Peserta
+          </h1>
+          <ul>
+            <li className="people">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-5 items-center">
+                  <div className="w-6 h-6 rounded-full border border-black"></div>
+                  <h1 className="text-lg">Farouk Akhtar</h1>
+                </div>
+                <button className="iconbutton">
+                  <MoreHoriz />
+                </button>
+              </div>
+            </li>
+            <li className="people">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-5 items-center">
+                  <div className="w-6 h-6 rounded-full border border-black"></div>
+                  <h1 className="text-lg">Farouk Akhtar</h1>
+                </div>
+                <button className="iconbutton">
+                  <MoreHoriz />
+                </button>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
