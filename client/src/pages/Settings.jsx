@@ -16,24 +16,32 @@ export default function Settings() {
           </button>
         </div>
         <div className="mb-5">
-          <div className="flex justify-between">
-            <h1 className="font-bold">Name</h1>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="font-bold">Name</h1>
+              <h1 className="text-sm sm:text-base mt-1">
+                Farrel Giovanni Jaohari
+              </h1>
+            </div>
             <button className="flex gap-2">
               <span className="font-bold">Change</span>
               <DriveFileRenameOutline />
             </button>
           </div>
-          <h1 className="text-sm sm:text-base mt-1">Farrel Giovanni Jaohari</h1>
         </div>
         <div className="mb-5">
-          <div className="flex justify-between">
-            <h1 className="font-bold">Email</h1>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="font-bold">Email</h1>
+              <h1 className="mt-1 text-sm sm:text-base">
+                akuntumbal@gmail.com
+              </h1>
+            </div>
             <button className="flex gap-2">
               <span className="font-bold">Change</span>
               <DriveFileRenameOutline />
             </button>
           </div>
-          <h1 className="mt-1 text-sm sm:text-base">akuntumbal@gmail.com</h1>
         </div>
         <div className="mb-5">
           <h1 className="font-bold">Password</h1>

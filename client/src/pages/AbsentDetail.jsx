@@ -11,12 +11,15 @@ import {
   ListHomeAsAdmin,
   ListHomeAsUser,
   ListPeopleAsUser,
+  SettingsAbsentAdmin,
+  SettingsAbsentPeserta,
 } from "../ui/Detail/UI";
 import { useState } from "react";
 import setting from "../img/4860084 1.svg";
+import { MoreHoriz } from "@mui/icons-material";
 
 export default function AbsentDetail() {
-  const [admin, setAdmin] = useState(true);
+  const [admin, setAdmin] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -39,8 +42,15 @@ export default function AbsentDetail() {
           </div>
           {admin && (
             <div className="absolute right-0 sm:right-5 top-2.5">
-              <button className="iconbutton">
+              <button className="iconbutton" onClick={() => setActiveIndex(3)}>
                 <img src={setting} alt="" width="24" />
+              </button>
+            </div>
+          )}
+          {!admin && (
+            <div className="absolute right-0 sm:right-5 top-2.5">
+              <button className="iconbutton" onClick={() => setActiveIndex(2)}>
+                <MoreHoriz />
               </button>
             </div>
           )}
@@ -53,14 +63,27 @@ export default function AbsentDetail() {
               {!admin && <ListHomeAsUser />}
             </div>
           </TabPanel>
+
           {admin && (
             <TabPanel>
               <AttendanceLog />
             </TabPanel>
           )}
+
           <TabPanel>
             <ListPeopleAsUser />
           </TabPanel>
+
+          {admin && (
+            <TabPanel>
+              <SettingsAbsentAdmin />
+            </TabPanel>
+          )}
+          {!admin && (
+            <TabPanel>
+              <SettingsAbsentPeserta />
+            </TabPanel>
+          )}
         </TabPanels>
       </Tabs>
     </ChakraProvider>

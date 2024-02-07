@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   ArrowForward,
   DriveFileRenameOutline,
+  Logout,
   MoreHoriz,
   Search,
   Share,
@@ -68,12 +69,9 @@ export function ListPeopleAsUser() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
-      <div className="flex justify-between items-center">
-        <div className="relative w-2/3 sm:w-1/2">
-          <Search className="absolute left-3 top-3.5" />
-          <input type="text" className="pl-10" placeholder="Search Name" />
-        </div>
-        <h1 className="font-bold">1 People</h1>
+      <div className="relative w-2/3 sm:w-1/2">
+        <Search className="absolute left-3 top-3.5" />
+        <input type="text" className="pl-10" placeholder="Search Name" />
       </div>
       <div className="bg-white mt-5 rounded-md border">
         <div className="p-5">
@@ -91,14 +89,15 @@ export function ListPeopleAsUser() {
           </div>
         </div>
         <div className="p-5">
-          <h1 className="border-b border-b-gray-300 py-2 text-xl font-bold">
-            Peserta
-          </h1>
+          <div className="flex justify-between border-b border-b-gray-300 py-2">
+            <h1 className="text-xl font-bold">Peserta</h1>
+            <h1 className="font-bold">2 People</h1>
+          </div>
           <ul>
             <li className="people">
               <div className="flex justify-between items-center">
                 <div className="flex gap-5 items-center">
-                  <div className="w-6 h-6 rounded-full border border-black"></div>
+                  <div className="circle"></div>
                   <h1 className="text-lg">Farouk Akhtar</h1>
                 </div>
                 <button className="iconbutton">
@@ -109,7 +108,7 @@ export function ListPeopleAsUser() {
             <li className="people">
               <div className="flex justify-between items-center">
                 <div className="flex gap-5 items-center">
-                  <div className="w-6 h-6 rounded-full border border-black"></div>
+                  <div className="circle"></div>
                   <h1 className="text-lg">Farouk Akhtar</h1>
                 </div>
                 <button className="iconbutton">
@@ -229,52 +228,25 @@ function TableAttendance() {
     <>
       <div className="mt-5 border border-[#C4C4C4] rounded-md">
         <TableContainer>
-          <Table variant="striped">
+          <Table variant="striped" bg={"white"}>
             <Thead>
               <Tr>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  Photo
-                </Th>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  Name
-                </Th>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  Position
-                </Th>
+                <Th paddingY="5">#</Th>
+                <Th paddingY="5">Name</Th>
+                <Th paddingY="5">Check-in</Th>
+                <Th paddingY="5">Check-out</Th>
+                <Th paddingY="5">Actual time</Th>
+                <Th paddingY="5">Total time</Th>
               </Tr>
             </Thead>
             <Tbody>
               <Tr>
-                <Td align="center" justifyContent="center">
-                  <div className="w-6 h-6 rounded-full border border-black"></div>
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Farrel Giovanni Jaohari
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Admin
-                </Td>
-                <Td align="center" justifyContent="center">
-                  <button className="iconbutton">
-                    <MoreHoriz />
-                  </button>
-                </Td>
-              </Tr>
-              <Tr>
-                <Td align="center" justifyContent="center">
-                  <div className="circle"></div>
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Farouk
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Peserta
-                </Td>
-                <Td align="center" justifyContent="center">
-                  <button className="iconbutton">
-                    <MoreHoriz />
-                  </button>
-                </Td>
+                <Td>1</Td>
+                <Td>Farrel Giovanni Jaohari</Td>
+                <Td>08:30</Td>
+                <Td>10:00</Td>
+                <Td>1:30 Hr</Td>
+                <Td>1:30 Hr</Td>
               </Tr>
             </Tbody>
           </Table>
@@ -320,5 +292,88 @@ export function AttendanceLog() {
         </TabPanels>
       </Tabs>
     </div>
+  );
+}
+
+export function SettingsAbsentAdmin() {
+  return (
+    <div className="pt-5 px-2 sm:p-5">
+      <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
+        <h1 className="text-xl sm:text-2xl font-bold mb-5">Class Detail</h1>
+        <div className="mb-5">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="font-bold">Name</h1>
+              <h1 className="text-sm sm:text-base mt-1">List 1</h1>
+            </div>
+            <button className="flex gap-2">
+              <span className="font-bold">Change</span>
+              <DriveFileRenameOutline />
+            </button>
+          </div>
+        </div>
+        <div className="mb-5">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="font-bold">Owner Name</h1>
+              <h1 className="text-sm sm:text-base mt-1">
+                Farrel Giovanni Jaohari
+              </h1>
+            </div>
+            <button className="flex gap-2">
+              <span className="font-bold">Change</span>
+              <DriveFileRenameOutline />
+            </button>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-5">
+          <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function SettingsAbsentPeserta() {
+  return (
+    <>
+      <div className="pt-5 px-2 sm:p-5">
+        <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
+          <h1 className="text-xl sm:text-2xl font-bold mb-5">Class Detail</h1>
+          <div className="mb-5">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="font-bold">Display Name</h1>
+                <h1 className="text-sm sm:text-base mt-1">
+                  Farrel Giovanni Jaohari
+                </h1>
+              </div>
+              <button className="flex gap-2">
+                <span className="font-bold">Change</span>
+                <DriveFileRenameOutline />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-5">
+            <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-5 px-2 sm:p-5">
+        <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm flex justify-center">
+          <button className="bg-red-600 text-white py-2 px-7 rounded-md">
+            <Logout className="mr-2" />
+            <span>Leave</span>
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
