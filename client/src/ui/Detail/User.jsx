@@ -226,8 +226,8 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
           )}
 
           {!absent && (
-            <div className="py-5">
-              <img src={shape} alt="" className="mx-auto" />
+            <div className="pt-3 pb-5">
+              <img src={shape} alt="" className="mx-auto mb-5" />
               <h1 className="font-bold text-center">
                 No absentee hour listed,{" "}
                 <span className="text-primary">make one</span>
@@ -321,16 +321,14 @@ export function AttendanceLog() {
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-5">Attendance Log</h1>
 
-      <Tabs colorScheme="blue">
+      <Tabs colorScheme="black">
         <TabList>
-          <div className="px-5 flex">
-            <Tab>
-              <div className="p-2">Daily</div>
-            </Tab>
-            <Tab>
-              <div className="p-2">Monthly</div>
-            </Tab>
-          </div>
+          <Tab>
+            <div className="p-2">Daily</div>
+          </Tab>
+          <Tab>
+            <div className="p-2">Monthly</div>
+          </Tab>
         </TabList>
 
         <TabPanels>
