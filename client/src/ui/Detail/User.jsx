@@ -21,6 +21,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import shape from "../../img/Scribble-28.svg.svg";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -142,6 +143,7 @@ export function ListPeopleAsUser() {
 
 export function ListHomeAsAdmin({ setActiveIndex }) {
   const navigate = useNavigate();
+  const [absent, setAbsent] = useState(null);
 
   const handleButtonClick = () => {
     setActiveIndex(1);
@@ -180,45 +182,58 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
               <ArrowForward />
             </button>
           </div>
-          <ul>
-            <li className="even:bg-[#F1F1F1] odd:bg-white">
-              <div className="flex justify-between p-5">
-                <div className="flex gap-5">
-                  <div className="circle"></div>
-                  <h1 className="font-bold text-sm md:text-base">
-                    Farouk Akhtar Ramadhan
-                  </h1>
+
+          {absent && (
+            <ul>
+              <li className="even:bg-[#F1F1F1] odd:bg-white">
+                <div className="flex justify-between p-5">
+                  <div className="flex gap-5">
+                    <div className="circle"></div>
+                    <h1 className="font-bold text-sm md:text-base">
+                      Farouk Akhtar Ramadhan
+                    </h1>
+                  </div>
+                  <h3 className="font-bold text-sm md:text-base">
+                    Present <span className="text-green-500">(On-Time)</span>
+                  </h3>
                 </div>
-                <h3 className="font-bold text-sm md:text-base">
-                  Present <span className="text-green-500">(On-Time)</span>
-                </h3>
-              </div>
-            </li>
-            <li className="even:bg-[#F1F1F1] odd:bg-white">
-              <div className="flex justify-between p-5">
-                <div className="flex gap-5">
-                  <div className="circle"></div>
-                  <h1 className="font-bold text-sm md:text-base">
-                    Farrel Giovanni Jaohari
-                  </h1>
+              </li>
+              <li className="even:bg-[#F1F1F1] odd:bg-white">
+                <div className="flex justify-between p-5">
+                  <div className="flex gap-5">
+                    <div className="circle"></div>
+                    <h1 className="font-bold text-sm md:text-base">
+                      Farrel Giovanni Jaohari
+                    </h1>
+                  </div>
+                  <h3 className="font-bold text-sm md:text-base">
+                    Present <span className="text-red-700">(Late)</span>
+                  </h3>
                 </div>
-                <h3 className="font-bold text-sm md:text-base">
-                  Present <span className="text-red-700">(Late)</span>
-                </h3>
-              </div>
-            </li>
-            <li className="even:bg-[#F1F1F1] odd:bg-white">
-              <div className="flex justify-between p-5">
-                <div className="flex gap-5">
-                  <div className="circle"></div>
-                  <h1 className="font-bold text-sm md:text-base">
-                    Farrel Giovanni Jaohari
-                  </h1>
+              </li>
+              <li className="even:bg-[#F1F1F1] odd:bg-white">
+                <div className="flex justify-between p-5">
+                  <div className="flex gap-5">
+                    <div className="circle"></div>
+                    <h1 className="font-bold text-sm md:text-base">
+                      Farrel Giovanni Jaohari
+                    </h1>
+                  </div>
+                  <h3 className="font-bold text-sm md:text-base">Absent</h3>
                 </div>
-                <h3 className="font-bold text-sm md:text-base">Absent</h3>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          )}
+
+          {!absent && (
+            <div className="py-5">
+              <img src={shape} alt="" className="mx-auto" />
+              <h1 className="font-bold text-center">
+                No absentee hour listed,{" "}
+                <span className="text-primary">make one</span>
+              </h1>
+            </div>
+          )}
         </div>
       </div>
     </div>

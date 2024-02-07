@@ -13,6 +13,7 @@ import {
   ListPeopleAsUser,
 } from "../ui/Detail/User";
 import { useState } from "react";
+import setting from "../img/4860084 1.svg";
 
 export default function AbsentDetail() {
   const [admin, setAdmin] = useState(true);
@@ -36,6 +37,13 @@ export default function AbsentDetail() {
               <div className="p-2">People</div>
             </Tab>
           </div>
+          {admin && (
+            <div className="absolute right-5 top-2.5">
+              <button className="iconbutton">
+                <img src={setting} alt="" width="24" />
+              </button>
+            </div>
+          )}
         </TabList>
 
         <TabPanels>
