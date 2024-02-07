@@ -332,7 +332,7 @@ export function AttendanceLog() {
         </TabList>
 
         <TabPanels>
-          <TabPanel>
+          <TabPanel paddingX={0}>
             <TableAttendance />
           </TabPanel>
           <TabPanel>
