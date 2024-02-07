@@ -7,7 +7,7 @@ export default function Dialog({
 }) {
   return (
     <div className="fixed top-0 left-0 bottom-0 right-0 z-[9999] bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="min-w-80 max-w-96 md:w-1/2 p-5 rounded-md bg-white">
+      <div className="min-w-80 max-w-[450px] md:w-1/2 p-5 md:py-5 md:px-10 rounded-md bg-white">
         <h1 className="text-lg font-bold mb-5">{title}</h1>
         <div>
           <label htmlFor={label1} className="text-[#404040] font-semibold">

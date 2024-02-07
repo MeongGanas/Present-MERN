@@ -16,6 +16,10 @@ body {
   @apply p-2 hover:bg-slate-50 rounded-full transition duration-200;
 }
 
+.selectButton {
+  @apply block py-3 px-5 hover:bg-slate-50 w-full text-left;
+}
+
 .listDetail {
   background-image: url("./img/Mask\ group.png");
   background-position: center;
