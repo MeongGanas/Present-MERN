@@ -24,7 +24,7 @@ export default function AbsentDetail() {
     <ChakraProvider>
       <Tabs index={activeIndex} onChange={setActiveIndex} colorScheme="blue">
         <TabList>
-          <div className="px-5 flex">
+          <div className="sm:px-5 flex">
             <Tab>
               <div className="p-2">Home</div>
             </Tab>
@@ -38,7 +38,7 @@ export default function AbsentDetail() {
             </Tab>
           </div>
           {admin && (
-            <div className="absolute right-5 top-2.5">
+            <div className="absolute right-0 sm:right-5 top-2.5">
               <button className="iconbutton">
                 <img src={setting} alt="" width="24" />
               </button>

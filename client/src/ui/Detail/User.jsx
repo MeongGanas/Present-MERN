@@ -75,68 +75,7 @@ export function ListPeopleAsUser() {
         </div>
         <h1 className="font-bold">1 People</h1>
       </div>
-      <div className="mt-5 border border-[#C4C4C4] rounded-md">
-        <TableContainer>
-          <Table variant="striped">
-            <Thead>
-              <Tr>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  #
-                </Th>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  Photo
-                </Th>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  Name
-                </Th>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  Position
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td align="center" justifyContent="center">
-                  1
-                </Td>
-                <Td align="center" justifyContent="center">
-                  <div className="w-6 h-6 rounded-full border border-black"></div>
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Farrel Giovanni Jaohari
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Admin
-                </Td>
-                <Td align="center" justifyContent="center">
-                  <button className="iconbutton">
-                    <MoreHoriz />
-                  </button>
-                </Td>
-              </Tr>
-              <Tr>
-                <Td align="center" justifyContent="center">
-                  2
-                </Td>
-                <Td align="center" justifyContent="center">
-                  <div className="circle"></div>
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Farouk
-                </Td>
-                <Td align="center" justifyContent="center">
-                  Peserta
-                </Td>
-                <Td align="center" justifyContent="center">
-                  <button className="iconbutton">
-                    <MoreHoriz />
-                  </button>
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </div>
+      <TableAttendance />
     </div>
   );
 }
@@ -243,21 +182,11 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
 function TableAttendance() {
   return (
     <>
-      <div className="flex justify-between items-center">
-        <div className="relative w-2/3 sm:w-1/2">
-          <Search className="absolute left-3 top-3.5" />
-          <input type="text" className="pl-10" placeholder="Search Name" />
-        </div>
-        <h1 className="font-bold">1 People</h1>
-      </div>
       <div className="mt-5 border border-[#C4C4C4] rounded-md">
         <TableContainer>
           <Table variant="striped">
             <Thead>
               <Tr>
-                <Th paddingY="5" align="center" justifyContent="center">
-                  #
-                </Th>
                 <Th paddingY="5" align="center" justifyContent="center">
                   Photo
                 </Th>
@@ -271,9 +200,6 @@ function TableAttendance() {
             </Thead>
             <Tbody>
               <Tr>
-                <Td align="center" justifyContent="center">
-                  1
-                </Td>
                 <Td align="center" justifyContent="center">
                   <div className="w-6 h-6 rounded-full border border-black"></div>
                 </Td>
@@ -290,9 +216,6 @@ function TableAttendance() {
                 </Td>
               </Tr>
               <Tr>
-                <Td align="center" justifyContent="center">
-                  2
-                </Td>
                 <Td align="center" justifyContent="center">
                   <div className="circle"></div>
                 </Td>
@@ -335,7 +258,18 @@ export function AttendanceLog() {
           <TabPanel paddingX={0}>
             <TableAttendance />
           </TabPanel>
-          <TabPanel>
+          <TabPanel paddingX={0}>
+            <div className="flex justify-between items-center">
+              <div className="relative w-2/3 sm:w-1/2">
+                <Search className="absolute left-3 top-3.5" />
+                <input
+                  type="text"
+                  className="pl-10"
+                  placeholder="Search Name"
+                />
+              </div>
+              <h1 className="font-bold">1 People</h1>
+            </div>
             <TableAttendance />
           </TabPanel>
         </TabPanels>
