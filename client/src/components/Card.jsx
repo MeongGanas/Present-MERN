@@ -1,15 +1,17 @@
-import { MoreHoriz } from "@mui/icons-material";
+import { Info, Logout, MoreHoriz } from "@mui/icons-material";
 import background from "../img/Mask group.png";
 import setting from "../img/4860084 1.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ClickAwayListener from "react-click-away-listener";
 
 function Card() {
   const [admin, setAdmin] = useState(false);
+  const [more, setMore] = useState(false);
   const navigate = useNavigate();
 
   return (
-    <div className="w-full min-w-80 max-w-sm shadow-md rounded-md overflow-hidden">
+    <div className="w-full bg-white min-w-80 max-w-sm shadow-md rounded-md overflow-hidden">
       <img
         src={background}
         alt=""
@@ -25,9 +27,27 @@ function Card() {
             List 1
           </h1>
           {!admin && (
-            <button className="iconbutton">
-              <MoreHoriz />
-            </button>
+            <ClickAwayListener onClickAway={() => setMore(false)}>
+              <div className="relative">
+                <button className="iconbutton" onClick={() => setMore(!more)}>
+                  <MoreHoriz />
+                </button>
+                <div
+                  className={`absolute -top-2 right-10 ${
+                    more ? "scale-100" : "scale-0"
+                  } z-[9999] bg-white min-w-32 shadow-md transition-all duration-200 rounded-md overflow-hidden`}
+                >
+                  <button className="selectButton">
+                    <Info className="mr-2" />
+                    <span>Info</span>
+                  </button>
+                  <button className="selectButton text-red-700">
+                    <Logout className="mr-2" />
+                    <span>Keluar</span>
+                  </button>
+                </div>
+              </div>
+            </ClickAwayListener>
           )}
         </div>
 

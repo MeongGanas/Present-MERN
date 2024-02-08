@@ -20,8 +20,7 @@ export default function Layout({ children }) {
     const path = location.pathname;
 
     setUrl(path);
-    console.log(active);
-  }, [location, active]);
+  }, [location]);
 
   return (
     <>
