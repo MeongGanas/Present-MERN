@@ -2,19 +2,9 @@ import { useState } from "react";
 import shape from "../../img/shape.svg";
 import Dialog from "../../components/Dialog";
 
-export default function NotJoin() {
-  const [joinActive, setJoinActive] = useState(false);
-  const [createActive, setCreateActive] = useState(false);
-
+export default function NotJoin({ setCreateActive, setJoinActive }) {
   return (
     <div>
-      <Dialog
-        joinActive={joinActive}
-        createActive={createActive}
-        setCreateActive={setCreateActive}
-        setJoinActive={setJoinActive}
-      />
-
       <div className="h-screen -mt-16 flex justify-center items-center">
         <div className="w-full min-w-80 max-w-md md:w-1/2">
           <div className="flex justify-center mb-5">

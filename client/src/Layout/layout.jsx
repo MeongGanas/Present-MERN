@@ -1,18 +1,19 @@
 import { Add, ChevronRight, Menu } from "@mui/icons-material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
 import Dialog from "../components/Dialog";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
+import { LayoutContext } from "../hooks/dialogContext";
 
 export default function Layout({ children }) {
   const location = useLocation();
   const [active, setActive] = useState(false);
   const [lgActive, setLgActive] = useState(true);
   const [selectionActive, setSelectionActive] = useState(false);
-  const [joinActive, setJoinActive] = useState(false);
-  const [createActive, setCreateActive] = useState(false);
+  const { joinActive, createActive, setCreateActive, setJoinActive } =
+    useContext(LayoutContext);
   const [url, setUrl] = useState("");
   const navigate = useNavigate();
 
