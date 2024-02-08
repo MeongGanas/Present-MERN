@@ -8,25 +8,12 @@ export default function NotJoin() {
 
   return (
     <div>
-      {joinActive && (
-        <Dialog
-          title={"Join an absentee"}
-          handleClose={() => setJoinActive(false)}
-          label1={"List Code"}
-          label2={"Display Name (optional)"}
-          labelButton={"Join"}
-        />
-      )}
-
-      {createActive && (
-        <Dialog
-          title={"Create an absentee"}
-          handleClose={() => setCreateActive(false)}
-          label1={"Absent name"}
-          label2={"Owner Name (optional)"}
-          labelButton={"Create"}
-        />
-      )}
+      <Dialog
+        joinActive={joinActive}
+        createActive={createActive}
+        setCreateActive={setCreateActive}
+        setJoinActive={setJoinActive}
+      />
 
       <div className="h-screen -mt-16 flex justify-center items-center">
         <div className="w-full min-w-80 max-w-md md:w-1/2">
@@ -39,13 +26,13 @@ export default function NotJoin() {
           <div className="flex gap-5 px-2">
             <button
               className="button coloredButton text-sm"
-              onClick={() => setJoinActive(true)}
+              onClick={() => setCreateActive(true)}
             >
               Create an absentee
             </button>
             <button
               className="button coloredButton text-sm"
-              onClick={() => setCreateActive(true)}
+              onClick={() => setJoinActive(true)}
             >
               Join an absentee
             </button>

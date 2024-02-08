@@ -19,7 +19,7 @@ import setting from "../img/4860084 1.svg";
 import { MoreHoriz } from "@mui/icons-material";
 
 export default function AbsentDetail() {
-  const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState(true);
 
   const [activeIndex, setActiveIndex] = useState(0);
 

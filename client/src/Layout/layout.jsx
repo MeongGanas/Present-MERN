@@ -25,25 +25,12 @@ export default function Layout({ children }) {
 
   return (
     <>
-      {joinActive && (
-        <Dialog
-          title={"Join an absentee"}
-          handleClose={() => setJoinActive(false)}
-          label1={"List Code"}
-          label2={"Display Name (optional)"}
-          labelButton={"Join"}
-        />
-      )}
-
-      {createActive && (
-        <Dialog
-          title={"Create an absentee"}
-          handleClose={() => setCreateActive(false)}
-          label1={"Absent name"}
-          label2={"Owner Name (optional)"}
-          labelButton={"Create"}
-        />
-      )}
+      <Dialog
+        joinActive={joinActive}
+        createActive={createActive}
+        setCreateActive={setCreateActive}
+        setJoinActive={setJoinActive}
+      />
 
       <ClickAwayListener onClickAway={() => setSelectionActive(false)}>
         <div>
