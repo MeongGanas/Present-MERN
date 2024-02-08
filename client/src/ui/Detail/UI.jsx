@@ -347,7 +347,7 @@ export function SettingsAbsentAdmin() {
         </div>
         <div className="mb-5">
           <h1 className="text-lg font-bold mb-5">Select Theme</h1>
-          <div className="flex gap-5">
+          <div className="flex gap-5 flex-wrap">
             <button>
               <div className="w-20 h-20 rounded-full bg-[#0E2A47]"></div>
             </button>
