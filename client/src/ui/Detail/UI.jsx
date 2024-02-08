@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import shape from "../../img/Scribble-28.svg.svg";
+import background from "../../img/Mask group.png";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -135,7 +136,10 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
     <div>
       <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between">
         <div className="w-full flex justify-end">
-          <button className="bg-white py-2 px-3 rounded-md shadow-sm flex gap-2">
+          <button
+            className="bg-white py-2 px-3 rounded-md shadow-sm flex gap-2"
+            onClick={() => setActiveIndex(3)}
+          >
             <DriveFileRenameOutline />
             <span className="font-bold">Customize</span>
           </button>
@@ -297,7 +301,7 @@ export function AttendanceLog() {
 
 export function SettingsAbsentAdmin() {
   return (
-    <div className="pt-5 px-2 sm:p-5">
+    <div className="px-2">
       <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
         <h1 className="text-xl sm:text-2xl font-bold mb-5">Class Detail</h1>
         <div className="mb-5">
@@ -323,6 +327,38 @@ export function SettingsAbsentAdmin() {
             <button className="flex gap-2">
               <span className="font-bold">Change</span>
               <DriveFileRenameOutline />
+            </button>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-5">
+          <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+            Save
+          </button>
+        </div>
+      </div>
+
+      <div className="border-2 mt-5 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
+        <h1 className="text-xl sm:text-2xl font-bold mb-5">
+          Customize Apperance
+        </h1>
+        <div className="mb-5">
+          <img src={background} alt="" className="max-h-64 w-full rounded-md" />
+        </div>
+        <div className="mb-5">
+          <h1 className="text-lg font-bold mb-5">Select Theme</h1>
+          <div className="flex gap-5">
+            <button>
+              <div className="w-20 h-20 rounded-full bg-[#0E2A47]"></div>
+            </button>
+            <button>
+              <div className="w-20 h-20 rounded-full bg-[#C62E2E]"></div>
+            </button>
+            <button>
+              <div className="w-20 h-20 rounded-full bg-[#3EBA4E]"></div>
+            </button>
+            <button>
+              <div className="w-20 h-20 rounded-full bg-[#404040]"></div>
             </button>
           </div>
         </div>
