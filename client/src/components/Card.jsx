@@ -7,7 +7,7 @@ import ClickAwayListener from "react-click-away-listener";
 import { TabContext } from "../hooks/tabContext";
 
 function Card() {
-  const [admin, setAdmin] = useState(true);
+  const [admin, setAdmin] = useState(false);
   const [more, setMore] = useState(false);
   const { setActiveIndex } = useContext(TabContext);
   const navigate = useNavigate();
