@@ -4,7 +4,6 @@ import {
   ArrowForward,
   DriveFileRenameOutline,
   Logout,
-  MoreHoriz,
   Share,
 } from "@mui/icons-material";
 import {
@@ -25,16 +24,31 @@ import {
 import shape from "../../img/Scribble-28.svg.svg";
 import background from "../../img/Mask group.png";
 import SearchInput from "../../components/SearchInput";
-import { MakeAbsenteeDialog } from "../../components/Dialog";
+import {
+  CheckInDialog,
+  MakeAbsenteeDialog,
+  PermissionDialog,
+} from "../../components/Dialog";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
+  const [CheckInActive, setCheckInActive] = useState(false);
+  const [PermissionActive, setPermissionActive] = useState(false);
+  const [shift, setShift] = useState(1);
 
   useEffect(() => {
     setTimeout(() => {
       setWaktu(new Date());
     }, 1000);
   });
+
+  useEffect(() => {
+    if (CheckInActive || PermissionActive) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [CheckInActive, PermissionActive]);
 
   function padZero(num) {
     return String(num).padStart(2, "0");
@@ -52,17 +66,46 @@ export function ListHomeAsUser() {
       </div>
 
       <div className="text-black bg-white rounded-md">
-        <div className="text-center border-b-2 py-5">
-          <h4 className="font-bold">Shift 1</h4>
-          <h1 className="text-3xl font-bold my-4">08:30 - 10:00</h1>
-          <p>Toleransi</p>
-        </div>
-        <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
-          <button className="button bg-[#0E2A47] max-w-72 text-white">
-            Check-In
-          </button>
-          <button className="button max-w-72">Permission</button>
-        </div>
+        {shift && (
+          <>
+            <div className="text-center border-b-2 py-5">
+              <h4 className="font-bold">Shift 1</h4>
+              <h1 className="text-3xl font-bold my-4">08:30 - 10:00</h1>
+              <p>Toleransi</p>
+            </div>
+            <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
+              <button
+                className="button bg-[#0E2A47] max-w-72 text-white"
+                onClick={() => setCheckInActive(true)}
+              >
+                Check-In
+              </button>
+              <button
+                className="button max-w-72"
+                onClick={() => setPermissionActive(true)}
+              >
+                Permission
+              </button>
+            </div>
+
+            <CheckInDialog
+              active={CheckInActive}
+              setActive={setCheckInActive}
+            />
+
+            <PermissionDialog
+              active={PermissionActive}
+              setActive={setPermissionActive}
+            />
+          </>
+        )}
+        {!shift && (
+          <div className="min-h-52 flex items-center justify-center">
+            <h1 className="font-bold text-[#7A7A7A] text-2xl">
+              No Shifts available 👋
+            </h1>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -192,6 +235,8 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
 }
 
 export function ListPeople() {
+  const [admin, setAdmin] = useState(false);
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
@@ -201,14 +246,9 @@ export function ListPeople() {
           <h1 className="mb-5 border-b border-b-gray-300 py-2 text-xl font-bold">
             Admin
           </h1>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-5 items-center">
-              <div className="w-6 h-6 rounded-full border border-black"></div>
-              <h1 className="text-lg">Farrel Giovanni Jaohari</h1>
-            </div>
-            <button className="iconbutton">
-              <MoreHoriz />
-            </button>
+          <div className="flex gap-5 items-center">
+            <div className="w-6 h-6 rounded-full border border-black"></div>
+            <h1 className="text-lg">Farrel Giovanni Jaohari</h1>
           </div>
         </div>
 
@@ -224,20 +264,7 @@ export function ListPeople() {
                   <div className="circle"></div>
                   <h1 className="text-lg">Farouk Akhtar</h1>
                 </div>
-                <button className="iconbutton">
-                  <MoreHoriz />
-                </button>
-              </div>
-            </li>
-            <li className="people">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-5 items-center">
-                  <div className="circle"></div>
-                  <h1 className="text-lg">Farouk Akhtar</h1>
-                </div>
-                <button className="iconbutton">
-                  <MoreHoriz />
-                </button>
+                {admin && <button className="text-red-700">Remove</button>}
               </div>
             </li>
           </ul>

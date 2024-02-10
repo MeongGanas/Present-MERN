@@ -14,14 +14,15 @@ import {
   SettingsAbsentAdmin,
   SettingsAbsentPeserta,
 } from "../ui/Detail/UI";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import setting from "../img/4860084 1.svg";
 import { MoreHoriz } from "@mui/icons-material";
+import { TabContext } from "../hooks/tabContext";
 
 export default function AbsentDetail() {
-  const [admin, setAdmin] = useState(true);
+  const [admin, setAdmin] = useState(false);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const { activeIndex, setActiveIndex } = useContext(TabContext);
 
   return (
     <ChakraProvider>

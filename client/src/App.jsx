@@ -7,27 +7,42 @@ import AbsentDetail from "./pages/AbsentDetail";
 import Settings from "./pages/Settings";
 import Layout from "./Layout/layout";
 import { LayoutProvider } from "./hooks/dialogContext";
+import { TabProvider } from "./hooks/tabContext";
 
 export default function App() {
   return (
-    <LayoutProvider>
-      <Routes>
-        <Route path="/" element={<Selection />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="*"
-          element={
+    <Routes>
+      <Route path="/" element={<Selection />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="*"
+        element={
+          <LayoutProvider>
             <Layout>
               <Routes>
-                <Route path="/home" element={<Home />} />
-                <Route path="/:listname" element={<AbsentDetail />} />
+                <Route
+                  path="/home"
+                  element={
+                    <TabProvider>
+                      <Home />
+                    </TabProvider>
+                  }
+                />
+                <Route
+                  path="/:listname"
+                  element={
+                    <TabProvider>
+                      <AbsentDetail />
+                    </TabProvider>
+                  }
+                />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </Layout>
-          }
-        />
-      </Routes>
-    </LayoutProvider>
+          </LayoutProvider>
+        }
+      />
+    </Routes>
   );
 }

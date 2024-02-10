@@ -1,5 +1,14 @@
-import { Checkbox } from "@chakra-ui/react";
+import {
+  Checkbox,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
+import { Close } from "@mui/icons-material";
 import { useState } from "react";
+import location from "../img/image 2.svg";
 
 function DialogFormat({ handleClose, title, label1, label2, labelButton }) {
   return (
@@ -104,7 +113,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
       } transition-all duration-200 overflow-hidden`}
     >
       <div className="bg-white p-8 rounded-md w-full max-w-screen-md h-screen overflow-y-auto relative">
-        <h1 className="font-bold text-xl mb-5">Add absentee hour</h1>
+        <h1 className="font-bold text-xl my-5">Add absentee hour</h1>
         <div className="w-full block md:flex gap-5 mb-5">
           <div className="w-full mb-2 md:mb-0">
             <label htmlFor="name" className="block">
@@ -201,6 +210,123 @@ export function MakeAbsenteeDialog({ active, setActive }) {
               Add absentee hour
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function CheckInDialog({ active, setActive }) {
+  return (
+    <div
+      className={`dialog ${
+        active ? "scale-100" : "scale-0"
+      } transition-all duration-200 overflow-hidden`}
+    >
+      <div className="w-full max-w-96 bg-white h-fit rounded-md overflow-hidden">
+        <div className="flex p-3 items-center border-b-2 border-[#d9d9d9]">
+          <button className="iconbutton" onClick={() => setActive(false)}>
+            <Close />
+          </button>
+          <h1 className="font-bold ml-3">Check-In</h1>
+        </div>
+        <div className="min-h-40">
+          <h1>maps</h1>
+        </div>
+        <div className="border-t-2 border-[#d9d9d9] h-full bg-[#F8F8F9]">
+          <Tabs colorScheme="black">
+            <TabList bgColor="white">
+              <div className="px-3 flex">
+                <Tab>
+                  <div className="p-2 font-bold">Location</div>
+                </Tab>
+                <Tab>
+                  <div className="p-2 font-bold">Shift</div>
+                </Tab>
+              </div>
+            </TabList>
+
+            <TabPanels>
+              <TabPanel paddingX={0}>
+                <div className="py-2 px-4">
+                  <div className="p-2 border-[1.5px] bg-white rounded-md border-black flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <img src={location} alt="" />
+                      <div>
+                        <h1 className="font-bold">Main</h1>
+                        <h3 className="font-bold text-sm">Btp Blok A 235</h3>
+                      </div>
+                    </div>
+                    <input type="radio" className="w-6 h-6" />
+                  </div>
+                </div>
+              </TabPanel>
+              <TabPanel paddingX={0}>
+                <div className="py-2 px-4">
+                  <div className="py-2 px-4 bg-white border-[1.5px] rounded-md border-black flex items-center justify-between">
+                    <div>
+                      <h1 className="font-bold">Shift 1</h1>
+                      <h3 className="font-bold text-sm">10:00 - 11:00</h3>
+                    </div>
+                    <input type="radio" className="w-6 h-6" />
+                  </div>
+                </div>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+          <div className="px-4 py-3">
+            <button className="text-center w-full py-3 bg-[#0E2A47] rounded-md text-white font-bold">
+              Check-In
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function PermissionDialog({ active, setActive }) {
+  return (
+    <div
+      className={`dialog ${
+        active ? "scale-100" : "scale-0"
+      } transition-all duration-200 overflow-hidden`}
+    >
+      <div className="w-full max-w-96 bg-white h-fit rounded-md overflow-hidden">
+        <div className="flex p-3 items-center border-b-2 border-[#d9d9d9]">
+          <button className="iconbutton" onClick={() => setActive(false)}>
+            <Close />
+          </button>
+          <h1 className="font-bold ml-3">Permission</h1>
+        </div>
+        <div className="p-3 bg-[#f8f8f8] h-full">
+          <div className="mb-5">
+            <label htmlFor="title" className="block font-bold mb-2">
+              Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              className="border-[1.5px] border-black p-3 w-full rounded-md"
+            />
+          </div>
+
+          <div className="mb-5">
+            <label htmlFor="desc" className="block font-bold mb-2">
+              Description
+            </label>
+            <textarea
+              name="desc"
+              id="desc"
+              rows={10}
+              className="w-full border-[1.5px] p-2 border-black rounded-md"
+            ></textarea>
+          </div>
+
+          <button className="text-center w-full py-3 bg-[#0E2A47] rounded-md text-white font-bold">
+            Check-In
+          </button>
         </div>
       </div>
     </div>

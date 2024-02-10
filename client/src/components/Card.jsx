@@ -2,12 +2,14 @@ import { Info, Logout, MoreHoriz } from "@mui/icons-material";
 import background from "../img/Mask group.png";
 import setting from "../img/4860084 1.svg";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
+import { TabContext } from "../hooks/tabContext";
 
 function Card() {
-  const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState(true);
   const [more, setMore] = useState(false);
+  const { setActiveIndex } = useContext(TabContext);
   const navigate = useNavigate();
 
   return (
@@ -55,7 +57,13 @@ function Card() {
 
         {admin && (
           <div className="w-full flex justify-end">
-            <button className="iconbutton">
+            <button
+              className="iconbutton"
+              onClick={() => {
+                setActiveIndex(3);
+                navigate("/list1");
+              }}
+            >
               <img src={setting} alt="" width="24" />
             </button>
           </div>
