@@ -103,10 +103,10 @@ export function MakeAbsenteeDialog({ active, setActive }) {
         active ? "scale-100" : "scale-0"
       } transition-all duration-200 overflow-hidden`}
     >
-      <div className="bg-white p-8 rounded-md w-full max-w-screen-md h-screen overflow-y-auto">
+      <div className="bg-white p-8 rounded-md w-full max-w-screen-md h-screen overflow-y-auto relative">
         <h1 className="font-bold text-xl mb-5">Add absentee hour</h1>
         <div className="w-full block md:flex gap-5 mb-5">
-          <div className="mb-2 w-full md:w-1/2 md:mb-0">
+          <div className="mb-2 md:mb-0">
             <label htmlFor="name" className="block">
               Absentee Name
             </label>
@@ -114,20 +114,20 @@ export function MakeAbsenteeDialog({ active, setActive }) {
               type="text"
               name="name"
               id="name"
-              className="border-2 border-[#D9D9D9] block p-2 rounded-md"
+              className="border-2 border-[#D9D9D9] focus:outline-none block p-2 rounded-md"
             />
           </div>
 
-          <div className="w-full md:w-1/2">
+          <div>
             <label htmlFor="late" className="block">
               Late tolerance
             </label>
-            <div className="flex">
+            <div className="flex max-w-80">
               <input
                 type="text"
                 name="late"
                 id="late"
-                className="border-2 border-[#D9D9D9] block p-2 rounded-s-md"
+                className="border-2 border-[#D9D9D9] focus:outline-none block p-2 rounded-s-md"
               />
               <div className="bg-[#D9D9D9] p-2 min-h-fit flex items-center rounded-e-md">
                 <h1>Minutes</h1>
@@ -153,7 +153,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
                 Select all
               </Checkbox>
             </div>
-            <div className="p-3 flex flex-wrap gap-5">
+            <div className="p-3 gap-5">
               {days.map((day, i) => (
                 <div className="mb-2">
                   <Checkbox
