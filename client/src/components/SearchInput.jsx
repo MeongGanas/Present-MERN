@@ -2,7 +2,7 @@ import { Search } from "@mui/icons-material";
 
 export default function SearchInput() {
   return (
-    <form className="relative max-w-60">
+    <form className="relative max-w-60 min-w-52">
       <Search className="absolute left-3 top-2.5" />
       <input
         type="text"

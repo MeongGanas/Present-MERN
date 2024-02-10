@@ -20,11 +20,11 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Select,
 } from "@chakra-ui/react";
 import shape from "../../img/Scribble-28.svg.svg";
 import background from "../../img/Mask group.png";
 import SearchInput from "../../components/SearchInput";
-import EditIcon from "../../img/Editable-line.svg";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -262,8 +262,8 @@ function DailyAttendance() {
   return (
     <>
       <div className="block sm:flex justify-between items-center">
-        <div className="block md:flex gap-5 mb-5 sm:mb-0">
-          <div className="flex w-fit mb-2 md:mb-0 items-center bg-white border-2 border-black rounded-[9px] overflow-hidden">
+        <div className="flex gap-5 mb-5 sm:mb-0 flex-wrap">
+          <div className="flex w-fit items-center bg-white border-2 border-black rounded-[9px] overflow-hidden">
             <button className="p-2 hover:bg-slate-100 duration-200 transition">
               <ArrowBack />
             </button>
@@ -275,28 +275,68 @@ function DailyAttendance() {
               <ArrowForward />
             </button>
           </div>
-          <div className="flex gap-2">
-            <SearchInput />
-            <button className="coloredButton p-2 rounded-[9px] border-2 border-black">
-              <img src={EditIcon} alt="" width={24} />
-            </button>
+
+          <SearchInput />
+
+          <div className="border-2 w-fit border-black bg-white overflow-hidden rounded-[9px] flex">
+            <button className="button-kehadiran">Present</button>
+            <button className="button-kehadiran">Not Present</button>
+            <button className="button-kehadiran">Late</button>
+            <button className="button-kehadiran">Permission</button>
           </div>
         </div>
-        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
+        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black text-nowrap">
           Export to Excel
         </button>
       </div>
+
       <TableAttendance />
     </>
   );
 }
 
 function MonthlyAttendance() {
+  const [month, setMonth] = useState("January");
+  const [year, setYear] = useState("2024");
+
+  const handleMonth = (event) => {
+    setMonth(event.target.value);
+  };
+
+  const handleYear = (event) => {
+    setYear(event.target.value);
+  };
+
   return (
     <>
       <div className="block sm:flex justify-between items-center">
-        <div className="block md:flex gap-5 mb-5 sm:mb-0">
+        <div className="flex flex-wrap gap-5 mb-5 sm:mb-0">
           <SearchInput />
+          <div className="flex gap-5 w-full">
+            <Select
+              placeholder="Select Month"
+              onChange={handleMonth}
+              border="2px"
+              borderColor="black"
+              bgColor="white"
+              height="43.33px"
+            >
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="Maret">Maret</option>
+            </Select>
+            <Select
+              placeholder="Select Year"
+              onChange={handleYear}
+              border="2px"
+              borderColor="black"
+              bgColor="white"
+              height="43.33px"
+            >
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </Select>
+          </div>
         </div>
         <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
           Export to Excel
