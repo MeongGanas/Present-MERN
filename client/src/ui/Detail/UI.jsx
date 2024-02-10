@@ -263,15 +263,15 @@ function DailyAttendance() {
     <>
       <div className="block sm:flex justify-between items-center">
         <div className="block md:flex gap-5 mb-5 sm:mb-0">
-          <div className="flex w-fit mb-2 md:mb-0 items-center bg-white border-2 border-black rounded-[9px]">
-            <button className="p-2">
+          <div className="flex w-fit mb-2 md:mb-0 items-center bg-white border-2 border-black rounded-[9px] overflow-hidden">
+            <button className="p-2 hover:bg-slate-100 duration-200 transition">
               <ArrowBack />
             </button>
             <input
               type="date"
-              className="border-x-2 p-2 border-black h-full text-center"
+              className="border-x-2 p-2 border-black h-full text-center focus:outline-none"
             />
-            <button className="p-2">
+            <button className="p-2 hover:bg-slate-100 duration-200 transition">
               <ArrowForward />
             </button>
           </div>
