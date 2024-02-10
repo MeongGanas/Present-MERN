@@ -106,7 +106,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
       <div className="bg-white p-8 rounded-md w-full max-w-screen-md h-screen overflow-y-auto">
         <h1 className="font-bold text-xl mb-5">Add absentee hour</h1>
         <div className="w-full block md:flex gap-5 mb-5">
-          <div className="mb-2 md:mb-0">
+          <div className="mb-2 w-full md:w-1/2 md:mb-0">
             <label htmlFor="name" className="block">
               Absentee Name
             </label>
@@ -118,7 +118,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
             />
           </div>
 
-          <div>
+          <div className="w-full md:w-1/2">
             <label htmlFor="late" className="block">
               Late tolerance
             </label>
@@ -153,7 +153,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
                 Select all
               </Checkbox>
             </div>
-            <div className="p-3">
+            <div className="p-3 flex flex-wrap gap-5">
               {days.map((day, i) => (
                 <div className="mb-2">
                   <Checkbox
@@ -178,12 +178,12 @@ export function MakeAbsenteeDialog({ active, setActive }) {
             </div>
             <div className="flex p-3 gap-5 justify-evenly">
               <input
-                type="text"
-                className="border-2 w-1/2 border-[#D9D9D9] block p-2 rounded-md"
+                type="time"
+                className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
               />
               <input
-                type="text"
-                className="border-2 w-1/2 border-[#D9D9D9] block p-2 rounded-md"
+                type="time"
+                className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
               />
             </div>
           </div>
