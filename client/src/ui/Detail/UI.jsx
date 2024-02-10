@@ -241,8 +241,8 @@ export function ListPeople() {
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
       <SearchInput />
-      <div className="bg-white mt-5 rounded-md border">
-        <div className="p-5" id="admin-list">
+      <div className="bg-white mt-5 rounded-md border p-5">
+        <div className="mb-5" id="admin-list">
           <h1 className="mb-5 border-b border-b-gray-300 py-2 text-xl font-bold">
             Admin
           </h1>
@@ -252,7 +252,7 @@ export function ListPeople() {
           </div>
         </div>
 
-        <div className="p-5" id="participants-list">
+        <div id="participants-list">
           <div className="flex justify-between border-b border-b-gray-300 py-2">
             <h1 className="text-xl font-bold">Peserta</h1>
             <h1 className="font-bold">2 People</h1>
