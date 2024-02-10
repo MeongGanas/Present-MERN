@@ -25,6 +25,7 @@ import {
 import shape from "../../img/Scribble-28.svg.svg";
 import background from "../../img/Mask group.png";
 import SearchInput from "../../components/SearchInput";
+import { MakeAbsenteeDialog } from "../../components/Dialog";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -69,10 +70,19 @@ export function ListHomeAsUser() {
 
 export function ListHomeAsAdmin({ setActiveIndex }) {
   const [absent, setAbsent] = useState(null);
+  const [dialogActive, setDialogActive] = useState(false);
 
   const handleButtonClick = () => {
     setActiveIndex(1);
   };
+
+  useEffect(() => {
+    if (dialogActive) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [dialogActive]);
 
   return (
     <div>
@@ -159,8 +169,20 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
               <img src={shape} alt="" className="mx-auto mb-5" />
               <h1 className="font-bold text-center">
                 No absentee hour listed,{" "}
-                <span className="text-primary cursor-pointer">make one</span>
+                <span
+                  className="text-primary cursor-pointer"
+                  onClick={() => {
+                    setDialogActive(true);
+                  }}
+                >
+                  make one
+                </span>
               </h1>
+
+              <MakeAbsenteeDialog
+                active={dialogActive}
+                setActive={setDialogActive}
+              />
             </div>
           )}
         </div>

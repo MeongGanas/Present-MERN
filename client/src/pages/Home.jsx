@@ -4,7 +4,7 @@ import WholeCard from "../components/Card";
 import { LayoutContext } from "../hooks/dialogContext";
 
 export default function Home() {
-  const [absentee, setAbsentee] = useState(null);
+  const [absentee, setAbsentee] = useState(1);
   const { setCreateActive, setJoinActive } = useContext(LayoutContext);
 
   return (

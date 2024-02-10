@@ -2,7 +2,7 @@ import { Add, ChevronRight, Menu } from "@mui/icons-material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
-import Dialog from "../components/Dialog";
+import { Dialog } from "../components/Dialog";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
