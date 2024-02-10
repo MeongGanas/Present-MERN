@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
+  ArrowBack,
   ArrowForward,
   DriveFileRenameOutline,
   Logout,
   MoreHoriz,
-  Search,
   Share,
 } from "@mui/icons-material";
 import {
@@ -21,9 +21,10 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import shape from "../../img/Scribble-28.svg.svg";
 import background from "../../img/Mask group.png";
+import SearchInput from "../../components/SearchInput";
+import EditIcon from "../../img/Editable-line.svg";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -66,66 +67,7 @@ export function ListHomeAsUser() {
   );
 }
 
-export function ListPeopleAsUser() {
-  return (
-    <div className="max-w-screen-lg mx-auto">
-      <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
-      <div className="relative w-2/3 sm:w-1/2">
-        <Search className="absolute left-3 top-3.5" />
-        <input type="text" className="pl-10" placeholder="Search Name" />
-      </div>
-      <div className="bg-white mt-5 rounded-md border">
-        <div className="p-5">
-          <h1 className="mb-5 border-b border-b-gray-300 py-2 text-xl font-bold">
-            Admin
-          </h1>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-5 items-center">
-              <div className="w-6 h-6 rounded-full border border-black"></div>
-              <h1 className="text-lg">Farrel Giovanni Jaohari</h1>
-            </div>
-            <button className="iconbutton">
-              <MoreHoriz />
-            </button>
-          </div>
-        </div>
-        <div className="p-5">
-          <div className="flex justify-between border-b border-b-gray-300 py-2">
-            <h1 className="text-xl font-bold">Peserta</h1>
-            <h1 className="font-bold">2 People</h1>
-          </div>
-          <ul>
-            <li className="people">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-5 items-center">
-                  <div className="circle"></div>
-                  <h1 className="text-lg">Farouk Akhtar</h1>
-                </div>
-                <button className="iconbutton">
-                  <MoreHoriz />
-                </button>
-              </div>
-            </li>
-            <li className="people">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-5 items-center">
-                  <div className="circle"></div>
-                  <h1 className="text-lg">Farouk Akhtar</h1>
-                </div>
-                <button className="iconbutton">
-                  <MoreHoriz />
-                </button>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function ListHomeAsAdmin({ setActiveIndex }) {
-  const navigate = useNavigate();
   const [absent, setAbsent] = useState(null);
 
   const handleButtonClick = () => {
@@ -217,7 +159,7 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
               <img src={shape} alt="" className="mx-auto mb-5" />
               <h1 className="font-bold text-center">
                 No absentee hour listed,{" "}
-                <span className="text-primary">make one</span>
+                <span className="text-primary cursor-pointer">make one</span>
               </h1>
             </div>
           )}
@@ -227,10 +169,66 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
   );
 }
 
+export function ListPeople() {
+  return (
+    <div className="max-w-screen-lg mx-auto">
+      <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
+      <SearchInput />
+      <div className="bg-white mt-5 rounded-md border">
+        <div className="p-5" id="admin-list">
+          <h1 className="mb-5 border-b border-b-gray-300 py-2 text-xl font-bold">
+            Admin
+          </h1>
+          <div className="flex justify-between items-center">
+            <div className="flex gap-5 items-center">
+              <div className="w-6 h-6 rounded-full border border-black"></div>
+              <h1 className="text-lg">Farrel Giovanni Jaohari</h1>
+            </div>
+            <button className="iconbutton">
+              <MoreHoriz />
+            </button>
+          </div>
+        </div>
+
+        <div className="p-5" id="participants-list">
+          <div className="flex justify-between border-b border-b-gray-300 py-2">
+            <h1 className="text-xl font-bold">Peserta</h1>
+            <h1 className="font-bold">2 People</h1>
+          </div>
+          <ul>
+            <li className="people">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-5 items-center">
+                  <div className="circle"></div>
+                  <h1 className="text-lg">Farouk Akhtar</h1>
+                </div>
+                <button className="iconbutton">
+                  <MoreHoriz />
+                </button>
+              </div>
+            </li>
+            <li className="people">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-5 items-center">
+                  <div className="circle"></div>
+                  <h1 className="text-lg">Farouk Akhtar</h1>
+                </div>
+                <button className="iconbutton">
+                  <MoreHoriz />
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TableAttendance() {
   return (
     <>
-      <div className="mt-5 border border-[#C4C4C4] rounded-md">
+      <div className="mt-5 border border-[#C4C4C4] rounded-md overflow-hidden">
         <TableContainer>
           <Table variant="striped" bg={"white"}>
             <Thead>
@@ -260,6 +258,55 @@ function TableAttendance() {
   );
 }
 
+function DailyAttendance() {
+  return (
+    <>
+      <div className="block sm:flex justify-between items-center">
+        <div className="block md:flex gap-5 mb-5 sm:mb-0">
+          <div className="flex w-fit mb-2 md:mb-0 items-center bg-white border-2 border-black rounded-[9px]">
+            <button className="p-2">
+              <ArrowBack />
+            </button>
+            <input
+              type="date"
+              className="border-x-2 p-2 border-black h-full text-center"
+            />
+            <button className="p-2">
+              <ArrowForward />
+            </button>
+          </div>
+          <div className="flex gap-2">
+            <SearchInput />
+            <button className="coloredButton p-2 rounded-[9px] border-2 border-black">
+              <img src={EditIcon} alt="" width={24} />
+            </button>
+          </div>
+        </div>
+        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
+          Export to Excel
+        </button>
+      </div>
+      <TableAttendance />
+    </>
+  );
+}
+
+function MonthlyAttendance() {
+  return (
+    <>
+      <div className="block sm:flex justify-between items-center">
+        <div className="block md:flex gap-5 mb-5 sm:mb-0">
+          <SearchInput />
+        </div>
+        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
+          Export to Excel
+        </button>
+      </div>
+      <TableAttendance />
+    </>
+  );
+}
+
 export function AttendanceLog() {
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -277,21 +324,10 @@ export function AttendanceLog() {
 
         <TabPanels>
           <TabPanel paddingX={0}>
-            <TableAttendance />
+            <DailyAttendance />
           </TabPanel>
           <TabPanel paddingX={0}>
-            <div className="flex justify-between items-center">
-              <div className="relative w-2/3 sm:w-1/2">
-                <Search className="absolute left-3 top-3.5" />
-                <input
-                  type="text"
-                  className="pl-10"
-                  placeholder="Search Name"
-                />
-              </div>
-              <h1 className="font-bold">1 People</h1>
-            </div>
-            <TableAttendance />
+            <MonthlyAttendance />
           </TabPanel>
         </TabPanels>
       </Tabs>

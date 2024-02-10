@@ -10,7 +10,7 @@ import {
   AttendanceLog,
   ListHomeAsAdmin,
   ListHomeAsUser,
-  ListPeopleAsUser,
+  ListPeople,
   SettingsAbsentAdmin,
   SettingsAbsentPeserta,
 } from "../ui/Detail/UI";
@@ -71,7 +71,7 @@ export default function AbsentDetail() {
           )}
 
           <TabPanel>
-            <ListPeopleAsUser />
+            <ListPeople />
           </TabPanel>
 
           {admin && (

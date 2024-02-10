@@ -11,7 +11,13 @@ export default function Selection() {
         <form className="min-w-sm">
           <div className="mb-5">
             <label htmlFor="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="example" />
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="example"
+              className="input"
+            />
           </div>
           <div className="mb-5">
             <label htmlFor="email">Email</label>
@@ -20,11 +26,17 @@ export default function Selection() {
               name="email"
               id="email"
               placeholder="example@gmail.com"
+              className="input"
             />
           </div>
           <div className="mb-10">
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              className="input"
+            />
           </div>
           <button type="submit" className="button coloredButton">
             Register

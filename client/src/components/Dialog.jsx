@@ -6,13 +6,23 @@ function DialogFormat({ handleClose, title, label1, label2, labelButton }) {
         <label htmlFor={label1} className="text-[#404040] font-semibold">
           {label1}
         </label>
-        <input type="text" name={label1} id={label1} className="mb-5 mt-1" />
+        <input
+          type="text"
+          name={label1}
+          id={label1}
+          className="mb-5 mt-1 input"
+        />
       </div>
       <div>
         <label htmlFor={label2} className="text-[#404040] font-semibold">
           {label2}
         </label>
-        <input type="text" name={label2} id={label2} className="mb-5 mt-1" />
+        <input
+          type="text"
+          name={label2}
+          id={label2}
+          className="mb-5 mt-1 input"
+        />
       </div>
       <div className="flex justify-end gap-5">
         <button onClick={handleClose}>Cancel</button>

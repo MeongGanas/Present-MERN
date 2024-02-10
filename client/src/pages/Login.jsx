@@ -18,13 +18,18 @@ export default function Selection() {
               type="email"
               name="email"
               id="email"
-              className="mb-5"
+              className="mb-5 input"
               placeholder="example@gmail.com"
             />
           </div>
           <div>
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              className="input"
+            />
           </div>
           <div className="mb-5 flex justify-end mt-2">
             <h4 className="text-sm">

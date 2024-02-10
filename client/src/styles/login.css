@@ -20,6 +20,6 @@ label {
   display: block;
 }
 
-input {
+.input {
   @apply w-full border-2 border-black px-5 py-3 rounded-xl;
 }
