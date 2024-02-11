@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LayoutLogin from "../Layout/layoutLogin";
 import swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { LoadingContext } from "../hooks/loadingContext";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -11,8 +12,11 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const { setLoading } = useContext(LoadingContext);
+
   const register = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const data = { username, email, password };
 
@@ -27,17 +31,18 @@ export default function Register() {
             timer: 1000,
           })
           .then(() => {
-            navigate("/");
+            setLoading(false);
+            navigate("/login");
           });
       })
       .catch((err) => {
-        // swal.fire({
-        //   title: "Register Fail!",
-        //   text: err,
-        //   icon: "error",
-        //   confirmButtonText: "Close",
-        // });
-        console.log(err);
+        setLoading(false);
+        swal.fire({
+          title: "Register Fail!",
+          text: err.response.data.mssg,
+          icon: "error",
+          confirmButtonText: "Close",
+        });
       });
   };
 
@@ -57,6 +62,8 @@ export default function Register() {
               id="name"
               placeholder="example"
               className="input"
+              autoComplete="username"
+              required
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -69,6 +76,8 @@ export default function Register() {
               placeholder="example@gmail.com"
               className="input"
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              required
             />
           </div>
           <div className="mb-10">
@@ -79,6 +88,8 @@ export default function Register() {
               id="password"
               className="input"
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="off"
+              required
             />
           </div>
           <button

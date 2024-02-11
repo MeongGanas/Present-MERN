@@ -17,7 +17,7 @@ const register = async (req, res) => {
 
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ mssg: err });
   }
 };
 
