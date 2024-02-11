@@ -1,9 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
 import { ReactComponent as Google } from "../img/7123025_logo_google_g_icon 1.svg";
+import { TokenContext } from "../hooks/tokenContext";
+import { useContext, useEffect } from "react";
 
 export default function Selection() {
   const navigate = useNavigate();
+
+  const { token } = useContext(TokenContext);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token]);
+
   return (
     <LayoutLogin>
       <div className="min-w-80">

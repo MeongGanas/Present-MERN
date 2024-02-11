@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LayoutLogin from "../Layout/layoutLogin";
 import swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { LoadingContext } from "../hooks/loadingContext";
+import { TokenContext } from "../hooks/tokenContext";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -13,6 +14,14 @@ export default function Register() {
   const [email, setEmail] = useState("");
 
   const { setLoading } = useContext(LoadingContext);
+
+  const { token } = useContext(TokenContext);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token]);
 
   const register = (e) => {
     e.preventDefault();

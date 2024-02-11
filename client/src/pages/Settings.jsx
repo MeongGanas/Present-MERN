@@ -1,7 +1,19 @@
+import { useContext, useEffect } from "react";
 import orang from "../img/4836491 1.svg";
 import { DriveFileRenameOutline } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { TokenContext } from "../hooks/tokenContext";
 
 export default function Settings() {
+  const navigate = useNavigate();
+  const { token } = useContext(TokenContext);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token]);
+
   return (
     <div className="pt-5 px-2 sm:p-5">
       <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">

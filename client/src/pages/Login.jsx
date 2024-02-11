@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoadingContext } from "../hooks/loadingContext";
 import axios from "axios";
 import swal from "sweetalert2";
+import { TokenContext } from "../hooks/tokenContext";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,6 +13,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const { setLoading } = useContext(LoadingContext);
+  const { token, setToken } = useContext(TokenContext);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token]);
 
   const login = (e) => {
     e.preventDefault();
@@ -30,6 +38,8 @@ export default function Login() {
             timer: 1000,
           })
           .then(() => {
+            localStorage.setItem("token", response.data.token);
+            setToken(response.data.token);
             setLoading(false);
             navigate("/home");
           });

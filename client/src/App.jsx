@@ -9,43 +9,46 @@ import Layout from "./Layout/layout";
 import { LayoutProvider } from "./hooks/dialogContext";
 import { TabProvider } from "./hooks/tabContext";
 import { LoadingProvider } from "./hooks/loadingContext";
+import { TokenProvider } from "./hooks/tokenContext";
 
 export default function App() {
   return (
-    <LoadingProvider>
-      <Routes>
-        <Route path="/" element={<Selection />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="*"
-          element={
-            <LayoutProvider>
-              <Layout>
-                <Routes>
-                  <Route
-                    path="/home"
-                    element={
-                      <TabProvider>
-                        <Home />
-                      </TabProvider>
-                    }
-                  />
-                  <Route
-                    path="/:listname"
-                    element={
-                      <TabProvider>
-                        <AbsentDetail />
-                      </TabProvider>
-                    }
-                  />
-                  <Route path="/settings" element={<Settings />} />
-                </Routes>
-              </Layout>
-            </LayoutProvider>
-          }
-        />
-      </Routes>
-    </LoadingProvider>
+    <TokenProvider>
+      <LoadingProvider>
+        <Routes>
+          <Route path="/" element={<Selection />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="*"
+            element={
+              <LayoutProvider>
+                <Layout>
+                  <Routes>
+                    <Route
+                      path="/home"
+                      element={
+                        <TabProvider>
+                          <Home />
+                        </TabProvider>
+                      }
+                    />
+                    <Route
+                      path="/:listname"
+                      element={
+                        <TabProvider>
+                          <AbsentDetail />
+                        </TabProvider>
+                      }
+                    />
+                    <Route path="/settings" element={<Settings />} />
+                  </Routes>
+                </Layout>
+              </LayoutProvider>
+            }
+          />
+        </Routes>
+      </LoadingProvider>
+    </TokenProvider>
   );
 }
