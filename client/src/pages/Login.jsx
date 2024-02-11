@@ -37,12 +37,13 @@ export default function Login() {
       })
       .catch((err) => {
         setLoading(false);
-        swal.fire({
-          title: "Login Fail!",
-          text: err.response.data.mssg,
-          icon: "error",
-          confirmButtonText: "Close",
-        });
+        // swal.fire({
+        //   title: "Login Fail!",
+        //   text: err.response.data.mssg,
+        //   icon: "error",
+        //   confirmButtonText: "Close",
+        // });
+        console.log(err.response);
       });
   };
 

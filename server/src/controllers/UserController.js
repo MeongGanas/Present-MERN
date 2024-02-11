@@ -12,7 +12,10 @@ const login = async (req, res) => {
       return res.status(404).json({ mssg: "User not found" });
     }
 
-    const isPassValid = await bcrypt.compare(password, existUser.password);
+    const isPassValid = await bcrypt.compare(
+      password.toString(),
+      existUser.password
+    );
     if (!isPassValid) {
       return res.status(404).json({ mssg: "Password wrong" });
     }
@@ -21,7 +24,7 @@ const login = async (req, res) => {
       expiresIn: "24h",
     });
 
-    res.status(200).json({ token, user: existUser });
+    res.status(200).json({ token, user: existUser, mssg: "Login Berhasil" });
   } catch (err) {
     res.status(500).json({ mssg: err });
   }
