@@ -14,6 +14,7 @@ const absenteeModel = new Schema({
   usersJoin: {
     type: Object,
   },
+  admin: [{ type: Object }],
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);
