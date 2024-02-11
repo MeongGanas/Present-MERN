@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
 
-export default function Selection() {
+export default function Login() {
   const navigate = useNavigate();
 
   return (

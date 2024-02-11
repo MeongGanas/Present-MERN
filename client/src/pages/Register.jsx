@@ -1,6 +1,46 @@
+import { useState } from "react";
 import LayoutLogin from "../Layout/layoutLogin";
+import swal from "sweetalert2";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function Selection() {
+export default function Register() {
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const register = (e) => {
+    e.preventDefault();
+
+    const data = { username, email, password };
+
+    axios
+      .post("https://present-server-nine.vercel.app/api/user/register", data)
+      .then((response) => {
+        swal
+          .fire({
+            title: "Register Success!",
+            icon: "success",
+            confirmButtonText: "Close",
+            timer: 1000,
+          })
+          .then(() => {
+            navigate("/");
+          });
+      })
+      .catch((err) => {
+        // swal.fire({
+        //   title: "Register Fail!",
+        //   text: err,
+        //   icon: "error",
+        //   confirmButtonText: "Close",
+        // });
+        console.log(err);
+      });
+  };
+
   return (
     <LayoutLogin>
       <div className="min-w-80">
@@ -17,6 +57,7 @@ export default function Selection() {
               id="name"
               placeholder="example"
               className="input"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="mb-5">
@@ -27,6 +68,7 @@ export default function Selection() {
               id="email"
               placeholder="example@gmail.com"
               className="input"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-10">
@@ -36,9 +78,14 @@ export default function Selection() {
               name="password"
               id="password"
               className="input"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="button coloredButton">
+          <button
+            type="submit"
+            className="button coloredButton"
+            onClick={register}
+          >
             Register
           </button>
         </form>
