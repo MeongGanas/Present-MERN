@@ -22,28 +22,26 @@ export default function Login() {
     axios
       .post("https://present-server-nine.vercel.app/api/user/login", data)
       .then((response) => {
-        // swal
-        //   .fire({
-        //     title: "Login Success!",
-        //     icon: "success",
-        //     confirmButtonText: "Close",
-        //     timer: 1000,
-        //   })
-        //   .then(() => {
-        //     setLoading(false);
-        //     navigate("/home");
-        //   });
-        console.log(response);
+        swal
+          .fire({
+            title: "Login Success!",
+            icon: "success",
+            confirmButtonText: "Close",
+            timer: 1000,
+          })
+          .then(() => {
+            setLoading(false);
+            navigate("/home");
+          });
       })
       .catch((err) => {
         setLoading(false);
-        // swal.fire({
-        //   title: "Login Fail!",
-        //   text: err.response.data.mssg,
-        //   icon: "error",
-        //   confirmButtonText: "Close",
-        // });
-        console.log(err.response);
+        swal.fire({
+          title: "Login Fail!",
+          text: err.response.data.mssg,
+          icon: "error",
+          confirmButtonText: "Close",
+        });
       });
   };
 
