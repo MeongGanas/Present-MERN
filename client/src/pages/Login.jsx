@@ -1,8 +1,49 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
+import { useContext, useState } from "react";
+import { LoadingContext } from "../hooks/loadingContext";
+import axios from "axios";
+import swal from "sweetalert2";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { setLoading } = useContext(LoadingContext);
+
+  const login = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const data = { email, password };
+
+    axios
+      .post("https://present-server-nine.vercel.app/api/user/login", data)
+      .then((response) => {
+        swal
+          .fire({
+            title: "Login Success!",
+            icon: "success",
+            confirmButtonText: "Close",
+            timer: 1000,
+          })
+          .then(() => {
+            setLoading(false);
+            navigate("/home");
+          });
+      })
+      .catch((err) => {
+        setLoading(false);
+        swal.fire({
+          title: "Login Fail!",
+          text: err.response.data.mssg,
+          icon: "error",
+          confirmButtonText: "Close",
+        });
+      });
+  };
 
   return (
     <LayoutLogin>
@@ -20,6 +61,9 @@ export default function Login() {
               id="email"
               className="mb-5 input"
               placeholder="example@gmail.com"
+              autoComplete="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -29,6 +73,9 @@ export default function Login() {
               name="password"
               id="password"
               className="input"
+              autoComplete="off"
+              required
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mb-5 flex justify-end mt-2">
@@ -39,7 +86,7 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            onClick={() => navigate("/home")}
+            onClick={login}
             className="button coloredButton mb-5"
           >
             Login
