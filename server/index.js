@@ -9,11 +9,13 @@ const cors = require("cors");
 const UserRoutes = require("./src/routes/user");
 const AbsenteeRoutes = require("./src/routes/absentee");
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 app.use(express.json());
 
@@ -22,8 +24,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/user", UserRoutes);
 app.use("/api/absentee", AbsenteeRoutes);
+app.use("/api/user", UserRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL)
