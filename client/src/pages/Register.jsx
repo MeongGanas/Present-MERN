@@ -35,6 +35,7 @@ export default function Register() {
           title: "Register Success!",
           icon: "success",
           confirmButtonText: "Close",
+          timer: 1000,
         })
         .then(() => {
           navigate("/login");
