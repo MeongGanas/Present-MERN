@@ -69,16 +69,8 @@ export function Dialog({
   const create = async (absentName, ownerName) => {
     const userData = JSON.parse(localStorage.getItem("userData"));
 
-    try {
-      const response = await createAbsentee(
-        absentName,
-        ownerName,
-        userData._id
-      );
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
+    const response = await createAbsentee(absentName, ownerName, userData._id);
+    console.log(response);
   };
 
   return (

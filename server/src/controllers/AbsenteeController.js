@@ -2,9 +2,13 @@ const { isValidObjectId } = require("mongoose");
 const Absentee = require("../models/Absentee");
 const crypto = require("crypto");
 
-const getAll = async () => {};
+const getAll = async (req, res) => {
+  res.status(200).json({ mssg: "Get all absentee" });
+};
 
-const getSingle = async () => {};
+const getSingle = async (req, res) => {
+  res.status(200).json({ mssg: "Get single absentee" });
+};
 
 const createAbsent = async (req, res) => {
   const data = req.body;
