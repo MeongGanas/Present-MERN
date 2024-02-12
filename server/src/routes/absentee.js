@@ -6,7 +6,7 @@ const {
 } = require("../controllers/AbsenteeController");
 const router = express.Router();
 
-router.get("/getAll", getAll);
+router.get("/getAll/:userId", getAll);
 router.get("/getSingle", getSingle);
 router.post("/create/:userId", createAbsent);
 

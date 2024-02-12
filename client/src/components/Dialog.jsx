@@ -7,9 +7,11 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import { Close } from "@mui/icons-material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import location from "../img/image 2.svg";
 import { createAbsentee } from "../lib/actions";
+import { LoadingContext } from "../hooks/loadingContext";
+import swal from "sweetalert2";
 
 function DialogFormat({
   handleClose,
@@ -73,11 +75,39 @@ export function Dialog({
   setJoinActive,
   setCreateActive,
 }) {
+  const { setLoading } = useContext(LoadingContext);
+
   const create = async (absentName, ownerName) => {
+    setLoading(true);
     const userData = JSON.parse(localStorage.getItem("userData"));
 
-    const response = await createAbsentee(absentName, ownerName, userData._id);
-    console.log(response);
+    try {
+      const response = await createAbsentee(
+        absentName,
+        ownerName,
+        userData._id,
+        userData.username
+      );
+      swal
+        .fire({
+          title: "Create Absetee Success!",
+          icon: "success",
+          confirmButtonText: "Close",
+          timer: 1000,
+        })
+        .then(() => {
+          setLoading(false);
+          setCreateActive(false);
+        });
+    } catch (err) {
+      setLoading(false);
+      swal.fire({
+        title: "Create Absentee Fail!",
+        text: err.response?.data?.mssg || "An error occurred during login",
+        icon: "error",
+        confirmButtonText: "Close",
+      });
+    }
   };
 
   return (

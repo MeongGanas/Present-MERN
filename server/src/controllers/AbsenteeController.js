@@ -3,7 +3,13 @@ const Absentee = require("../models/Absentee");
 const crypto = require("crypto");
 
 const getAll = async (req, res) => {
-  res.status(200).json({ mssg: "Get all absentee" });
+  const { userId } = req.params;
+
+  const absentee = await Absentee.find({
+    $or: [{ userId: userId }, { usersJoin: userId }],
+  });
+
+  res.status(200).json({ absentee });
 };
 
 const getSingle = async (req, res) => {
@@ -11,7 +17,7 @@ const getSingle = async (req, res) => {
 };
 
 const createAbsent = async (req, res) => {
-  const data = req.body;
+  const { name, ownerName, username } = req.body;
   const { userId } = req.params;
 
   if (!isValidObjectId(userId)) {
@@ -22,7 +28,8 @@ const createAbsent = async (req, res) => {
 
   try {
     const absentee = await Absentee.create({
-      ...data,
+      name,
+      ownerName: ownerName || username,
       userId,
       code,
       usersJoin: [],

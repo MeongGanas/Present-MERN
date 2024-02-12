@@ -35,13 +35,14 @@ export function logoutUser(setUserData, setToken) {
   setUserData(null);
 }
 
-export async function createAbsentee(name, ownerName, userId) {
+export async function createAbsentee(name, ownerName, userId, username) {
   try {
     const response = await axios.post(
       `https://present-server-nine.vercel.app/api/absentee/create/${userId}`,
       {
         name,
         ownerName,
+        username,
       }
     );
     return response.data;
