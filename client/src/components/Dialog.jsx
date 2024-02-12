@@ -10,7 +10,14 @@ import { Close } from "@mui/icons-material";
 import { useState } from "react";
 import location from "../img/image 2.svg";
 
-function DialogFormat({ handleClose, title, label1, label2, labelButton }) {
+function DialogFormat({
+  handleClose,
+  title,
+  label1,
+  label2,
+  labelButton,
+  handleAction,
+}) {
   return (
     <div className={`dialog-content`}>
       <h1 className="text-lg font-bold mb-5">{title}</h1>
@@ -38,7 +45,7 @@ function DialogFormat({ handleClose, title, label1, label2, labelButton }) {
       </div>
       <div className="flex justify-end gap-5">
         <button onClick={handleClose}>Cancel</button>
-        <button>{labelButton}</button>
+        <button onClick={handleAction}>{labelButton}</button>
       </div>
     </div>
   );
@@ -63,6 +70,7 @@ export function Dialog({
           label1={"List Code"}
           label2={"Display Name (optional)"}
           labelButton={"Join"}
+          // handleAction={}
         />
       </div>
 

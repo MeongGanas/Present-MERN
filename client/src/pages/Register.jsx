@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { LoadingContext } from "../hooks/loadingContext";
 import { TokenContext } from "../hooks/tokenContext";
+import { registerUser } from "../lib/UserActions";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -23,36 +24,31 @@ export default function Register() {
     }
   }, [token]);
 
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const data = { username, email, password };
-
-    axios
-      .post("https://present-server-nine.vercel.app/api/user/register", data)
-      .then((response) => {
-        swal
-          .fire({
-            title: "Register Success!",
-            icon: "success",
-            confirmButtonText: "Close",
-            timer: 1000,
-          })
-          .then(() => {
-            setLoading(false);
-            navigate("/login");
-          });
-      })
-      .catch((err) => {
-        setLoading(false);
-        swal.fire({
-          title: "Register Fail!",
-          text: err.response.data.mssg,
-          icon: "error",
+    try {
+      const data = await registerUser(username, email, password);
+      swal
+        .fire({
+          title: "Register Success!",
+          icon: "success",
           confirmButtonText: "Close",
+        })
+        .then(() => {
+          navigate("/login");
+          setLoading(false);
         });
+    } catch (err) {
+      setLoading(false);
+      swal.fire({
+        title: "Register Fail!",
+        text: err.response?.data?.mssg || "An error occurred during register",
+        icon: "error",
+        confirmButtonText: "Close",
       });
+    }
   };
 
   return (

@@ -78,11 +78,6 @@ export default function WholeCard() {
     <div className="flex p-5 justify-center">
       <div className="grid grid-cols-1 max-w-screen-lg md:grid-cols-2 xl:grid-cols-3 gap-5">
         <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
       </div>
     </div>
   );

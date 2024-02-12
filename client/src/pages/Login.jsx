@@ -5,6 +5,7 @@ import { LoadingContext } from "../hooks/loadingContext";
 import axios from "axios";
 import swal from "sweetalert2";
 import { TokenContext } from "../hooks/tokenContext";
+import { loginUser } from "../lib/UserActions";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const { setLoading } = useContext(LoadingContext);
-  const { token, setToken } = useContext(TokenContext);
+  const { token, setToken, setUserData } = useContext(TokenContext);
 
   useEffect(() => {
     if (token) {
@@ -21,38 +22,27 @@ export default function Login() {
     }
   }, [token]);
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const data = { email, password };
-
-    axios
-      .post("https://present-server-nine.vercel.app/api/user/login", data)
-      .then((response) => {
-        swal
-          .fire({
-            title: "Login Success!",
-            icon: "success",
-            confirmButtonText: "Close",
-            timer: 1000,
-          })
-          .then(() => {
-            localStorage.setItem("token", response.data.token);
-            setToken(response.data.token);
-            setLoading(false);
-            navigate("/home");
-          });
-      })
-      .catch((err) => {
-        setLoading(false);
-        swal.fire({
-          title: "Login Fail!",
-          text: err.response.data.mssg,
-          icon: "error",
-          confirmButtonText: "Close",
-        });
+    try {
+      const data = await loginUser(email, password);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userData", JSON.stringify(data.user));
+      setToken(data.token);
+      setUserData(data.user);
+      navigate("/home");
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      swal.fire({
+        title: "Login Fail!",
+        text: err.response?.data?.mssg || "An error occurred during login",
+        icon: "error",
+        confirmButtonText: "Close",
       });
+    }
   };
 
   return (
