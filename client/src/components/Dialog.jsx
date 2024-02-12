@@ -9,6 +9,7 @@ import {
 import { Close } from "@mui/icons-material";
 import { useState } from "react";
 import location from "../img/image 2.svg";
+import { createAbsentee } from "../lib/AbsenteeData";
 
 function DialogFormat({
   handleClose,
@@ -18,6 +19,9 @@ function DialogFormat({
   labelButton,
   handleAction,
 }) {
+  const [data1, setData1] = useState(null);
+  const [data2, setData2] = useState(null);
+
   return (
     <div className={`dialog-content`}>
       <h1 className="text-lg font-bold mb-5">{title}</h1>
@@ -30,6 +34,7 @@ function DialogFormat({
           name={label1}
           id={label1}
           className="mb-5 mt-1 input"
+          onChange={setData1}
         />
       </div>
       <div>
@@ -41,11 +46,14 @@ function DialogFormat({
           name={label2}
           id={label2}
           className="mb-5 mt-1 input"
+          onChange={setData2}
         />
       </div>
       <div className="flex justify-end gap-5">
         <button onClick={handleClose}>Cancel</button>
-        <button onClick={handleAction}>{labelButton}</button>
+        <button onClick={() => handleAction(data1, data2)}>
+          {labelButton}
+        </button>
       </div>
     </div>
   );
@@ -57,6 +65,12 @@ export function Dialog({
   setJoinActive,
   setCreateActive,
 }) {
+  const create = async (absentName, ownerName) => {
+    const response = await createAbsentee(absentName, ownerName);
+
+    console.log("ok");
+  };
+
   return (
     <>
       <div
@@ -70,7 +84,7 @@ export function Dialog({
           label1={"List Code"}
           label2={"Display Name (optional)"}
           labelButton={"Join"}
-          // handleAction={}
+          // handleAction={createAbsentee}
         />
       </div>
 
@@ -85,6 +99,7 @@ export function Dialog({
           label1={"Absent name"}
           label2={"Owner Name (optional)"}
           labelButton={"Create"}
+          handleAction={create}
         />
       </div>
     </>

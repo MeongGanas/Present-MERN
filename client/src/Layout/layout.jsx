@@ -39,7 +39,7 @@ export default function Layout({ children }) {
               location.pathname === "/home" || location.pathname === "/settings"
                 ? "block"
                 : "hidden"
-            } fixed top-3 right-16 sm:right-24 z-[9999]`}
+            } fixed top-3 right-16 md:right-24 z-[9999]`}
             onClick={() => setSelectionActive(!selectionActive)}
           >
             <Add />

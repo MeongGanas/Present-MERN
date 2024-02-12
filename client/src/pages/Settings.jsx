@@ -17,7 +17,7 @@ export default function Settings() {
 
   return (
     <div className="p-5">
-      <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
+      <div className="border-2 mx-auto border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 p-5 rounded-md max-w-screen-sm">
         <h1 className="text-xl sm:text-2xl font-bold">Profile</h1>
         <div className="flex items-center gap-5 my-5">
           <div className="border-2 rounded-full p-2 border-black">
@@ -71,16 +71,14 @@ export default function Settings() {
           </button>
         </div>
       </div>
-      <div className="w-full mt-5 sm:p-5 sm:mt-0">
-        <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm flex justify-center">
-          <button
-            className="bg-red-600 text-white py-2 px-7 rounded-md"
-            onClick={() => logoutUser(setToken, setUserData)}
-          >
-            <Logout className="mr-2" />
-            <span>Logout</span>
-          </button>
-        </div>
+      <div className="border-2 mx-auto mt-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 p-5 rounded-md max-w-screen-sm flex justify-end">
+        <button
+          className="bg-red-600 text-white py-2 px-7 rounded-md"
+          onClick={() => logoutUser(setToken, setUserData)}
+        >
+          <Logout className="mr-2" />
+          <span>Logout</span>
+        </button>
       </div>
     </div>
   );

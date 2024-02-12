@@ -2,20 +2,27 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const absenteeModel = new Schema({
+  userId: {
+    type: String,
+  },
   name: {
     type: String,
     required: true,
   },
-  photo: [{ type: Object }],
+  ownerName: {
+    type: String,
+    default: null,
+  },
+  photo: {
+    type: String,
+    default: null,
+  },
   code: {
     type: String,
     required: true,
   },
   usersJoin: {
-    type: Object,
-  },
-  maker: {
-    type: String,
+    type: Array,
   },
 });
 
