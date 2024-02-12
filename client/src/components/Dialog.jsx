@@ -10,6 +10,7 @@ import { Close } from "@mui/icons-material";
 import { useState } from "react";
 import location from "../img/image 2.svg";
 import { createAbsentee } from "../lib/AbsenteeData";
+import axios from "axios";
 
 function DialogFormat({
   handleClose,
@@ -34,7 +35,7 @@ function DialogFormat({
           name={label1}
           id={label1}
           className="mb-5 mt-1 input"
-          onChange={setData1}
+          onChange={(e) => setData1(e.target.value)}
         />
       </div>
       <div>
@@ -46,7 +47,7 @@ function DialogFormat({
           name={label2}
           id={label2}
           className="mb-5 mt-1 input"
-          onChange={setData2}
+          onChange={(e) => setData2(e.target.value)}
         />
       </div>
       <div className="flex justify-end gap-5">
@@ -66,9 +67,10 @@ export function Dialog({
   setCreateActive,
 }) {
   const create = async (absentName, ownerName) => {
-    const response = await createAbsentee(absentName, ownerName);
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const response = await createAbsentee(absentName, ownerName, userData._id);
 
-    console.log("ok");
+    console.log(response);
   };
 
   return (
@@ -84,7 +86,7 @@ export function Dialog({
           label1={"List Code"}
           label2={"Display Name (optional)"}
           labelButton={"Join"}
-          // handleAction={createAbsentee}
+          handleAction={createAbsentee}
         />
       </div>
 
