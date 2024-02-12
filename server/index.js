@@ -10,10 +10,6 @@ const UserRoutes = require("./src/routes/user");
 const AbsenteeRoutes = require("./src/routes/absentee");
 
 app.use(cors());
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
 
 app.use(express.json());
 
