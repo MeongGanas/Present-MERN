@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import LayoutLogin from "../Layout/layoutLogin";
 import swal from "sweetalert2";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { LoadingContext } from "../hooks/loadingContext";
 import { TokenContext } from "../hooks/tokenContext";
-import { registerUser } from "../lib/UserActions";
+import { registerUser } from "../lib/actions";
 
 export default function Register() {
   const navigate = useNavigate();

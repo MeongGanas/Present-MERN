@@ -3,7 +3,7 @@ import orang from "../img/4836491 1.svg";
 import { DriveFileRenameOutline, Logout } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { TokenContext } from "../hooks/tokenContext";
-import { logoutUser } from "../lib/UserActions";
+import { logoutUser } from "../lib/actions";
 
 export default function Settings() {
   const navigate = useNavigate();

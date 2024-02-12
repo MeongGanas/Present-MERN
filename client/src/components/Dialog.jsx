@@ -9,8 +9,7 @@ import {
 import { Close } from "@mui/icons-material";
 import { useState } from "react";
 import location from "../img/image 2.svg";
-import { createAbsentee } from "../lib/AbsenteeData";
-import axios from "axios";
+import { createAbsentee } from "../lib/actions";
 
 function DialogFormat({
   handleClose,
@@ -26,36 +25,44 @@ function DialogFormat({
   return (
     <div className={`dialog-content`}>
       <h1 className="text-lg font-bold mb-5">{title}</h1>
-      <div>
-        <label htmlFor={label1} className="text-[#404040] font-semibold">
-          {label1}
-        </label>
-        <input
-          type="text"
-          name={label1}
-          id={label1}
-          className="mb-5 mt-1 input"
-          onChange={(e) => setData1(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor={label2} className="text-[#404040] font-semibold">
-          {label2}
-        </label>
-        <input
-          type="text"
-          name={label2}
-          id={label2}
-          className="mb-5 mt-1 input"
-          onChange={(e) => setData2(e.target.value)}
-        />
-      </div>
-      <div className="flex justify-end gap-5">
-        <button onClick={handleClose}>Cancel</button>
-        <button onClick={() => handleAction(data1, data2)}>
-          {labelButton}
-        </button>
-      </div>
+      <form>
+        <div>
+          <label htmlFor={label1} className="text-[#404040] font-semibold">
+            {label1}
+          </label>
+          <input
+            type="text"
+            name={label1}
+            id={label1}
+            className="mb-5 mt-1 input"
+            onChange={(e) => setData1(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor={label2} className="text-[#404040] font-semibold">
+            {label2}
+          </label>
+          <input
+            type="text"
+            name={label2}
+            id={label2}
+            className="mb-5 mt-1 input"
+            onChange={(e) => setData2(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-end gap-5">
+          <button onClick={handleClose}>Cancel</button>
+          <button
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              handleAction(data1, data2);
+            }}
+          >
+            {labelButton}
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

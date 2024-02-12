@@ -28,3 +28,20 @@ export function logoutUser(setUserData, setToken) {
   setToken(null);
   setUserData(null);
 }
+
+export async function createAbsentee(absentName, ownerName, userId) {
+  console.log(absentName, ownerName, userId);
+
+  try {
+    const response = await axios.post(
+      "/api/absentee/create" + userId.toString(),
+      {
+        absentName,
+        ownerName,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
