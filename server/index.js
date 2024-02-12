@@ -16,8 +16,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/user", cors(), UserRoutes);
-app.use("/api/absentee", cors(), AbsenteeRoutes);
+const corsOptions = {
+  origin: "*",
+};
+
+app.use("/api/user", cors(corsOptions), UserRoutes);
+app.use("/api/absentee", cors(corsOptions), AbsenteeRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL)
