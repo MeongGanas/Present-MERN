@@ -10,7 +10,7 @@ const UserRoutes = require("./src/routes/user");
 const AbsenteeRoutes = require("./src/routes/absentee");
 
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
