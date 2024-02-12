@@ -20,20 +20,18 @@ const createAbsent = async (req, res) => {
 
   const code = crypto.randomBytes(6).toString("hex").slice(0, 6).toUpperCase();
 
-  res.status(200).json({ code, data, userId });
+  try {
+    const absentee = await Absentee.create({
+      ...data,
+      userId,
+      code,
+      usersJoin: [],
+    });
 
-  // try {
-  //   const absentee = await Absentee.create({
-  //     ...data,
-  //     userId,
-  //     code,
-  //     usersJoin: [],
-  //   });
-
-  //   res.status(200).json({ absentee });
-  // } catch (err) {
-  //   res.status(500).json({ mssg: err });
-  // }
+    res.status(200).json({ absentee });
+  } catch (err) {
+    res.status(500).json({ mssg: err });
+  }
 };
 
 const updateAbsent = async () => {};

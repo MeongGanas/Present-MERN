@@ -1,5 +1,4 @@
 {
-  "proxy": "https://present-server-nine.vercel.app",
   "name": "client",
   "version": "0.1.0",
   "private": true,

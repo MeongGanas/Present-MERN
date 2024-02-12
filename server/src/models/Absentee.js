@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const absenteeModel = new Schema({
   userId: {
     type: String,
+    required: true,
   },
   name: {
     type: String,
