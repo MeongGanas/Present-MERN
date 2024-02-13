@@ -2,11 +2,12 @@ import { Info, Logout, MoreHoriz } from "@mui/icons-material";
 import background from "../img/Mask group.png";
 import setting from "../img/4860084 1.svg";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { TabContext } from "../hooks/tabContext";
 import { LayoutContext } from "../hooks/dialogContext";
 import NotJoin from "../ui/home/NotJoin";
+import { getAbsentee } from "../lib/absentee";
 
 function Card({ absent }) {
   const [admin, setAdmin] = useState(false);
@@ -75,19 +76,22 @@ function Card({ absent }) {
   );
 }
 
-export default function WholeCard({ absentee }) {
+const resource = getAbsentee();
+
+export default function WholeCard() {
   const { setCreateActive, setJoinActive } = useContext(LayoutContext);
+  const absentee = resource.read().absentee;
 
   return (
     <>
-      {!absentee && (
+      {absentee.length === 0 && (
         <NotJoin
           setCreateActive={setCreateActive}
           setJoinActive={setJoinActive}
         />
       )}
 
-      {absentee && (
+      {absentee.length > 0 && (
         <div className="flex p-5 justify-center">
           <div className="grid grid-cols-1 max-w-screen-lg md:grid-cols-2 xl:grid-cols-3 gap-5">
             {absentee &&

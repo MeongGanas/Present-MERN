@@ -1,40 +1,28 @@
-import { useContext, useEffect, useState } from "react";
-import NotJoin from "../ui/home/NotJoin";
+import { Suspense, useContext, useEffect } from "react";
 import WholeCard from "../components/Card";
-import { LayoutContext } from "../hooks/dialogContext";
 import { useNavigate } from "react-router-dom";
 import { TokenContext } from "../hooks/tokenContext";
-import { getAbsentee } from "../lib/absentee";
-import { LoadingContext } from "../hooks/loadingContext";
+import Loading from "../components/Loading";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [absentee, setAbsentee] = useState([]);
-  const { setCreateActive, setJoinActive } = useContext(LayoutContext);
   const { token, userData } = useContext(TokenContext);
-  const { setLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
-    } else {
-      const getAll = async () => {
-        const absenteeData = await getAbsentee(userData._id);
-        setAbsentee(absenteeData);
-      };
-      getAll();
     }
   }, [token]);
 
   return (
-    <>
-      {absentee.length === 0 && (
-        <NotJoin
-          setCreateActive={setCreateActive}
-          setJoinActive={setJoinActive}
-        />
-      )}
-      {absentee && <WholeCard absentee={absentee} />}
-    </>
+    <Suspense
+      fallback={
+        <div className="-mt-16">
+          <Loading />
+        </div>
+      }
+    >
+      <WholeCard userId={userData._id} />
+    </Suspense>
   );
 }

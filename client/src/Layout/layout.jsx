@@ -19,8 +19,9 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     const path = location.pathname;
-
-    setUrl(path);
+    const newpath = path.split("/");
+    console.log(newpath);
+    setUrl(newpath[1]);
   }, [location]);
 
   return (
@@ -89,9 +90,7 @@ export default function Layout({ children }) {
             {url && (
               <div>
                 <ChevronRight className="mx-1" />
-                <span className="text-sm sm:text-lg font-bold">
-                  {url.slice(1, url.length)}
-                </span>
+                <span className="text-sm sm:text-lg font-bold">{url}</span>
               </div>
             )}
           </div>
