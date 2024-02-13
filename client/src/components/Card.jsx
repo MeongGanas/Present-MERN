@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { TabContext } from "../hooks/tabContext";
+import { LayoutContext } from "../hooks/dialogContext";
+import NotJoin from "../ui/home/NotJoin";
 
-function Card() {
+function Card({ absent }) {
   const [admin, setAdmin] = useState(false);
   const [more, setMore] = useState(false);
   const { setActiveIndex } = useContext(TabContext);
@@ -26,7 +28,7 @@ function Card() {
             className="text-xl font-bold underline cursor-pointer"
             onClick={() => navigate("/list1")}
           >
-            List 1
+            {absent.name}
           </h1>
           {!admin && (
             <ClickAwayListener onClickAway={() => setMore(false)}>
@@ -53,7 +55,7 @@ function Card() {
           )}
         </div>
 
-        {!admin && <h1 className="my-2">Nama yang punya</h1>}
+        {!admin && <h1 className="my-2">{absent.ownerName}</h1>}
 
         {admin && (
           <div className="w-full flex justify-end">
@@ -73,12 +75,28 @@ function Card() {
   );
 }
 
-export default function WholeCard() {
+export default function WholeCard({ absentee }) {
+  const { setCreateActive, setJoinActive } = useContext(LayoutContext);
+
   return (
-    <div className="flex p-5 justify-center">
-      <div className="grid grid-cols-1 max-w-screen-lg md:grid-cols-2 xl:grid-cols-3 gap-5">
-        <Card />
-      </div>
-    </div>
+    <>
+      {!absentee && (
+        <NotJoin
+          setCreateActive={setCreateActive}
+          setJoinActive={setJoinActive}
+        />
+      )}
+
+      {absentee && (
+        <div className="flex p-5 justify-center">
+          <div className="grid grid-cols-1 max-w-screen-lg md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {absentee &&
+              absentee.map((absent) => (
+                <Card absent={absent} key={absent._id} />
+              ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -1,6 +1,4 @@
-import { useState } from "react";
 import shape from "../../img/shape.svg";
-import Dialog from "../../components/Dialog";
 
 export default function NotJoin({ setCreateActive, setJoinActive }) {
   return (

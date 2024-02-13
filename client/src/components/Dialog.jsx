@@ -53,7 +53,9 @@ function DialogFormat({
           />
         </div>
         <div className="flex justify-end gap-5">
-          <button onClick={handleClose}>Cancel</button>
+          <button type="button" onClick={handleClose}>
+            Cancel
+          </button>
           <button
             type="submit"
             onClick={(e) => {
