@@ -6,11 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { TokenContext } from "../hooks/tokenContext";
 import { getAbsentee } from "../lib/absentee";
 import { LoadingContext } from "../hooks/loadingContext";
-import { FormatColorResetSharp } from "@mui/icons-material";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [absentee, setAbsentee] = useState(null);
+  const [absentee, setAbsentee] = useState([]);
   const { setCreateActive, setJoinActive } = useContext(LayoutContext);
   const { token, userData } = useContext(TokenContext);
   const { setLoading } = useContext(LoadingContext);
@@ -29,7 +28,7 @@ export default function Home() {
 
   return (
     <>
-      {!absentee && (
+      {absentee.length === 0 && (
         <NotJoin
           setCreateActive={setCreateActive}
           setJoinActive={setJoinActive}
