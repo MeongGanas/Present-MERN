@@ -15,12 +15,10 @@ export default function Layout({ children }) {
   const { joinActive, createActive, setCreateActive, setJoinActive } =
     useContext(LayoutContext);
   const [url, setUrl] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     const path = location.pathname;
     const newpath = path.split("/");
-    console.log(newpath);
     setUrl(newpath[1]);
   }, [location]);
 
@@ -96,9 +94,9 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button className="iconbutton" onClick={() => navigate("/settings")}>
+          <Link to="/settings" className="iconbutton">
             <img src={orang} alt="" width={26} />
-          </button>
+          </Link>
         </div>
       </nav>
 

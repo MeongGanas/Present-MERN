@@ -27,11 +27,12 @@ export default function Login() {
 
     try {
       const data = await loginUser(email, password);
+      const userData = await data.user;
       localStorage.setItem("token", data.token);
-      localStorage.setItem("userData", JSON.stringify(data.user));
+      localStorage.setItem("userData", JSON.stringify(userData));
       setToken(data.token);
       setUserData(data.user);
-      navigate(`/home/${data.user._id}`);
+      navigate("/home");
       setLoading(false);
     } catch (err) {
       setLoading(false);

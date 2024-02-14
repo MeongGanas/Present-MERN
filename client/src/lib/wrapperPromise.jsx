@@ -1,4 +1,6 @@
-export default function wrapPromise(promise) {
+import { getAbsentee } from "./absentee";
+
+export function wrapPromise(promise) {
   let status = "pending";
   let response;
 
@@ -26,3 +28,9 @@ export default function wrapPromise(promise) {
 
   return { read };
 }
+
+export const getUserAbsentee = (userId) => {
+  return {
+    data: wrapPromise(getAbsentee(userId)),
+  };
+};

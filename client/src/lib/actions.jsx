@@ -31,6 +31,7 @@ export async function registerUser(username, email, password) {
 export function logoutUser(setUserData, setToken) {
   localStorage.removeItem("token");
   localStorage.removeItem("userData");
+  localStorage.removeItem("userId");
   setToken(null);
   setUserData(null);
 }

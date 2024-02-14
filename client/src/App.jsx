@@ -34,7 +34,7 @@ export default function App() {
                       }
                     />
                     <Route
-                      path="/:listname"
+                      path="/:listname/:listId"
                       element={
                         <TabProvider>
                           <AbsentDetail />
