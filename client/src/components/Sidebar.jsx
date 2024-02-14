@@ -41,7 +41,7 @@ export default function Sidebar({ absentee }) {
                         to={`/${absent.name}/${absent._id}`}
                         className="sidemenu"
                       >
-                        <span className="border h-6 w-6 rounded-full border-black"></span>
+                        <span className="border h-6 min-w-6 rounded-full border-black"></span>
                         {absent.name}
                       </Link>
                     </li>

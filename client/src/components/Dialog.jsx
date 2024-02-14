@@ -12,6 +12,7 @@ import location from "../img/image 2.svg";
 import { createAbsentee, joinAbsentee } from "../lib/actions";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
+import { TokenContext } from "../hooks/tokenContext";
 
 function DialogFormat({
   handleClose,
@@ -78,11 +79,10 @@ export function Dialog({
   setCreateActive,
 }) {
   const { setLoading } = useContext(LoadingContext);
+  const { userData } = useContext(TokenContext);
 
   const create = async (absentName, ownerName) => {
     setLoading(true);
-    const userData = JSON.parse(localStorage.getItem("userData"));
-
     try {
       const response = await createAbsentee(
         absentName,
@@ -114,8 +114,6 @@ export function Dialog({
 
   const join = async (absentCode, displayName) => {
     setLoading(true);
-    const userData = JSON.parse(localStorage.getItem("userData"));
-
     try {
       const response = await joinAbsentee(
         absentCode,

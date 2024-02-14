@@ -261,7 +261,7 @@ export function ListPeople({ absent, admin }) {
           <ul>
             {absent.usersJoin &&
               absent.usersJoin.map((participant) => (
-                <li className="people" id={participant.userId}>
+                <li className="people" key={participant.userId}>
                   <div className="flex justify-between items-center">
                     <div className="flex gap-5 items-center">
                       <div className="circle"></div>
