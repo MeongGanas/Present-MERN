@@ -1,11 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LayoutContext } from "../../hooks/dialogContext";
 import NotJoin from "../../ui/home/NotJoin";
 import Card from "../../components/Card";
 
 export default function WholeAbsentee({ resource }) {
-  const { setCreateActive, setJoinActive } = useContext(LayoutContext);
+  const { setCreateActive, setJoinActive, setAbsentee } =
+    useContext(LayoutContext);
   const absentee = resource.data.read().absentee;
+
+  useEffect(() => {
+    setAbsentee(absentee);
+  }, [absentee]);
 
   return (
     <>

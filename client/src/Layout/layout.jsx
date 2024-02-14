@@ -1,5 +1,5 @@
 import { Add, ChevronRight, Menu } from "@mui/icons-material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
 import { Dialog } from "../components/Dialog";
@@ -12,7 +12,7 @@ export default function Layout({ children }) {
   const [active, setActive] = useState(false);
   const [lgActive, setLgActive] = useState(true);
   const [selectionActive, setSelectionActive] = useState(false);
-  const { joinActive, createActive, setCreateActive, setJoinActive } =
+  const { joinActive, createActive, setCreateActive, setJoinActive, absentee } =
     useContext(LayoutContext);
   const [url, setUrl] = useState("");
 
@@ -107,7 +107,7 @@ export default function Layout({ children }) {
           lgActive ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
         } h-screen pt-16 border-r-2 border-[#D9D9D9] hidden lg:block transition-all duration-300`}
       >
-        <Sidebar />
+        <Sidebar absentee={absentee} />
       </div>
 
       <ClickAwayListener
@@ -126,7 +126,7 @@ export default function Layout({ children }) {
               active ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
             } h-screen pt-16 border-r-2 border-[#D9D9D9] block lg:hidden transition-all duration-300`}
           >
-            <Sidebar />
+            <Sidebar absentee={absentee} />
           </div>
         </div>
       </ClickAwayListener>

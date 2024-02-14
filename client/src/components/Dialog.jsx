@@ -228,7 +228,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
             </div>
             <div className="p-3 gap-5">
               {days.map((day, i) => (
-                <div className="mb-2">
+                <div className="mb-2" key={i}>
                   <Checkbox
                     isChecked={checkedItems[i]}
                     onChange={(e) => {

@@ -22,7 +22,7 @@ export default function Selection() {
           <h1 className="text-primary mb-3 font-bold text-3xl">Present</h1>
           <p className="font-bold text-lg">Let’s get you started</p>
         </div>
-        <div className="min-w-sm">
+        <div className="min-w-96">
           <button
             className="button coloredButton mb-5"
             onClick={() => navigate("/login")}
