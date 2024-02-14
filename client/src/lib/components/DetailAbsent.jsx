@@ -18,17 +18,19 @@ import {
   Tab,
   ChakraProvider,
 } from "@chakra-ui/react";
+import { TokenContext } from "../../hooks/tokenContext";
 
 export default function DetailAbsent({ resource }) {
   const [admin, setAdmin] = useState(false);
+  const { userData } = useContext(TokenContext);
   const { activeIndex, setActiveIndex } = useContext(TabContext);
-  //   const absentData = resource.data.read();
+  const absentData = resource.data.read().absentee;
 
-  //   const userId = localStorage.getItem("userId");
-
-  //   useEffect(() => {
-  //     console.log(absentData);
-  //   }, [absentData]);
+  useEffect(() => {
+    if (absentData.userId === userData._id) {
+      setAdmin(true);
+    }
+  }, [absentData]);
 
   return (
     <ChakraProvider>

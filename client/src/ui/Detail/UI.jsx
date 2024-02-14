@@ -116,6 +116,7 @@ export function ListHomeAsUser() {
 export function ListHomeAsAdmin({ setActiveIndex }) {
   const [absent, setAbsent] = useState(null);
   const [dialogActive, setDialogActive] = useState(false);
+  const { absentName } = useParams();
 
   const handleButtonClick = () => {
     setActiveIndex(1);
@@ -141,7 +142,7 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
             <span className="font-bold">Customize</span>
           </button>
         </div>
-        <h1 className="text-white text-3xl font-bold">List 1</h1>
+        <h1 className="text-white text-3xl font-bold">{absentName}</h1>
       </div>
       <div className="block md:flex w-full gap-5">
         <div className="w-full mb-5 md:mb-0 bg-white md:max-w-64 border border-[#c4c4c4] rounded-md pt-2 p-5 h-fit">

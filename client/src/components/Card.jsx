@@ -69,7 +69,7 @@ export default function Card({ absent }) {
               className="iconbutton"
               onClick={() => {
                 setActiveIndex(3);
-                navigate("/list1");
+                navigate(`/${absent.name}/${absent._id}`);
               }}
             >
               <img src={setting} alt="" width="24" />
