@@ -22,9 +22,11 @@ const absenteeModel = new Schema({
     type: String,
     required: true,
   },
-  usersJoin: {
-    type: Array,
-  },
+  usersJoin: [
+    {
+      type: Object,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);

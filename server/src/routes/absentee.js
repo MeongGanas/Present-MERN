@@ -7,7 +7,7 @@ const {
 const router = express.Router();
 
 router.get("/getAll/:userId", getAll);
-router.get("/getSingle", getSingle);
+router.get("/getSingle/:absentId", getSingle);
 router.post("/create/:userId", createAbsent);
 
 module.exports = router;

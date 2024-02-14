@@ -13,7 +13,15 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
-  res.status(200).json({ mssg: "Get single absentee" });
+  const { absentId } = req.params;
+
+  const absentee = await Absentee.findById({ _id: absentId });
+
+  if (!absentee) {
+    return res.status(404).json({ mssg: "No such a absent" });
+  }
+
+  res.status(200).json({ absentee });
 };
 
 const createAbsent = async (req, res) => {
@@ -32,7 +40,7 @@ const createAbsent = async (req, res) => {
       ownerName: ownerName || username,
       userId,
       code,
-      usersJoin: [],
+      usersJoin: [{}],
     });
 
     res.status(200).json({ absentee });

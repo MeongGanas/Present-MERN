@@ -29,11 +29,13 @@ import {
   MakeAbsenteeDialog,
   PermissionDialog,
 } from "../../components/Dialog";
+import { useParams } from "react-router-dom";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
   const [CheckInActive, setCheckInActive] = useState(false);
   const [PermissionActive, setPermissionActive] = useState(false);
+  const { absentName } = useParams();
   const [shift, setShift] = useState(1);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export function ListHomeAsUser() {
 
   return (
     <div className="p-5 max-w-screen-lg mx-auto listDetail text-white rounded-md">
-      <h1 className="text-3xl">List 1</h1>
+      <h1 className="text-3xl">{absentName}</h1>
 
       <div className="py-10 text-center">
         <h1 className="mb-2 text-5xl font-bold">

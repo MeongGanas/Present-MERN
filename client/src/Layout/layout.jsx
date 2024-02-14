@@ -88,7 +88,9 @@ export default function Layout({ children }) {
             {url && (
               <div>
                 <ChevronRight className="mx-1" />
-                <span className="text-sm sm:text-lg font-bold">{url}</span>
+                <span className="text-sm sm:text-lg font-bold">
+                  {decodeURIComponent(url)}
+                </span>
               </div>
             )}
           </div>

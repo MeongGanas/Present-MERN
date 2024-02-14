@@ -11,3 +11,15 @@ export function getAbsentee(userId) {
     throw err;
   }
 }
+
+export function getSingleAbsentee(absentId) {
+  try {
+    return axios
+      .get(
+        `https://present-server-nine.vercel.app/api/absentee/getSingle/${absentId}`
+      )
+      .then((res) => res.data);
+  } catch (err) {
+    throw err;
+  }
+}
