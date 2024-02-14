@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { getDetailAbsentee } from "../lib/wrapperPromise";
 import Loading from "../components/Loading";
