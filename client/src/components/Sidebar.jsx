@@ -10,13 +10,8 @@ import home from "../img/4836512 1.svg";
 import setting from "../img/4860084 1.svg";
 import list from "../img/5504165 1.svg";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 
 export default function Sidebar({ absentee }) {
-  useEffect(() => {
-    console.log(absentee);
-  }, [absentee]);
-
   return (
     <>
       <div className="border-b-2 pt-4 pb-3">

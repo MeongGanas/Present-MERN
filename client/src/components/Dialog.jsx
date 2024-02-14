@@ -9,7 +9,7 @@ import {
 import { Close } from "@mui/icons-material";
 import { useContext, useState } from "react";
 import location from "../img/image 2.svg";
-import { createAbsentee } from "../lib/actions";
+import { createAbsentee, joinAbsentee } from "../lib/actions";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
 
@@ -112,6 +112,39 @@ export function Dialog({
     }
   };
 
+  const join = async (absentCode, displayName) => {
+    setLoading(true);
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
+    try {
+      const response = await joinAbsentee(
+        absentCode,
+        displayName,
+        userData._id,
+        userData.username
+      );
+      swal
+        .fire({
+          title: "Join Absetee Success!",
+          icon: "success",
+          confirmButtonText: "Close",
+          timer: 1000,
+        })
+        .then(() => {
+          setLoading(false);
+          setJoinActive(false);
+        });
+    } catch (err) {
+      setLoading(false);
+      swal.fire({
+        title: "Join Absentee Fail!",
+        text: err.response?.data?.mssg || "An error occurred during login",
+        icon: "error",
+        confirmButtonText: "Close",
+      });
+    }
+  };
+
   return (
     <>
       <div
@@ -125,7 +158,7 @@ export function Dialog({
           label1={"List Code"}
           label2={"Display Name (optional)"}
           labelButton={"Join"}
-          handleAction={createAbsentee}
+          handleAction={join}
         />
       </div>
 

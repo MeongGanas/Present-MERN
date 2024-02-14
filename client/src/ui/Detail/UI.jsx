@@ -237,9 +237,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   );
 }
 
-export function ListPeople() {
-  const [admin, setAdmin] = useState(false);
-
+export function ListPeople({ absent, admin }) {
   return (
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
@@ -251,25 +249,35 @@ export function ListPeople() {
           </h1>
           <div className="flex gap-5 items-center">
             <div className="w-6 h-6 rounded-full border border-black"></div>
-            <h1 className="text-lg">Farrel Giovanni Jaohari</h1>
+            <h1 className="text-lg">{absent.ownerName}</h1>
           </div>
         </div>
 
         <div id="participants-list">
           <div className="flex justify-between border-b border-b-gray-300 py-2">
             <h1 className="text-xl font-bold">Peserta</h1>
-            <h1 className="font-bold">2 People</h1>
+            <h1 className="font-bold">{absent.usersJoin.length} People</h1>
           </div>
           <ul>
-            <li className="people">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-5 items-center">
-                  <div className="circle"></div>
-                  <h1 className="text-lg">Farouk Akhtar</h1>
-                </div>
-                {admin && <button className="text-red-700">Remove</button>}
-              </div>
-            </li>
+            {absent.usersJoin &&
+              absent.usersJoin.map((participant) => (
+                <li className="people" id={participant.userId}>
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-5 items-center">
+                      <div className="circle"></div>
+                      <h1 className="text-lg">{participant.username}</h1>
+                    </div>
+                    {admin && (
+                      <button
+                        className="text-red-700"
+                        value={participant.userId}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

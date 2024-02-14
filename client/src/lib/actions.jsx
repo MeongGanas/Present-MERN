@@ -51,3 +51,20 @@ export async function createAbsentee(name, ownerName, userId, username) {
     throw error;
   }
 }
+
+export async function joinAbsentee(code, displayName, userId, username) {
+  try {
+    const response = await axios.post(
+      `https://present-server-nine.vercel.app/api/absentee/join`,
+      {
+        code,
+        displayName,
+        userId,
+        username,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -75,7 +75,7 @@ export default function AbsenteeDetail({ absent, admin }) {
           )}
 
           <TabPanel>
-            <ListPeople absent={absent} />
+            <ListPeople absent={absent} admin={admin} />
           </TabPanel>
 
           {admin && (
