@@ -113,8 +113,8 @@ export function ListHomeAsUser() {
   );
 }
 
-export function ListHomeAsAdmin({ setActiveIndex }) {
-  const [absent, setAbsent] = useState(null);
+export function ListHomeAsAdmin({ setActiveIndex, absent }) {
+  const [attendanceLog, setAttendanceLog] = useState(null);
   const [dialogActive, setDialogActive] = useState(false);
   const { absentName } = useParams();
 
@@ -152,7 +152,7 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
               <Share className="w-4 h-4" />
             </button>
           </div>
-          <h1 className="font-bold text-2xl">A9B58Z</h1>
+          <h1 className="font-bold text-2xl">{absent.code}</h1>
         </div>
 
         <div className="w-full border bg-white border-[#c4c4c4] rounded-md">
@@ -168,7 +168,7 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
             </button>
           </div>
 
-          {absent && (
+          {attendanceLog && (
             <ul>
               <li className="even:bg-[#F1F1F1] odd:bg-white">
                 <div className="flex justify-between p-5">
@@ -210,7 +210,7 @@ export function ListHomeAsAdmin({ setActiveIndex }) {
             </ul>
           )}
 
-          {!absent && (
+          {!attendanceLog && (
             <div className="pt-3 pb-5">
               <img src={shape} alt="" className="mx-auto mb-5" />
               <h1 className="font-bold text-center">

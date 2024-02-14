@@ -9,7 +9,13 @@ export default function AbsentDetail() {
   const resource = getDetailAbsentee(absentId);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense
+      fallback={
+        <div className="-mt-16">
+          <Loading />
+        </div>
+      }
+    >
       <DetailAbsent resource={resource} />
     </Suspense>
   );

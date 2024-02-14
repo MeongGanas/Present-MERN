@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { TabContext } from "../hooks/tabContext";
 import setting from "../img/4860084 1.svg";
 import { MoreHoriz } from "@mui/icons-material";
@@ -18,18 +18,9 @@ import {
   Tab,
   ChakraProvider,
 } from "@chakra-ui/react";
-import { TokenContext } from "../hooks/tokenContext";
 
-export default function AbsenteeDetail({ absent }) {
+export default function AbsenteeDetail({ absent, admin }) {
   const { activeIndex, setActiveIndex } = useContext(TabContext);
-  const [admin, setAdmin] = useState(false);
-  const { userData } = useContext(TokenContext);
-
-  useEffect(() => {
-    if (absent.userId === userData._id) {
-      setAdmin(true);
-    }
-  }, [absent]);
 
   return (
     <ChakraProvider>
@@ -67,7 +58,12 @@ export default function AbsenteeDetail({ absent }) {
         <TabPanels>
           <TabPanel>
             <div className="max-w-screen-lg mx-auto">
-              {admin && <ListHomeAsAdmin setActiveIndex={setActiveIndex} />}
+              {admin && (
+                <ListHomeAsAdmin
+                  absent={absent}
+                  setActiveIndex={setActiveIndex}
+                />
+              )}
               {!admin && <ListHomeAsUser />}
             </div>
           </TabPanel>
@@ -79,17 +75,17 @@ export default function AbsenteeDetail({ absent }) {
           )}
 
           <TabPanel>
-            <ListPeople />
+            <ListPeople absent={absent} />
           </TabPanel>
 
           {admin && (
             <TabPanel>
-              <SettingsAbsentAdmin />
+              <SettingsAbsentAdmin absent={absent} />
             </TabPanel>
           )}
           {!admin && (
             <TabPanel>
-              <SettingsAbsentPeserta />
+              <SettingsAbsentPeserta absent={absent} />
             </TabPanel>
           )}
         </TabPanels>
