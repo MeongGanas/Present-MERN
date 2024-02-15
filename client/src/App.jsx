@@ -10,6 +10,7 @@ import { LayoutProvider } from "./hooks/dialogContext";
 import { TabProvider } from "./hooks/tabContext";
 import { LoadingProvider } from "./hooks/loadingContext";
 import { DataProvider } from "./hooks/dataContext";
+import { ResourceProvider } from "./hooks/resourceContext";
 
 export default function App() {
   return (
@@ -23,27 +24,29 @@ export default function App() {
             path="*"
             element={
               <LayoutProvider>
-                <Layout>
-                  <Routes>
-                    <Route
-                      path="/home"
-                      element={
-                        <TabProvider>
-                          <Home />
-                        </TabProvider>
-                      }
-                    />
-                    <Route
-                      path="/:absentName/:absentId"
-                      element={
-                        <TabProvider>
-                          <AbsentDetail />
-                        </TabProvider>
-                      }
-                    />
-                    <Route path="/settings" element={<Settings />} />
-                  </Routes>
-                </Layout>
+                <ResourceProvider>
+                  <Layout>
+                    <Routes>
+                      <Route
+                        path="/home"
+                        element={
+                          <TabProvider>
+                            <Home />
+                          </TabProvider>
+                        }
+                      />
+                      <Route
+                        path="/:absentName/:absentId"
+                        element={
+                          <TabProvider>
+                            <AbsentDetail />
+                          </TabProvider>
+                        }
+                      />
+                      <Route path="/settings" element={<Settings />} />
+                    </Routes>
+                  </Layout>
+                </ResourceProvider>
               </LayoutProvider>
             }
           />

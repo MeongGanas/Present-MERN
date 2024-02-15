@@ -4,10 +4,12 @@ import { DataContext } from "../hooks/dataContext";
 import Loading from "../components/Loading";
 import WholeAbsentee from "../lib/components/WholeAbsentee";
 import { TabContext } from "../hooks/tabContext";
+import { ResourceContext } from "../hooks/resourceContext";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { token, resource } = useContext(DataContext);
+  const { token } = useContext(DataContext);
+  const { resource } = useContext(ResourceContext);
   const { setActiveIndex } = useContext(TabContext);
 
   useEffect(() => {

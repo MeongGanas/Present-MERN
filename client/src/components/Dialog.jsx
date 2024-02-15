@@ -79,7 +79,7 @@ export function Dialog({
   setCreateActive,
 }) {
   const { setLoading } = useContext(LoadingContext);
-  const { userData } = useContext(DataContext);
+  const { userData, setAbsentee } = useContext(DataContext);
 
   const create = async (absentName, ownerName) => {
     setLoading(true);
@@ -98,6 +98,7 @@ export function Dialog({
           timer: 1000,
         })
         .then(() => {
+          setAbsentee((prev) => [...prev, response]);
           setLoading(false);
           setCreateActive(false);
         });
@@ -129,6 +130,7 @@ export function Dialog({
           timer: 1000,
         })
         .then(() => {
+          setAbsentee((prev) => [...prev, response]);
           setLoading(false);
           setJoinActive(false);
         });

@@ -1,5 +1,4 @@
-import { createContext, useMemo, useState } from "react";
-import { getUserAbsentee } from "../lib/wrapperPromise";
+import { createContext, useState } from "react";
 
 export const DataContext = createContext();
 
@@ -9,7 +8,6 @@ export const DataProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("userData")) || null
   );
   const [absentee, setAbsentee] = useState(null);
-  const resource = useMemo(() => getUserAbsentee(userData._id), [userData._id]);
 
   return (
     <DataContext.Provider
@@ -18,7 +16,6 @@ export const DataProvider = ({ children }) => {
         setToken,
         userData,
         setUserData,
-        resource,
         absentee,
         setAbsentee,
       }}
