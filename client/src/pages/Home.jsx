@@ -1,16 +1,14 @@
 import { Suspense, useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { TokenContext } from "../hooks/tokenContext";
+import { useNavigate } from "react-router-dom";
+import { DataContext } from "../hooks/dataContext";
 import Loading from "../components/Loading";
 import WholeAbsentee from "../lib/components/WholeAbsentee";
-import { getUserAbsentee } from "../lib/wrapperPromise";
 import { TabContext } from "../hooks/tabContext";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { token, userData } = useContext(TokenContext);
+  const { token, resource } = useContext(DataContext);
   const { setActiveIndex } = useContext(TabContext);
-  const resource = getUserAbsentee(userData._id);
 
   useEffect(() => {
     if (!token) {

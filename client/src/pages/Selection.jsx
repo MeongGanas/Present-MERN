@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
 import { ReactComponent as Google } from "../img/7123025_logo_google_g_icon 1.svg";
-import { TokenContext } from "../hooks/tokenContext";
 import { useContext, useEffect } from "react";
+import { DataContext } from "../hooks/dataContext";
 
 export default function Selection() {
   const navigate = useNavigate();
 
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(DataContext);
 
   useEffect(() => {
     if (token) {

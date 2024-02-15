@@ -5,13 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { TabContext } from "../hooks/tabContext";
-import { TokenContext } from "../hooks/tokenContext";
+import { DataContext } from "../hooks/dataContext";
 
 export default function Card({ absent }) {
   const [admin, setAdmin] = useState(false);
   const [more, setMore] = useState(false);
   const { setActiveIndex } = useContext(TabContext);
-  const { userData } = useContext(TokenContext);
+  const { userData } = useContext(DataContext);
   const navigate = useNavigate();
 
   useEffect(() => {

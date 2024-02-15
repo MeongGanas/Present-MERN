@@ -6,14 +6,16 @@ import { Dialog } from "../components/Dialog";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
+import { DataContext } from "../hooks/dataContext";
 
 export default function Layout({ children }) {
   const location = useLocation();
   const [active, setActive] = useState(false);
   const [lgActive, setLgActive] = useState(true);
   const [selectionActive, setSelectionActive] = useState(false);
-  const { joinActive, createActive, setCreateActive, setJoinActive, absentee } =
+  const { joinActive, createActive, setCreateActive, setJoinActive } =
     useContext(LayoutContext);
+  const { absentee } = useContext(DataContext);
   const [url, setUrl] = useState("");
 
   useEffect(() => {

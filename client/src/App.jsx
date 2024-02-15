@@ -9,11 +9,11 @@ import Layout from "./Layout/layout";
 import { LayoutProvider } from "./hooks/dialogContext";
 import { TabProvider } from "./hooks/tabContext";
 import { LoadingProvider } from "./hooks/loadingContext";
-import { TokenProvider } from "./hooks/tokenContext";
+import { DataProvider } from "./hooks/dataContext";
 
 export default function App() {
   return (
-    <TokenProvider>
+    <DataProvider>
       <LoadingProvider>
         <Routes>
           <Route path="/" element={<Selection />} />
@@ -49,6 +49,6 @@ export default function App() {
           />
         </Routes>
       </LoadingProvider>
-    </TokenProvider>
+    </DataProvider>
   );
 }

@@ -5,7 +5,6 @@ export const LayoutContext = createContext();
 export const LayoutProvider = ({ children }) => {
   const [joinActive, setJoinActive] = useState(false);
   const [createActive, setCreateActive] = useState(false);
-  const [absentee, setAbsentee] = useState(null);
 
   useEffect(() => {
     if (joinActive || createActive) {
@@ -22,8 +21,6 @@ export const LayoutProvider = ({ children }) => {
         setJoinActive,
         createActive,
         setCreateActive,
-        absentee,
-        setAbsentee,
       }}
     >
       {children}

@@ -12,7 +12,7 @@ import location from "../img/image 2.svg";
 import { createAbsentee, joinAbsentee } from "../lib/actions";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
-import { TokenContext } from "../hooks/tokenContext";
+import { DataContext } from "../hooks/dataContext";
 
 function DialogFormat({
   handleClose,
@@ -79,7 +79,7 @@ export function Dialog({
   setCreateActive,
 }) {
   const { setLoading } = useContext(LoadingContext);
-  const { userData } = useContext(TokenContext);
+  const { userData } = useContext(DataContext);
 
   const create = async (absentName, ownerName) => {
     setLoading(true);

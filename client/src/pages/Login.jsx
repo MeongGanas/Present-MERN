@@ -3,7 +3,7 @@ import LayoutLogin from "../Layout/layoutLogin";
 import { useContext, useEffect, useState } from "react";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
-import { TokenContext } from "../hooks/tokenContext";
+import { DataContext } from "../hooks/dataContext";
 import { loginUser } from "../lib/actions";
 
 export default function Login() {
@@ -13,7 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const { setLoading } = useContext(LoadingContext);
-  const { token, setToken, setUserData } = useContext(TokenContext);
+  const { token, setToken, setUserData } = useContext(DataContext);
 
   useEffect(() => {
     if (token) {

@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import AbsenteeDetail from "../../components/AbsenteeDetail";
-import { TokenContext } from "../../hooks/tokenContext";
+import { DataContext } from "../../hooks/dataContext";
 
 export default function DetailAbsent({ resource }) {
   const absentData = resource.data.read().absentee;
   const [admin, setAdmin] = useState(false);
-  const { userData } = useContext(TokenContext);
+  const { userData } = useContext(DataContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

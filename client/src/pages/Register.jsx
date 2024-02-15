@@ -3,7 +3,7 @@ import LayoutLogin from "../Layout/layoutLogin";
 import swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { LoadingContext } from "../hooks/loadingContext";
-import { TokenContext } from "../hooks/tokenContext";
+import { DataContext } from "../hooks/dataContext";
 import { registerUser } from "../lib/actions";
 
 export default function Register() {
@@ -15,7 +15,7 @@ export default function Register() {
 
   const { setLoading } = useContext(LoadingContext);
 
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(DataContext);
 
   useEffect(() => {
     if (token) {
