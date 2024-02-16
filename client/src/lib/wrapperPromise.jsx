@@ -34,9 +34,3 @@ export const getUserAbsentee = (userId) => {
     data: wrapPromise(getAbsentee(userId)),
   };
 };
-
-export const getDetailAbsentee = (absentId) => {
-  return {
-    data: wrapPromise(getSingleAbsentee(absentId)),
-  };
-};

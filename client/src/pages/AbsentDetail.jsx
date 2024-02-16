@@ -1,12 +1,10 @@
-import { Suspense } from "react";
-import { useParams } from "react-router-dom";
-import { getDetailAbsentee } from "../lib/wrapperPromise";
+import { Suspense, useContext } from "react";
 import Loading from "../components/Loading";
 import DetailAbsent from "../lib/components/DetailAbsent";
+import { ResourceContext } from "../hooks/resourceContext";
 
 export default function AbsentDetail() {
-  const { absentId } = useParams();
-  const resource = getDetailAbsentee(absentId);
+  const { resource } = useContext(ResourceContext);
 
   return (
     <Suspense

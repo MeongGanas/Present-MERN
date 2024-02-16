@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TabContext } from "../hooks/tabContext";
 import setting from "../img/4860084 1.svg";
 import { MoreHoriz } from "@mui/icons-material";
@@ -21,6 +21,10 @@ import {
 
 export default function AbsenteeDetail({ absent, admin }) {
   const { activeIndex, setActiveIndex } = useContext(TabContext);
+
+  useEffect(() => {
+    console.log(absent);
+  }, [absent]);
 
   return (
     <ChakraProvider>
