@@ -22,25 +22,21 @@ import {
 export default function AbsenteeDetail({ absent, admin }) {
   const { activeIndex, setActiveIndex } = useContext(TabContext);
 
-  useEffect(() => {
-    console.log(absent);
-  }, [absent]);
-
   return (
     <ChakraProvider>
       <Tabs index={activeIndex} onChange={setActiveIndex} colorScheme="blue">
         <TabList bg={"white"}>
           <div className="sm:px-5 flex">
             <Tab>
-              <div className="p-2">Home</div>
+              <div className="p-2 font-bold">Home</div>
             </Tab>
             {admin && (
               <Tab>
-                <div className="p-2">Attendance</div>
+                <div className="p-2 font-bold">Attendance</div>
               </Tab>
             )}
             <Tab>
-              <div className="p-2">People</div>
+              <div className="p-2 font-bold">People</div>
             </Tab>
           </div>
           {admin && (
