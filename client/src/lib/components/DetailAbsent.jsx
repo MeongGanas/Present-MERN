@@ -9,19 +9,20 @@ export default function DetailAbsent({ resource }) {
   const { absentId } = useParams();
   const { userData } = useContext(DataContext);
   const [loading, setLoading] = useState(true);
-  const absentData = getSingleAbsentee(resource.data.read().absentee, absentId);
+  const absent = resource.data.read().absentee;
+  const absentDetail = getSingleAbsentee(absent, absentId);
 
   useEffect(() => {
     setLoading(true);
-    if (absentData.userId === userData._id) {
+    if (absentDetail.userId === userData._id) {
       setAdmin(true);
     } else {
       setAdmin(false);
     }
     setLoading(false);
-  }, [absentData]);
+  }, [absentDetail]);
 
   return (
-    <>{!loading && <AbsenteeDetail absent={absentData} admin={admin} />}</>
+    <>{!loading && <AbsenteeDetail absent={absentDetail} admin={admin} />}</>
   );
 }

@@ -11,6 +11,7 @@ import { TabProvider } from "./hooks/tabContext";
 import { LoadingProvider } from "./hooks/loadingContext";
 import { DataProvider } from "./hooks/dataContext";
 import { ResourceProvider } from "./hooks/resourceContext";
+import Skeleton from "./components/skeletons/skeletons";
 
 export default function App() {
   return (

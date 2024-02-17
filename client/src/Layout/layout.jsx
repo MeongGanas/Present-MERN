@@ -1,12 +1,13 @@
 import { Add, ChevronRight, Menu } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
 import { Dialog } from "../components/Dialog";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
-import { DataContext } from "../hooks/dataContext";
+import { ResourceContext } from "../hooks/resourceContext";
+import Skeleton from "../components/skeletons/skeletons";
 
 export default function Layout({ children }) {
   const location = useLocation();
@@ -15,7 +16,7 @@ export default function Layout({ children }) {
   const [selectionActive, setSelectionActive] = useState(false);
   const { joinActive, createActive, setCreateActive, setJoinActive } =
     useContext(LayoutContext);
-  const { absentee } = useContext(DataContext);
+  const { resource } = useContext(ResourceContext);
   const [url, setUrl] = useState("");
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function Layout({ children }) {
   }, [location]);
 
   return (
-    <>
+    <Suspense fallback={<Skeleton />}>
       <Dialog
         joinActive={joinActive}
         createActive={createActive}
@@ -109,7 +110,7 @@ export default function Layout({ children }) {
           lgActive ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
         } h-screen pt-16 border-r-2 border-[#D9D9D9] hidden lg:block transition-all duration-300`}
       >
-        <Sidebar absentee={absentee} />
+        <Sidebar resource={resource} />
       </div>
 
       <ClickAwayListener
@@ -128,7 +129,7 @@ export default function Layout({ children }) {
               active ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
             } h-screen pt-16 border-r-2 border-[#D9D9D9] block lg:hidden transition-all duration-300`}
           >
-            <Sidebar absentee={absentee} />
+            <Sidebar resource={resource} />
           </div>
         </div>
       </ClickAwayListener>
@@ -140,6 +141,6 @@ export default function Layout({ children }) {
       >
         {children}
       </main>
-    </>
+    </Suspense>
   );
 }
