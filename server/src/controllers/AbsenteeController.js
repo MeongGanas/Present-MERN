@@ -12,18 +12,6 @@ const getAll = async (req, res) => {
   res.status(200).json({ absentee });
 };
 
-const getSingle = async (req, res) => {
-  const { absentId } = req.params;
-
-  const absentee = await Absentee.findById({ _id: absentId });
-
-  if (!absentee) {
-    return res.status(404).json({ mssg: "No such a absent" });
-  }
-
-  res.status(200).json({ absentee });
-};
-
 const createAbsent = async (req, res) => {
   const { name, ownerName, username } = req.body;
   const { userId } = req.params;
@@ -79,12 +67,29 @@ const joinAbsent = async (req, res) => {
   }
 };
 
-const updateAbsent = async () => {};
+const leaveAbsent = async (req, res) => {
+  const { id, userId } = req.params;
+
+  try {
+    const absentee = await Absentee.find({ _id: id });
+    const usersJoin = absentee[0].usersJoin.filter(
+      (user) => user.userId !== userId
+    );
+
+    const newAbsentee = await Absentee.findByIdAndUpdate(
+      { _id: id },
+      { usersJoin }
+    );
+
+    res.status(200).json(newAbsentee);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
 
 module.exports = {
   getAll,
-  getSingle,
   createAbsent,
   joinAbsent,
-  updateAbsent,
+  leaveAbsent,
 };

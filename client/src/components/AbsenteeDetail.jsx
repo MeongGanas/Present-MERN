@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { TabContext } from "../hooks/tabContext";
 import setting from "../img/4860084 1.svg";
 import { MoreHoriz } from "@mui/icons-material";

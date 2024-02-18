@@ -64,7 +64,7 @@ export default function Card({ absent }) {
         {!admin && <h1 className="my-2">{absent.ownerName}</h1>}
 
         {admin && (
-          <div className="w-full flex justify-end">
+          <div className="w-full flex justify-end mt-3">
             <button
               className="iconbutton"
               onClick={() => {

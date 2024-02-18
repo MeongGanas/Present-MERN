@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   ArrowBack,
   ArrowForward,
@@ -30,6 +30,8 @@ import {
   PermissionDialog,
 } from "../../components/Dialog";
 import { useParams } from "react-router-dom";
+import { DataContext } from "../../hooks/dataContext";
+import { leaveAbsentee } from "../../lib/actions";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -435,7 +437,7 @@ export function AttendanceLog() {
   );
 }
 
-export function SettingsAbsentAdmin() {
+export function SettingsAbsentAdmin({ absent }) {
   return (
     <div className="px-2">
       <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
@@ -444,7 +446,7 @@ export function SettingsAbsentAdmin() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="font-bold">Name</h1>
-              <h1 className="text-sm sm:text-base mt-1">List 1</h1>
+              <h1 className="text-sm sm:text-base mt-1">{absent.name}</h1>
             </div>
             <button className="flex gap-2">
               <span className="font-bold">Change</span>
@@ -456,9 +458,7 @@ export function SettingsAbsentAdmin() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="font-bold">Owner Name</h1>
-              <h1 className="text-sm sm:text-base mt-1">
-                Farrel Giovanni Jaohari
-              </h1>
+              <h1 className="text-sm sm:text-base mt-1">{absent.ownerName}</h1>
             </div>
             <button className="flex gap-2">
               <span className="font-bold">Change</span>
@@ -509,43 +509,62 @@ export function SettingsAbsentAdmin() {
   );
 }
 
-export function SettingsAbsentPeserta() {
+export function SettingsAbsentPeserta({ absent }) {
+  const { userData } = useContext(DataContext);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const user = absent.usersJoin.filter(
+      (user) => user.userId === userData._id
+    )[0];
+    setData(user);
+  });
+
   return (
     <>
-      <div className="pt-5 px-2 sm:p-5">
-        <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
-          <h1 className="text-xl sm:text-2xl font-bold mb-5">Class Detail</h1>
-          <div className="mb-5">
-            <div className="flex justify-between items-center">
-              <div>
-                <h1 className="font-bold">Display Name</h1>
-                <h1 className="text-sm sm:text-base mt-1">
-                  Farrel Giovanni Jaohari
-                </h1>
+      {data && (
+        <div>
+          <div className="pt-5 px-2 sm:p-5">
+            <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
+              <h1 className="text-xl sm:text-2xl font-bold mb-5">
+                Class Detail
+              </h1>
+              <div className="mb-5">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h1 className="font-bold">Display Name</h1>
+                    <h1 className="text-sm sm:text-base mt-1">
+                      {data.username}
+                    </h1>
+                  </div>
+                  <button className="flex gap-2">
+                    <span className="font-bold">Change</span>
+                    <DriveFileRenameOutline />
+                  </button>
+                </div>
               </div>
-              <button className="flex gap-2">
-                <span className="font-bold">Change</span>
-                <DriveFileRenameOutline />
+
+              <div className="flex justify-end gap-5">
+                <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="pt-5 px-2 sm:p-5">
+            <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm flex justify-end">
+              <button
+                className="bg-red-600 text-white py-2 px-7 rounded-md"
+                value={data.userId}
+                onClick={(e) => leaveAbsentee(e.target.value, absent._id)}
+              >
+                <Logout className="mr-2" />
+                <span>Leave</span>
               </button>
             </div>
           </div>
-
-          <div className="flex justify-end gap-5">
-            <button className="coloredButton py-2 px-7 rounded-md max-w-32">
-              Save
-            </button>
-          </div>
         </div>
-      </div>
-
-      <div className="pt-5 px-2 sm:p-5">
-        <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm flex justify-center">
-          <button className="bg-red-600 text-white py-2 px-7 rounded-md">
-            <Logout className="mr-2" />
-            <span>Leave</span>
-          </button>
-        </div>
-      </div>
+      )}
     </>
   );
 }

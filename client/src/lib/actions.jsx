@@ -1,4 +1,5 @@
 import axios from "axios";
+import swal from "sweetalert2";
 
 export async function loginUser(email, password) {
   try {
@@ -66,5 +67,21 @@ export async function joinAbsentee(code, displayName, userId, username) {
     return response.data;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function leaveAbsentee(userId, absentId) {
+  try {
+    await axios.patch(
+      `https://present-server-nine.vercel.app/api/absentee/leave/${absentId}/${userId}`
+    );
+    swal.fire({
+      title: "Leave Success!",
+      icon: "success",
+      timer: 1000,
+      confirmButtonText: "Close",
+    });
+  } catch (err) {
+    throw err;
   }
 }
