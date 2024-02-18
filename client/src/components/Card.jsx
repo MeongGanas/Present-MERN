@@ -6,12 +6,15 @@ import { useContext, useEffect, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { TabContext } from "../hooks/tabContext";
 import { DataContext } from "../hooks/dataContext";
+import { LoadingContext } from "../hooks/loadingContext";
+import { leaveAbsentee } from "../lib/actions";
 
 export default function Card({ absent }) {
   const [admin, setAdmin] = useState(false);
   const [more, setMore] = useState(false);
   const { setActiveIndex } = useContext(TabContext);
   const { userData } = useContext(DataContext);
+  const { setLoading } = useContext(LoadingContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +22,11 @@ export default function Card({ absent }) {
       setAdmin(true);
     }
   }, [absent]);
+
+  const leave = async (userId) => {
+    setLoading(true);
+    await leaveAbsentee(absent._id, userId).then(() => setLoading(false));
+  };
 
   return (
     <div className="w-full bg-white min-w-80 max-w-sm shadow-md rounded-md overflow-hidden">
@@ -47,11 +55,20 @@ export default function Card({ absent }) {
                     more ? "scale-100" : "scale-0"
                   } z-[9999] bg-white min-w-32 shadow-md transition-all duration-200 rounded-md overflow-hidden`}
                 >
-                  <button className="selectButton">
+                  <button
+                    className="selectButton"
+                    onClick={() => {
+                      navigate(`/${absent.name}/${absent._id}`);
+                      setActiveIndex(2);
+                    }}
+                  >
                     <Info className="mr-2" />
                     <span>Info</span>
                   </button>
-                  <button className="selectButton text-red-700">
+                  <button
+                    className="selectButton text-red-700"
+                    onClick={() => leave(userData._id)}
+                  >
                     <Logout className="mr-2" />
                     <span>Keluar</span>
                   </button>

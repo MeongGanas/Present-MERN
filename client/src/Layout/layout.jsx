@@ -26,7 +26,13 @@ export default function Layout({ children }) {
   }, [location]);
 
   return (
-    <Suspense fallback={<Skeleton />}>
+    <Suspense
+      fallback={
+        <div className="cursor-wait">
+          <Skeleton />
+        </div>
+      }
+    >
       <Dialog
         joinActive={joinActive}
         createActive={createActive}

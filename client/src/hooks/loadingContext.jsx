@@ -8,7 +8,11 @@ export const LoadingProvider = ({ children }) => {
 
   return (
     <LoadingContext.Provider value={{ loading, setLoading }}>
-      {loading && <Skeleton />}
+      {loading && (
+        <div className="cursor-wait">
+          <Skeleton />
+        </div>
+      )}
       {!loading && <div>{children}</div>}
     </LoadingContext.Provider>
   );
