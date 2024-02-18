@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import {
   ArrowBack,
   ArrowForward,
+  ContentCopy,
   DriveFileRenameOutline,
   Logout,
-  Share,
 } from "@mui/icons-material";
 import {
   Table,
@@ -33,6 +33,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DataContext } from "../../hooks/dataContext";
 import { leaveAbsentee } from "../../lib/actions";
 import { LoadingContext } from "../../hooks/loadingContext";
+import copy from "copy-to-clipboard";
+import { toast } from "react-toastify";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -125,6 +127,14 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
     setActiveIndex(1);
   };
 
+  const copyToClipboard = () => {
+    let copyText = absent.code;
+    let isCopy = copy(copyText);
+    if (isCopy) {
+      toast.success("Copied to Clipboard");
+    }
+  };
+
   useEffect(() => {
     if (dialogActive) {
       document.body.style.overflow = "hidden";
@@ -151,8 +161,8 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
         <div className="w-full mb-5 md:mb-0 bg-white md:max-w-64 border border-[#c4c4c4] rounded-md pt-2 p-5 h-fit">
           <div className="flex items-center justify-between mb-3">
             <h1 className=" font-bold">List Code</h1>
-            <button className="iconbutton">
-              <Share className="w-4 h-4" />
+            <button className="iconbutton" onClick={copyToClipboard}>
+              <ContentCopy className="w-4 h-4" />
             </button>
           </div>
           <h1 className="font-bold text-2xl">{absent.code}</h1>
