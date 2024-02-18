@@ -61,6 +61,13 @@ export function ListHomeAsUser() {
     return String(num).padStart(2, "0");
   }
 
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
   return (
     <div className="p-5 max-w-screen-lg mx-auto listDetail text-white rounded-md">
       <h1 className="text-3xl">{absentName}</h1>
@@ -69,7 +76,7 @@ export function ListHomeAsUser() {
         <h1 className="mb-2 text-5xl font-bold">
           {padZero(waktu.getHours())}:{padZero(waktu.getMinutes())}
         </h1>
-        <p>Fri, 18 sep 2023</p>
+        <p>{waktu.toLocaleString("en-IN", options)}</p>
       </div>
 
       <div className="text-black bg-white rounded-md">
@@ -122,6 +129,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   const [attendanceLog, setAttendanceLog] = useState(null);
   const [dialogActive, setDialogActive] = useState(false);
   const { absentName } = useParams();
+  const [waktu, setWaktu] = useState(new Date());
 
   const handleButtonClick = () => {
     setActiveIndex(1);
@@ -142,6 +150,13 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
       document.body.style.overflow = "unset";
     }
   }, [dialogActive]);
+
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
   return (
     <div>
@@ -173,7 +188,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
             <div>
               <h1 className="font-bold text-lg">Attendance Log</h1>
               <p className="font-bold text-sm md:text-base mt-1">
-                Fri, 28 aug 2023
+                {waktu.toLocaleString("en-IN", options)}
               </p>
             </div>
             <button onClick={handleButtonClick}>

@@ -47,7 +47,27 @@ const register = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const existUser = await User.find({ email: req.body.email });
+    if (existUser[0]._id != userId) {
+      return res.status(404).json({ mssg: "Email telah digunakan" });
+    }
+
+    const newUser = await User.findByIdAndUpdate(
+      { _id: userId },
+      { ...req.body }
+    );
+    res.status(200).json(newUser);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
 module.exports = {
   login,
   register,
+  updateUser,
 };

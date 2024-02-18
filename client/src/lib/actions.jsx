@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import swal from "sweetalert2";
 
 export async function loginUser(email, password) {
   try {
@@ -27,6 +25,20 @@ export async function registerUser(username, email, password) {
     return response.data;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function updateUser(data) {
+  try {
+    const response = await axios.patch(
+      `https://present-server-nine.vercel.app/api/user/update/${data.userId}`,
+      {
+        data,
+      }
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
   }
 }
 
