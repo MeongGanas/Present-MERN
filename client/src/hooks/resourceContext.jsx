@@ -5,7 +5,7 @@ export const ResourceContext = createContext();
 
 export const ResourceProvider = ({ children }) => {
   const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("userData")) || null
+    JSON.parse(localStorage.getItem("userData")) || { id: null }
   );
   const resource = useMemo(() => getUserAbsentee(userData._id), [userData._id]);
 

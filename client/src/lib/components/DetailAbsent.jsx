@@ -15,13 +15,15 @@ export default function DetailAbsent({ resource }) {
   const absentDetail = getSingleAbsentee(absent, absentId);
 
   useEffect(() => {
-    setLoading(true);
-    if (absentDetail.userId === userData._id) {
-      setAdmin(true);
-    } else {
-      setAdmin(false);
+    if (userData) {
+      setLoading(true);
+      if (absentDetail.userId === userData._id) {
+        setAdmin(true);
+      } else {
+        setAdmin(false);
+      }
+      setLoading(false);
     }
-    setLoading(false);
   }, [absentDetail]);
 
   return (

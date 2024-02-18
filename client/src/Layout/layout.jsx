@@ -1,5 +1,5 @@
 import { Add, ChevronRight, Menu } from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Suspense, useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
 import { Dialog } from "../components/Dialog";
@@ -11,6 +11,7 @@ import Skeleton from "../components/skeletons/skeletons";
 
 export default function Layout({ children }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [active, setActive] = useState(false);
   const [lgActive, setLgActive] = useState(true);
   const [selectionActive, setSelectionActive] = useState(false);
@@ -24,6 +25,12 @@ export default function Layout({ children }) {
     const newpath = path.split("/");
     setUrl(newpath[1]);
   }, [location]);
+
+  useEffect(() => {
+    if (!resource) {
+      navigate("/login");
+    }
+  }, [resource]);
 
   return (
     <Suspense
