@@ -6,7 +6,7 @@ export default function Skeleton() {
     <div className="animate-pulse">
       <nav className="fixed z-50 bg-gray-100 flex justify-between items-center border-b px-5 md:px-10 py-3 top-0 left-0 w-full">
         <div className="flex items-center gap-5 md:gap-10">
-          <div>
+          <div className="hover:cursor-not-allowed">
             <Menu />
           </div>
           <div className="h-2.5 bg-gray-200 rounded-full w-48"></div>

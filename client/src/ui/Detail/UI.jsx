@@ -32,7 +32,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { DataContext } from "../../hooks/dataContext";
 import { leaveAbsentee } from "../../lib/actions";
-import swal from "sweetalert2";
+import { LoadingContext } from "../../hooks/loadingContext";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -241,6 +241,15 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
 }
 
 export function ListPeople({ absent, admin }) {
+  const { setLoading } = useContext(LoadingContext);
+  const kick = async (userId) => {
+    setLoading(true);
+
+    await leaveAbsentee(absent._id, userId).then(() => {
+      setLoading(false);
+    });
+  };
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-10">List of people</h1>
@@ -274,6 +283,7 @@ export function ListPeople({ absent, admin }) {
                       <button
                         className="text-red-700"
                         value={participant.userId}
+                        onClick={(e) => kick(e.target.value)}
                       >
                         Remove
                       </button>
@@ -512,7 +522,8 @@ export function SettingsAbsentAdmin({ absent }) {
 
 export function SettingsAbsentPeserta({ absent }) {
   const navigate = useNavigate();
-  const { userData, absentee, setAbsentee } = useContext(DataContext);
+  const { userData } = useContext(DataContext);
+  const { setLoading } = useContext(LoadingContext);
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -523,19 +534,13 @@ export function SettingsAbsentPeserta({ absent }) {
   });
 
   const leave = async () => {
-    const response = await leaveAbsentee(absent._id, data.userId);
+    setLoading(true);
 
-    swal
-      .fire({
-        title: "Leave Success!",
-        icon: "success",
-        timer: 1000,
-        confirmButtonText: "Close",
-      })
-      .then(() => {
-        navigate("/home");
-        window.location.reload();
-      });
+    await leaveAbsentee(absent._id, data.userId).then(() => {
+      navigate("/home");
+      setLoading(false);
+      window.location.reload();
+    });
   };
 
   return (

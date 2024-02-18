@@ -84,24 +84,16 @@ export function Dialog({
   const create = async (absentName, ownerName) => {
     setLoading(true);
     try {
-      const response = await createAbsentee(
+      await createAbsentee(
         absentName,
         ownerName,
         userData._id,
         userData.username
-      );
-      swal
-        .fire({
-          title: "Create Absetee Success!",
-          icon: "success",
-          confirmButtonText: "Close",
-          timer: 1000,
-        })
-        .then(() => {
-          setAbsentee((prev) => [...prev, response]);
-          setLoading(false);
-          setCreateActive(false);
-        });
+      ).then((response) => {
+        setAbsentee((prev) => [...prev, response]);
+        setLoading(false);
+        setCreateActive(false);
+      });
     } catch (err) {
       setLoading(false);
       swal.fire({
@@ -116,24 +108,16 @@ export function Dialog({
   const join = async (absentCode, displayName) => {
     setLoading(true);
     try {
-      const response = await joinAbsentee(
+      await joinAbsentee(
         absentCode,
         displayName,
         userData._id,
         userData.username
-      );
-      swal
-        .fire({
-          title: "Join Absetee Success!",
-          icon: "success",
-          confirmButtonText: "Close",
-          timer: 1000,
-        })
-        .then(() => {
-          setAbsentee((prev) => [...prev, response]);
-          setLoading(false);
-          setJoinActive(false);
-        });
+      ).then((response) => {
+        setAbsentee((prev) => [...prev, response]);
+        setLoading(false);
+        setJoinActive(false);
+      });
     } catch (err) {
       setLoading(false);
       swal.fire({

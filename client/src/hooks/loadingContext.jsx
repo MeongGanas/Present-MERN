@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import Loading from "../components/Loading";
+import Skeleton from "../components/skeletons/skeletons";
 
 export const LoadingContext = createContext();
 
@@ -8,7 +8,7 @@ export const LoadingProvider = ({ children }) => {
 
   return (
     <LoadingContext.Provider value={{ loading, setLoading }}>
-      {loading && <Loading />}
+      {loading && <Skeleton />}
       {!loading && <div>{children}</div>}
     </LoadingContext.Provider>
   );

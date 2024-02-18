@@ -28,7 +28,7 @@ const createAbsent = async (req, res) => {
       ownerName: ownerName || username,
       userId,
       code,
-      usersJoin: [{}],
+      usersJoin: [],
     });
 
     res.status(200).json({ absentee });
