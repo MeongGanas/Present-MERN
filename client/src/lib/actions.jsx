@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
 
 export async function loginUser(email, password) {
@@ -70,17 +71,12 @@ export async function joinAbsentee(code, displayName, userId, username) {
   }
 }
 
-export async function leaveAbsentee(userId, absentId) {
+export async function leaveAbsentee(absentId, userId) {
   try {
-    await axios.patch(
+    const response = await axios.patch(
       `https://present-server-nine.vercel.app/api/absentee/leave/${absentId}/${userId}`
     );
-    swal.fire({
-      title: "Leave Success!",
-      icon: "success",
-      timer: 1000,
-      confirmButtonText: "Close",
-    });
+    return response;
   } catch (err) {
     throw err;
   }

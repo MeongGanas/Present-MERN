@@ -29,9 +29,10 @@ import {
   MakeAbsenteeDialog,
   PermissionDialog,
 } from "../../components/Dialog";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DataContext } from "../../hooks/dataContext";
 import { leaveAbsentee } from "../../lib/actions";
+import swal from "sweetalert2";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -510,7 +511,8 @@ export function SettingsAbsentAdmin({ absent }) {
 }
 
 export function SettingsAbsentPeserta({ absent }) {
-  const { userData } = useContext(DataContext);
+  const navigate = useNavigate();
+  const { userData, absentee, setAbsentee } = useContext(DataContext);
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -519,6 +521,22 @@ export function SettingsAbsentPeserta({ absent }) {
     )[0];
     setData(user);
   });
+
+  const leave = async () => {
+    const response = await leaveAbsentee(absent._id, data.userId);
+
+    swal
+      .fire({
+        title: "Leave Success!",
+        icon: "success",
+        timer: 1000,
+        confirmButtonText: "Close",
+      })
+      .then(() => {
+        navigate("/home");
+        window.location.reload();
+      });
+  };
 
   return (
     <>
@@ -555,8 +573,7 @@ export function SettingsAbsentPeserta({ absent }) {
             <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm flex justify-end">
               <button
                 className="bg-red-600 text-white py-2 px-7 rounded-md"
-                value={data.userId}
-                onClick={(e) => leaveAbsentee(e.target.value, absent._id)}
+                onClick={leave}
               >
                 <Logout className="mr-2" />
                 <span>Leave</span>
