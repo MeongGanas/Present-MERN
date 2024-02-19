@@ -15,3 +15,8 @@ export function getAbsentee(userId) {
 export function getSingleAbsentee(absentee, absentId) {
   return absentee.filter((absent) => absent._id === absentId)[0];
 }
+
+export async function createAbsentHour(absentId, data) {
+  console.log([absentId, data]);
+  return;
+}

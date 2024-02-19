@@ -13,6 +13,8 @@ import { createAbsentee, joinAbsentee } from "../lib/actions";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
+import { createAbsentHour } from "../lib/absentee";
+import { useParams } from "react-router-dom";
 
 function DialogFormat({
   handleClose,
@@ -187,6 +189,23 @@ export function MakeAbsenteeDialog({ active, setActive }) {
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
+  const [name, setName] = useState("");
+  const [tolerance, setTolerance] = useState("");
+  const [entry, setEntry] = useState("");
+  const [leave, setLeave] = useState("");
+
+  const { absentId } = useParams();
+
+  const handleAbsenteeHour = async () => {
+    const selectedDay = checkedItems
+      .filter((item, i) => {
+        return item;
+      })
+      .map((_, i) => days[i]);
+    const absentHourData = { name, selectedDay, tolerance, entry, leave };
+    const create = await createAbsentHour(absentId, absentHourData);
+  };
+
   return (
     <div
       className={`dialog ${
@@ -205,6 +224,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
               name="name"
               id="name"
               className="border-2 w-full border-[#D9D9D9] focus:outline-none block p-2 rounded-md"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -218,6 +238,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
                 name="late"
                 id="late"
                 className="border-2 w-full border-[#D9D9D9] focus:outline-none block p-2 rounded-s-md"
+                onChange={(e) => setTolerance(e.target.value)}
               />
               <div className="bg-[#D9D9D9] p-2 min-h-fit flex items-center rounded-e-md">
                 <h1>Minutes</h1>
@@ -270,10 +291,12 @@ export function MakeAbsenteeDialog({ active, setActive }) {
               <input
                 type="time"
                 className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
+                onChange={(e) => setEntry(e.target.value)}
               />
               <input
                 type="time"
                 className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
+                onChange={(e) => setLeave(e.target.value)}
               />
             </div>
           </div>
@@ -287,7 +310,10 @@ export function MakeAbsenteeDialog({ active, setActive }) {
             >
               Cancel
             </button>
-            <button className="py-2 px-5 min-h-fit coloredButton rounded-md">
+            <button
+              className="py-2 px-5 min-h-fit coloredButton rounded-md"
+              onClick={handleAbsenteeHour}
+            >
               Add absentee hour
             </button>
           </div>

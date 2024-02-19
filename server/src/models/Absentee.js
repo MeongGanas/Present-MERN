@@ -27,6 +27,7 @@ const absenteeModel = new Schema({
       type: Object,
     },
   ],
+  absenteeHours: [{ type: Object }],
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);

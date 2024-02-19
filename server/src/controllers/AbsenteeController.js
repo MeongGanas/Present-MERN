@@ -87,9 +87,28 @@ const leaveAbsent = async (req, res) => {
   }
 };
 
+const createAbsentHour = async (req, res) => {
+  const { absentId } = req.params;
+
+  try {
+    const absentHour = await Absentee.findByIdAndUpdate(
+      { _id: absentId },
+      {
+        $addToSet: {
+          absenteeHours: { ...req.body, attandceLog: [] },
+        },
+      }
+    );
+    res.status(200).json(absentHour);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   getAll,
   createAbsent,
   joinAbsent,
   leaveAbsent,
+  createAbsentHour,
 };
