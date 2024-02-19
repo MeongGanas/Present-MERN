@@ -63,7 +63,7 @@ const updateUser = async (req, res) => {
 
     const newUser = await User.find({ _id: userId });
 
-    res.status(200).json(newUser);
+    res.status(200).json(newUser[0]);
   } catch (err) {
     return res.status(500).json(err);
   }
