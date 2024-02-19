@@ -434,7 +434,6 @@ export function AttendanceLog({ absent }) {
     if (currentOption === "make") {
       setAbsentHour(true);
     }
-    console.log(currentOption);
   }, [currentOption]);
 
   return (
@@ -459,7 +458,7 @@ export function AttendanceLog({ absent }) {
                   onChange={(e) => setCurrentOption(e.target.value)}
                 >
                   {absent.absenteeHours.map((absentHour, i) => (
-                    <option value={i} className="p-2">
+                    <option value={i} key={i} className="p-2">
                       {absentHour.name}
                     </option>
                   ))}
@@ -596,23 +595,14 @@ export function SettingsAbsentPeserta({ absent }) {
     <>
       {data && (
         <div>
-          <div className="pt-5 px-2 sm:p-5">
+          <div className="px-2 sm:p-5">
             <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
               <h1 className="text-xl sm:text-2xl font-bold mb-5">
                 Class Detail
               </h1>
               <div className="mb-5">
                 <div className="flex justify-between items-center">
-                  <div>
-                    <h1 className="font-bold">Display Name</h1>
-                    <h1
-                      className={`text-sm sm:text-base mt-1 ${
-                        editName ? "hidden" : "block"
-                      }`}
-                    >
-                      {data.username}
-                    </h1>
-                  </div>
+                  <h1 className="font-bold">Display Name</h1>
                   <button
                     className="flex gap-2"
                     onClick={() => setEditName(true)}
@@ -621,6 +611,13 @@ export function SettingsAbsentPeserta({ absent }) {
                     <DriveFileRenameOutline />
                   </button>
                 </div>
+                <h1
+                  className={`text-sm sm:text-base mt-1 ${
+                    editName ? "hidden" : "block"
+                  }`}
+                >
+                  {data.username}
+                </h1>
                 <input
                   type="text"
                   value={newDisplayName}
