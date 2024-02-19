@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { DataContext } from "../hooks/dataContext";
 
-export default function Sidebar({ resource }) {
+export default function Sidebar({ resource, setActive }) {
   const absenteeData = resource.data.read().absentee;
   const { absentee, setAbsentee } = useContext(DataContext);
 
@@ -26,7 +26,15 @@ export default function Sidebar({ resource }) {
   return (
     <>
       <div className="border-b-2 pt-4 pb-3">
-        <Link to="/home" className="sidemenu">
+        <Link
+          to="/home"
+          className="sidemenu"
+          onClick={() => {
+            if (setActive) {
+              setActive(false);
+            }
+          }}
+        >
           <img src={home} alt="" width="24" />
           <span>Home</span>
         </Link>
@@ -51,6 +59,11 @@ export default function Sidebar({ resource }) {
                       <Link
                         to={`/detailAbsent/${absent._id}`}
                         className="sidemenu"
+                        onClick={() => {
+                          if (setActive) {
+                            setActive(false);
+                          }
+                        }}
                       >
                         <span className="border h-6 min-w-6 rounded-full border-black"></span>
                         {absent.name}
@@ -63,7 +76,15 @@ export default function Sidebar({ resource }) {
         </Accordion>
       </div>
       <div className="border-t-2 py-3">
-        <Link to="/settings" className="sidemenu">
+        <Link
+          to="/settings"
+          className="sidemenu"
+          onClick={() => {
+            if (setActive) {
+              setActive(false);
+            }
+          }}
+        >
           <img src={setting} alt="" width="24" />
           <span>Settings</span>
         </Link>

@@ -156,7 +156,7 @@ export default function Layout({ children }) {
               active ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
             } h-screen pt-16 border-r-2 border-[#D9D9D9] block lg:hidden transition-all duration-300`}
           >
-            <Sidebar resource={resource} />
+            <Sidebar resource={resource} setActive={setActive} />
           </div>
         </div>
       </ClickAwayListener>
