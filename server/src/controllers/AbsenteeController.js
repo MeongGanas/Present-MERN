@@ -17,7 +17,7 @@ const getAbsentName = async (req, res) => {
 
   try {
     const absent = await Absentee.findById({ _id: absentId });
-    res.status(200).json(absent.name);
+    res.status(200).json({ absentName: absent.name });
   } catch (err) {
     res.status(500).json(err);
   }

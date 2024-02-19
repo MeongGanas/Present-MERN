@@ -7,11 +7,12 @@ const {
   createAbsentHour,
   editAsPaticipant,
   editAsOwner,
+  getAbsentName,
 } = require("../controllers/AbsenteeController");
 const router = express.Router();
 
 router.get("/getAll/:userId", getAll);
-router.get("/getAbsentName/:absentId", getAll);
+router.get("/getAbsentName/:absentId", getAbsentName);
 
 router.post("/create/:userId", createAbsent);
 router.post("/join", joinAbsent);
