@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser, updateUser } from "../lib/actions";
 import { DataContext } from "../hooks/dataContext";
 import { LoadingContext } from "../hooks/loadingContext";
+import swal from "sweetalert2";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -41,7 +42,15 @@ export default function Settings() {
         setUserData(response);
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        swal.fire({
+          title: "Update User Fail!",
+          text: err.response?.data?.mssg || "An error occurred during login",
+          icon: "error",
+          confirmButtonText: "Close",
+        });
+      });
   };
 
   return (

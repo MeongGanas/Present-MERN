@@ -56,10 +56,13 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ mssg: "Email telah digunakan" });
     }
 
-    const newUser = await User.findByIdAndUpdate(
+    const updateUserData = await User.findByIdAndUpdate(
       { _id: userId },
       { ...req.body }
     );
+
+    const newUser = await User.find({ _id: userId });
+
     res.status(200).json(newUser);
   } catch (err) {
     return res.status(500).json(err);
