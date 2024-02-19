@@ -52,7 +52,7 @@ const updateUser = async (req, res) => {
 
   try {
     const existUser = await User.find({ email: req.body.email });
-    if (existUser[0]._id != userId) {
+    if (existUser.length > 0 && existUser[0]._id != userId) {
       return res.status(404).json({ mssg: "Email telah digunakan" });
     }
 

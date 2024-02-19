@@ -33,7 +33,9 @@ export async function updateUser(data) {
     const response = await axios.patch(
       `https://present-server-nine.vercel.app/api/user/update/${data.userId}`,
       {
-        data,
+        username: data.username,
+        email: data.email,
+        photo: data.photo,
       }
     );
     return response.data;

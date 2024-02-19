@@ -4,11 +4,12 @@ import { DriveFileRenameOutline, Logout } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { logoutUser, updateUser } from "../lib/actions";
 import { DataContext } from "../hooks/dataContext";
+import { LoadingContext } from "../hooks/loadingContext";
 
 export default function Settings() {
   const navigate = useNavigate();
   const { token, userData, setToken, setUserData } = useContext(DataContext);
-
+  const { setLoading } = useContext(LoadingContext);
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editPhoto, setEditPhoto] = useState(false);
@@ -32,7 +33,15 @@ export default function Settings() {
   }, [userData]);
 
   const handleUpdate = async () => {
-    await updateUser({ username, email, photo });
+    setLoading(true);
+    await updateUser({ userId: userData._id, username, email, photo })
+      .then((response) => {
+        localStorage.removeItem("userData");
+        localStorage.setItem("userData", JSON.stringify(response));
+        setUserData(response);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -158,7 +167,10 @@ export default function Settings() {
               >
                 Cancel
               </button>
-              <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+              <button
+                className="coloredButton py-2 px-7 rounded-md max-w-32"
+                onClick={handleUpdate}
+              >
                 Save
               </button>
             </div>
