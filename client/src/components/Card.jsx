@@ -58,8 +58,8 @@ export default function Card({ absent }) {
                   <button
                     className="selectButton"
                     onClick={() => {
-                      navigate(`/detailAbsent/${absent._id}`);
                       setActiveIndex(2);
+                      navigate(`/detailAbsent/${absent._id}`);
                     }}
                   >
                     <Info className="mr-2" />

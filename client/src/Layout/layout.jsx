@@ -9,6 +9,7 @@ import { LayoutContext } from "../hooks/dialogContext";
 import { ResourceContext } from "../hooks/resourceContext";
 import Skeleton from "../components/skeletons/skeletons";
 import { getAbsentName } from "../lib/absentee";
+import Loading from "../components/Loading";
 
 export default function Layout({ children }) {
   const location = useParams();
@@ -20,16 +21,20 @@ export default function Layout({ children }) {
     useContext(LayoutContext);
   const { resource } = useContext(ResourceContext);
   const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const getAbsenteeName = async (loc) => {
+    setLoading(true);
+    const getName = await getAbsentName(loc);
+    setUrl(getName.absentName);
+    setLoading(false);
+  };
 
   useEffect(() => {
     const newLocation = location["*"].split("/");
     const loc = newLocation[newLocation.length - 1];
-    if (loc !== "home" || loc !== "settings") {
-      const getAbsenteeName = async () => {
-        const getName = await getAbsentName(loc);
-        console.log(getName);
-      };
-      getAbsenteeName();
+    if (loc !== "home" && loc !== "settings") {
+      getAbsenteeName(loc);
     } else {
       setUrl(loc);
     }
@@ -161,7 +166,12 @@ export default function Layout({ children }) {
           lgActive ? "lg:pl-56" : "lg:pl-0"
         } transition-all duration-300 pt-16 w-full min-h-screen bg-[#f8f8f9]`}
       >
-        {children}
+        {loading && (
+          <div className="-mt-16">
+            <Loading />
+          </div>
+        )}
+        {!loading && <div>{children}</div>}
       </main>
     </Suspense>
   );

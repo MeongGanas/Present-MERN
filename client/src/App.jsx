@@ -23,31 +23,22 @@ export default function App() {
           <Route
             path="*"
             element={
-              <LayoutProvider>
-                <ResourceProvider>
-                  <Layout>
-                    <Routes>
-                      <Route
-                        path="/home"
-                        element={
-                          <TabProvider>
-                            <Home />
-                          </TabProvider>
-                        }
-                      />
-                      <Route
-                        path="/detailAbsent/:absentId"
-                        element={
-                          <TabProvider>
-                            <AbsentDetail />
-                          </TabProvider>
-                        }
-                      />
-                      <Route path="/settings" element={<Settings />} />
-                    </Routes>
-                  </Layout>
-                </ResourceProvider>
-              </LayoutProvider>
+              <TabProvider>
+                <LayoutProvider>
+                  <ResourceProvider>
+                    <Layout>
+                      <Routes>
+                        <Route path="/home" element={<Home />} />
+                        <Route
+                          path="/detailAbsent/:absentId"
+                          element={<AbsentDetail />}
+                        />
+                        <Route path="/settings" element={<Settings />} />
+                      </Routes>
+                    </Layout>
+                  </ResourceProvider>
+                </LayoutProvider>
+              </TabProvider>
             }
           />
         </Routes>
