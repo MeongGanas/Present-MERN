@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { LoadingContext } from "../hooks/loadingContext";
 import { DataContext } from "../hooks/dataContext";
 import { registerUser } from "../lib/actions";
+import Loading from "../components/Loading";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const { setLoading } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(false);
 
   const { token } = useContext(DataContext);
 
@@ -44,7 +45,10 @@ export default function Register() {
       setLoading(false);
       swal.fire({
         title: "Register Fail!",
-        text: err.response?.data?.mssg || "An error occurred during register",
+        text:
+          err.response?.data?.mssg ||
+          err.response?.data?.mssg?.message ||
+          "An error occurred during register",
         icon: "error",
         confirmButtonText: "Close",
       });
@@ -53,68 +57,75 @@ export default function Register() {
 
   return (
     <LayoutLogin>
-      <div className="min-w-80">
-        <div className="text-center mb-7">
-          <h1 className="text-primary mb-3 font-bold text-3xl">Present</h1>
-          <p className="font-bold text-lg">Register</p>
+      {loading && (
+        <div className="-mt-10">
+          <Loading />
         </div>
-        <form className="min-w-sm">
-          <div className="mb-5">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="example"
-              className="input"
-              autoComplete="username"
-              required
-              onChange={(e) => setUsername(e.target.value)}
-            />
+      )}
+      {!loading && (
+        <div className="min-w-80">
+          <div className="text-center mb-7">
+            <h1 className="text-primary mb-3 font-bold text-3xl">Present</h1>
+            <p className="font-bold text-lg">Register</p>
           </div>
-          <div className="mb-5">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="example@gmail.com"
-              className="input"
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
-              required
-            />
+          <form className="min-w-sm">
+            <div className="mb-5">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="example"
+                className="input"
+                autoComplete="username"
+                required
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="mb-5">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="example@gmail.com"
+                className="input"
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+            </div>
+            <div className="mb-10">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="input"
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="button coloredButton"
+              onClick={register}
+            >
+              Register
+            </button>
+          </form>
+          <div className="absolute bottom-3 w-full text-center left-0">
+            <h4 className="text-sm">
+              Already have an account?
+              <a className="text-primary font-bold" href="/login">
+                {" "}
+                click here
+              </a>
+            </h4>
           </div>
-          <div className="mb-10">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="input"
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="off"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="button coloredButton"
-            onClick={register}
-          >
-            Register
-          </button>
-        </form>
-        <div className="absolute bottom-3 w-full text-center left-0">
-          <h4 className="text-sm">
-            Already have an account?
-            <a className="text-primary font-bold" href="/login">
-              {" "}
-              click here
-            </a>
-          </h4>
         </div>
-      </div>
+      )}
     </LayoutLogin>
   );
 }

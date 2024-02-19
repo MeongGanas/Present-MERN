@@ -20,12 +20,16 @@ export default function Settings() {
   useEffect(() => {
     if (!token || !userData) {
       navigate("/login");
-    } else {
-      setUsername(userData.username);
-      setUsername(userData.password);
-      setUsername(userData.photo);
     }
-  }, [token, userData]);
+  }, [token]);
+
+  useEffect(() => {
+    if (userData) {
+      setUsername(userData.username);
+      setEmail(userData.email);
+      setPhoto(userData.photo);
+    }
+  }, [userData]);
 
   const handleUpdate = async () => {
     await updateUser({ username, email, photo });
@@ -83,23 +87,8 @@ export default function Settings() {
               </div>
             </div>
             <div className="mb-5">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h1 className="font-bold">Name</h1>
-                  <h1
-                    className={`text-sm sm:text-base mt-1 ${
-                      editName ? "hidden" : "block"
-                    }`}
-                  >
-                    {userData.username}
-                  </h1>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className={`input ${editName ? "block" : "hidden"}`}
-                  />
-                </div>
+              <div className="flex justify-between items-center gap-2">
+                <h1 className="font-bold">Name</h1>
                 <button
                   className="flex gap-2"
                   onClick={() => setEditName(true)}
@@ -108,25 +97,25 @@ export default function Settings() {
                   <DriveFileRenameOutline />
                 </button>
               </div>
+              <div className="mt-1">
+                <h1
+                  className={`text-sm sm:text-base mt-1 ${
+                    editName ? "hidden" : "block"
+                  }`}
+                >
+                  {userData.username}
+                </h1>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className={`input ${editName ? "block" : "hidden"} max-w-sm`}
+                />
+              </div>
             </div>
             <div className="mb-5">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h1 className="font-bold">Email</h1>
-                  <h1
-                    className={`text-sm sm:text-base mt-1 ${
-                      editEmail ? "hidden" : "block"
-                    }`}
-                  >
-                    {userData.email}
-                  </h1>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={`input ${editEmail ? "block" : "hidden"}`}
-                  />
-                </div>
+              <div className="flex justify-between items-center gap-2">
+                <h1 className="font-bold">Email</h1>
                 <button
                   className="flex gap-2"
                   onClick={() => setEditEmail(true)}
@@ -134,6 +123,21 @@ export default function Settings() {
                   <span className="font-bold">Change</span>
                   <DriveFileRenameOutline />
                 </button>
+              </div>
+              <div className="mt-1">
+                <h1
+                  className={`text-sm sm:text-base mt-1 ${
+                    editEmail ? "hidden" : "block"
+                  }`}
+                >
+                  {userData.email}
+                </h1>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`input ${editEmail ? "block" : "hidden"} max-w-sm`}
+                />
               </div>
             </div>
             <div className="mb-5">

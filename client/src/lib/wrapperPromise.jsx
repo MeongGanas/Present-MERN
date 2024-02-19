@@ -1,4 +1,4 @@
-import { getAbsentee, getSingleAbsentee } from "./absentee";
+import { getAbsentee } from "./absentee";
 
 export function wrapPromise(promise) {
   let status = "pending";
