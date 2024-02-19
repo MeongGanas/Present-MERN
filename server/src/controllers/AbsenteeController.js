@@ -87,6 +87,28 @@ const leaveAbsent = async (req, res) => {
   }
 };
 
+const editDisplayName = async (req, res) => {
+  const { absentId, userId } = req.params;
+
+  try {
+    const absentee = await Absentee.find({ _id: absentId });
+    const updatedUsersJoin = absentee[0].usersJoin.map((user) => {
+      if (user.userId === userId) {
+        return { ...user, username: req.body.newUsername };
+      }
+      return user;
+    });
+
+    const updateAbsentee = await Absentee.findByIdAndUpdate(
+      { _id: absentId },
+      { usersJoin: updatedUsersJoin }
+    );
+    res.status(200).json(updateAbsentee);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 const createAbsentHour = async (req, res) => {
   const { absentId } = req.params;
 
@@ -110,5 +132,6 @@ module.exports = {
   createAbsent,
   joinAbsent,
   leaveAbsent,
+  editDisplayName,
   createAbsentHour,
 };

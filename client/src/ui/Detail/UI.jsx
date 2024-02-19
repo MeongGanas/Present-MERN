@@ -36,6 +36,7 @@ import { LoadingContext } from "../../hooks/loadingContext";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { LayoutContext } from "../../hooks/dialogContext";
+import { editDisplayName } from "../../lib/absentee";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -485,6 +486,8 @@ export function AttendanceLog({ absent }) {
 }
 
 export function SettingsAbsentAdmin({ absent }) {
+  const [newOwnerName, setNewOwnerName] = useState("");
+
   return (
     <div className="px-2">
       <div className="border-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
@@ -562,6 +565,9 @@ export function SettingsAbsentPeserta({ absent }) {
   const { setLoading } = useContext(LoadingContext);
   const [data, setData] = useState(null);
 
+  const [editName, setEditName] = useState(false);
+  const [newDisplayName, setNewDisplayName] = useState("");
+
   useEffect(() => {
     const user = absent.usersJoin.filter(
       (user) => user.userId === userData._id
@@ -579,6 +585,13 @@ export function SettingsAbsentPeserta({ absent }) {
     });
   };
 
+  const updateDisplayName = async () => {
+    setLoading(true);
+    await editDisplayName(absent._id, data.userId, newDisplayName).then(() =>
+      setLoading(false)
+    );
+  };
+
   return (
     <>
       {data && (
@@ -592,19 +605,45 @@ export function SettingsAbsentPeserta({ absent }) {
                 <div className="flex justify-between items-center">
                   <div>
                     <h1 className="font-bold">Display Name</h1>
-                    <h1 className="text-sm sm:text-base mt-1">
+                    <h1
+                      className={`text-sm sm:text-base mt-1 ${
+                        editName ? "hidden" : "block"
+                      }`}
+                    >
                       {data.username}
                     </h1>
                   </div>
-                  <button className="flex gap-2">
+                  <button
+                    className="flex gap-2"
+                    onClick={() => setEditName(true)}
+                  >
                     <span className="font-bold">Change</span>
                     <DriveFileRenameOutline />
                   </button>
                 </div>
+                <input
+                  type="text"
+                  value={newDisplayName}
+                  onChange={(e) => setNewDisplayName(e.target.value)}
+                  className={`input ${
+                    editName ? "block" : "hidden"
+                  } max-w-sm mt-2`}
+                />
               </div>
 
               <div className="flex justify-end gap-5">
-                <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+                <button
+                  className="p-2 border-2 border-[#d9d9d9] rounded-md"
+                  onClick={() => {
+                    setEditName(false);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="coloredButton py-2 px-7 rounded-md max-w-32"
+                  onClick={updateDisplayName}
+                >
                   Save
                 </button>
               </div>

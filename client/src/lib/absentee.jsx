@@ -27,3 +27,8 @@ export async function createAbsentHour(absentId, data) {
     throw err;
   }
 }
+
+export async function editDisplayName(absentId, userId) {
+  console.log(absentId, userId);
+  return;
+}
