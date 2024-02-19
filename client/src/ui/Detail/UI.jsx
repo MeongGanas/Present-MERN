@@ -35,6 +35,7 @@ import { leaveAbsentee } from "../../lib/actions";
 import { LoadingContext } from "../../hooks/loadingContext";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
+import { LayoutContext } from "../../hooks/dialogContext";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -127,7 +128,7 @@ export function ListHomeAsUser() {
 
 export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   const [attendanceLog, setAttendanceLog] = useState(null);
-  const [dialogActive, setDialogActive] = useState(false);
+  const { absentHour, setAbsentHour } = useContext(LayoutContext);
   const { absentName } = useParams();
   const [waktu, setWaktu] = useState(new Date());
 
@@ -144,12 +145,18 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   };
 
   useEffect(() => {
-    if (dialogActive) {
+    if (absentHour) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [dialogActive]);
+  }, [absentHour]);
+
+  useEffect(() => {
+    if (absent.absenteeHours.length > 0) {
+      setAttendanceLog(absent.absenteeHours);
+    }
+  }, [absent]);
 
   const options = {
     weekday: "long",
@@ -196,47 +203,23 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
             </button>
           </div>
 
-          {attendanceLog && (
-            <ul>
-              <li className="even:bg-[#F1F1F1] odd:bg-white">
-                <div className="flex justify-between p-5">
-                  <div className="flex gap-5">
-                    <div className="circle"></div>
-                    <h1 className="font-bold text-sm md:text-base">
-                      Farouk Akhtar Ramadhan
-                    </h1>
+          <ul className="overflow-y-auto max-h-96">
+            {attendanceLog &&
+              attendanceLog.map((log, i) => (
+                <li className="even:bg-[#F1F1F1] odd:bg-white" key={i}>
+                  <div className="flex justify-between p-5">
+                    <div className="flex gap-5 items-center">
+                      <div className="circle min-w-6"></div>
+                      <h1 className="font-bold text-sm md:text-base">Farouk</h1>
+                    </div>
+                    <h3 className="font-bold">{log.name}</h3>
+                    <h3 className="font-bold text-sm md:text-base">
+                      Present <span className="text-green-500">(On-Time)</span>
+                    </h3>
                   </div>
-                  <h3 className="font-bold text-sm md:text-base">
-                    Present <span className="text-green-500">(On-Time)</span>
-                  </h3>
-                </div>
-              </li>
-              <li className="even:bg-[#F1F1F1] odd:bg-white">
-                <div className="flex justify-between p-5">
-                  <div className="flex gap-5">
-                    <div className="circle"></div>
-                    <h1 className="font-bold text-sm md:text-base">
-                      Farrel Giovanni Jaohari
-                    </h1>
-                  </div>
-                  <h3 className="font-bold text-sm md:text-base">
-                    Present <span className="text-red-700">(Late)</span>
-                  </h3>
-                </div>
-              </li>
-              <li className="even:bg-[#F1F1F1] odd:bg-white">
-                <div className="flex justify-between p-5">
-                  <div className="flex gap-5">
-                    <div className="circle"></div>
-                    <h1 className="font-bold text-sm md:text-base">
-                      Farrel Giovanni Jaohari
-                    </h1>
-                  </div>
-                  <h3 className="font-bold text-sm md:text-base">Absent</h3>
-                </div>
-              </li>
-            </ul>
-          )}
+                </li>
+              ))}
+          </ul>
 
           {!attendanceLog && (
             <div className="pt-3 pb-5">
@@ -246,17 +229,12 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                 <span
                   className="text-primary cursor-pointer"
                   onClick={() => {
-                    setDialogActive(true);
+                    setAbsentHour(true);
                   }}
                 >
                   make one
                 </span>
               </h1>
-
-              <MakeAbsenteeDialog
-                active={dialogActive}
-                setActive={setDialogActive}
-              />
             </div>
           )}
         </div>
@@ -445,30 +423,61 @@ function MonthlyAttendance() {
   );
 }
 
-export function AttendanceLog() {
+export function AttendanceLog({ absent }) {
+  const { setAbsentHour } = useContext(LayoutContext);
+  const [currentOption, setCurrentOption] = useState("");
+
+  useEffect(() => {
+    if (currentOption === "make") {
+      setAbsentHour(true);
+    }
+    console.log(currentOption);
+  }, [currentOption]);
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-2xl font-bold mt-3 mb-5">Attendance Log</h1>
 
-      <Tabs colorScheme="black">
-        <TabList>
-          <Tab>
-            <div className="p-2">Daily</div>
-          </Tab>
-          <Tab>
-            <div className="p-2">Monthly</div>
-          </Tab>
-        </TabList>
+      {absent && (
+        <Tabs colorScheme="black">
+          <TabList>
+            <div className="relative flex w-full">
+              <Tab>
+                <div className="p-2">Daily</div>
+              </Tab>
+              <Tab>
+                <div className="p-2">Monthly</div>
+              </Tab>
 
-        <TabPanels>
-          <TabPanel paddingX={0}>
-            <DailyAttendance />
-          </TabPanel>
-          <TabPanel paddingX={0}>
-            <MonthlyAttendance />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+              <div className="absolute right-0 bottom-4">
+                <Select
+                  variant="unstyled"
+                  placeholder="Select"
+                  onChange={(e) => setCurrentOption(e.target.value)}
+                >
+                  {absent.absenteeHours.map((absentHour, i) => (
+                    <option value={i} className="p-2">
+                      {absentHour.name}
+                    </option>
+                  ))}
+                  <option className="p-2" value="make">
+                    Create
+                  </option>
+                </Select>
+              </div>
+            </div>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel paddingX={0}>
+              <DailyAttendance />
+            </TabPanel>
+            <TabPanel paddingX={0}>
+              <MonthlyAttendance />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      )}
     </div>
   );
 }

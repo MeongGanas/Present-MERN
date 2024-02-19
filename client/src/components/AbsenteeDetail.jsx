@@ -76,7 +76,7 @@ export default function AbsenteeDetail({ absent, admin }) {
 
           {admin && (
             <TabPanel>
-              <AttendanceLog />
+              <AttendanceLog absent={absent} />
             </TabPanel>
           )}
 

@@ -1,10 +1,12 @@
 import { createContext, useEffect, useState } from "react";
+import { MakeAbsenteeDialog } from "../components/Dialog";
 
 export const LayoutContext = createContext();
 
 export const LayoutProvider = ({ children }) => {
   const [joinActive, setJoinActive] = useState(false);
   const [createActive, setCreateActive] = useState(false);
+  const [absentHour, setAbsentHour] = useState(false);
 
   useEffect(() => {
     if (joinActive || createActive) {
@@ -21,8 +23,12 @@ export const LayoutProvider = ({ children }) => {
         setJoinActive,
         createActive,
         setCreateActive,
+        absentHour,
+        setAbsentHour,
       }}
     >
+      <MakeAbsenteeDialog />
+
       {children}
     </LayoutContext.Provider>
   );

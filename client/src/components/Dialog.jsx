@@ -15,6 +15,7 @@ import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
 import { createAbsentHour } from "../lib/absentee";
 import { useParams } from "react-router-dom";
+import { LayoutContext } from "../hooks/dialogContext";
 
 function DialogFormat({
   handleClose,
@@ -166,7 +167,10 @@ export function Dialog({
   );
 }
 
-export function MakeAbsenteeDialog({ active, setActive }) {
+export function MakeAbsenteeDialog() {
+  const { setLoading } = useContext(LoadingContext);
+  const { absentHour, setAbsentHour } = useContext(LayoutContext);
+
   const [checkedItems, setCheckedItems] = useState([
     false,
     false,
@@ -197,19 +201,33 @@ export function MakeAbsenteeDialog({ active, setActive }) {
   const { absentId } = useParams();
 
   const handleAbsenteeHour = async () => {
+    setLoading(true);
     const selectedDay = checkedItems
-      .filter((item, i) => {
+      .filter((item) => {
         return item;
       })
       .map((_, i) => days[i]);
     const absentHourData = { name, selectedDay, tolerance, entry, leave };
-    const create = await createAbsentHour(absentId, absentHourData);
+    await createAbsentHour(absentId, absentHourData)
+      .then(() => setLoading(false))
+      .catch((err) => {
+        setLoading(false);
+        swal.fire({
+          title: "Create Absent Hour Fail!",
+          text:
+            err.response?.data?.mssg ||
+            err.response?.data?.mssg?.message ||
+            "An error occurred during login",
+          icon: "error",
+          confirmButtonText: "Close",
+        });
+      });
   };
 
   return (
     <div
       className={`dialog ${
-        active ? "scale-100" : "scale-0"
+        absentHour ? "scale-100" : "scale-0"
       } transition-all duration-200 overflow-hidden`}
     >
       <div className="bg-white p-8 rounded-md w-full max-w-screen-md h-screen overflow-y-auto relative">
@@ -224,6 +242,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
               name="name"
               id="name"
               className="border-2 w-full border-[#D9D9D9] focus:outline-none block p-2 rounded-md"
+              required
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -238,6 +257,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
                 name="late"
                 id="late"
                 className="border-2 w-full border-[#D9D9D9] focus:outline-none block p-2 rounded-s-md"
+                required
                 onChange={(e) => setTolerance(e.target.value)}
               />
               <div className="bg-[#D9D9D9] p-2 min-h-fit flex items-center rounded-e-md">
@@ -291,11 +311,13 @@ export function MakeAbsenteeDialog({ active, setActive }) {
               <input
                 type="time"
                 className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
+                required
                 onChange={(e) => setEntry(e.target.value)}
               />
               <input
                 type="time"
                 className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
+                required
                 onChange={(e) => setLeave(e.target.value)}
               />
             </div>
@@ -306,7 +328,7 @@ export function MakeAbsenteeDialog({ active, setActive }) {
           <div className="flex gap-5">
             <button
               className="p-2 border-2 border-[#d9d9d9] rounded-md"
-              onClick={() => setActive(false)}
+              onClick={() => setAbsentHour(false)}
             >
               Cancel
             </button>

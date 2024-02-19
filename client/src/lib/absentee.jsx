@@ -17,6 +17,13 @@ export function getSingleAbsentee(absentee, absentId) {
 }
 
 export async function createAbsentHour(absentId, data) {
-  console.log([absentId, data]);
-  return;
+  try {
+    const response = await axios.patch(
+      `https://present-server-nine.vercel.app/api/absentee/createAbsentHour/${absentId}`,
+      data
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
 }
