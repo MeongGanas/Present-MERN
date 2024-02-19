@@ -87,7 +87,7 @@ const leaveAbsent = async (req, res) => {
   }
 };
 
-const editDisplayName = async (req, res) => {
+const editAsPaticipant = async (req, res) => {
   const { absentId, userId } = req.params;
 
   try {
@@ -109,6 +109,21 @@ const editDisplayName = async (req, res) => {
   }
 };
 
+const editAsOwner = async (req, res) => {
+  const { absentId } = req.params;
+  const { newAbsentName, newOwnerName } = req.body;
+
+  try {
+    const updateAbsentee = await Absentee.findByIdAndUpdate(
+      { _id: absentId },
+      { ownerName: newOwnerName, name: newAbsentName }
+    );
+    res.status(200).json(updateAbsentee);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 const createAbsentHour = async (req, res) => {
   const { absentId } = req.params;
 
@@ -117,7 +132,7 @@ const createAbsentHour = async (req, res) => {
       { _id: absentId },
       {
         $addToSet: {
-          absenteeHours: { ...req.body, attandceLog: [] },
+          absenteeHours: { ...req.body, attendanceLog: [] },
         },
       }
     );
@@ -132,6 +147,7 @@ module.exports = {
   createAbsent,
   joinAbsent,
   leaveAbsent,
-  editDisplayName,
+  editAsOwner,
+  editAsPaticipant,
   createAbsentHour,
 };

@@ -12,7 +12,11 @@ export default function DetailAbsent({ resource }) {
   const { userData } = useContext(DataContext);
   const [loading, setLoading] = useState(true);
   const absent = resource.data.read().absentee;
-  const absentDetail = getSingleAbsentee(absent, absentId);
+  let absentDetail = getSingleAbsentee(absent, absentId);
+
+  useEffect(() => {
+    absentDetail = getSingleAbsentee(absent, absentId);
+  }, [absentId]);
 
   useEffect(() => {
     if (userData) {

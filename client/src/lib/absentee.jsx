@@ -28,7 +28,17 @@ export async function createAbsentHour(absentId, data) {
   }
 }
 
-export async function editDisplayName(absentId, userId) {
-  console.log(absentId, userId);
-  return;
+export async function editAsParticipant(absentId, userId, data) {
+  try {
+    await axios
+      .patch(
+        `https://present-server-nine.vercel.app/api/absentee/edit/participant/${absentId}/${userId}`,
+        {
+          newUsername: data,
+        }
+      )
+      .then((res) => console.log(res));
+  } catch (err) {
+    throw err;
+  }
 }

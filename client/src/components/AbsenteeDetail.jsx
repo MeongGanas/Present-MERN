@@ -1,7 +1,7 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TabContext } from "../hooks/tabContext";
 import setting from "../img/4860084 1.svg";
-import { MoreHoriz } from "@mui/icons-material";
+import { ArrowBack, ArrowForward, MoreHoriz } from "@mui/icons-material";
 import {
   AttendanceLog,
   ListHomeAsAdmin,
@@ -17,7 +17,138 @@ import {
   Tabs,
   Tab,
   ChakraProvider,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  TableContainer,
+  Select,
 } from "@chakra-ui/react";
+import SearchInput from "./SearchInput";
+
+function TableAttendance() {
+  return (
+    <>
+      <div className="mt-5 border border-[#C4C4C4] rounded-md overflow-hidden">
+        <TableContainer>
+          <Table variant="striped" bg={"white"}>
+            <Thead>
+              <Tr>
+                <Th paddingY="5">#</Th>
+                <Th paddingY="5">Name</Th>
+                <Th paddingY="5">Check-in</Th>
+                <Th paddingY="5">Check-out</Th>
+                <Th paddingY="5">Actual time</Th>
+                <Th paddingY="5">Total time</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>1</Td>
+                <Td>Farrel Giovanni Jaohari</Td>
+                <Td>08:30</Td>
+                <Td>10:00</Td>
+                <Td>1:30 Hr</Td>
+                <Td>1:30 Hr</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
+  );
+}
+
+export function DailyAttendance() {
+  return (
+    <>
+      <div className="block sm:flex justify-between items-center">
+        <div className="flex gap-5 mb-5 sm:mb-0 flex-wrap">
+          <div className="flex w-fit items-center bg-white border-2 border-black rounded-[9px] overflow-hidden">
+            <button className="p-2 hover:bg-slate-100 duration-200 transition">
+              <ArrowBack />
+            </button>
+            <input
+              type="date"
+              className="border-x-2 p-2 border-black h-full text-center focus:outline-none"
+            />
+            <button className="p-2 hover:bg-slate-100 duration-200 transition">
+              <ArrowForward />
+            </button>
+          </div>
+
+          <SearchInput />
+
+          <div className="border-2 w-fit border-black bg-white overflow-hidden rounded-[9px] flex">
+            <button className="button-kehadiran">Present</button>
+            <button className="button-kehadiran">Not Present</button>
+            <button className="button-kehadiran">Late</button>
+            <button className="button-kehadiran">Permission</button>
+          </div>
+        </div>
+        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black text-nowrap">
+          Export to Excel
+        </button>
+      </div>
+
+      <TableAttendance />
+    </>
+  );
+}
+
+export function MonthlyAttendance() {
+  const [month, setMonth] = useState("January");
+  const [year, setYear] = useState("2024");
+
+  const handleMonth = (event) => {
+    setMonth(event.target.value);
+  };
+
+  const handleYear = (event) => {
+    setYear(event.target.value);
+  };
+
+  return (
+    <>
+      <div className="block sm:flex justify-between items-center">
+        <div className="flex flex-wrap gap-5 mb-5 sm:mb-0">
+          <SearchInput />
+          <div className="flex gap-5 w-full">
+            <Select
+              placeholder="Select Month"
+              onChange={handleMonth}
+              border="2px"
+              borderColor="black"
+              bgColor="white"
+              height="43.33px"
+            >
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="Maret">Maret</option>
+            </Select>
+            <Select
+              placeholder="Select Year"
+              onChange={handleYear}
+              border="2px"
+              borderColor="black"
+              bgColor="white"
+              height="43.33px"
+            >
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </Select>
+          </div>
+        </div>
+        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
+          Export to Excel
+        </button>
+      </div>
+      <TableAttendance />
+    </>
+  );
+}
 
 export default function AbsenteeDetail({ absent, admin }) {
   const { activeIndex, setActiveIndex } = useContext(TabContext);

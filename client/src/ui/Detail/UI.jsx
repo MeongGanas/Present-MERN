@@ -1,19 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import {
-  ArrowBack,
   ArrowForward,
   ContentCopy,
   DriveFileRenameOutline,
   Logout,
 } from "@mui/icons-material";
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
   Tabs,
   TabList,
   TabPanels,
@@ -24,11 +16,7 @@ import {
 import shape from "../../img/Scribble-28.svg.svg";
 import background from "../../img/Mask group.png";
 import SearchInput from "../../components/SearchInput";
-import {
-  CheckInDialog,
-  MakeAbsenteeDialog,
-  PermissionDialog,
-} from "../../components/Dialog";
+import { CheckInDialog, PermissionDialog } from "../../components/Dialog";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataContext } from "../../hooks/dataContext";
 import { leaveAbsentee } from "../../lib/actions";
@@ -36,7 +24,11 @@ import { LoadingContext } from "../../hooks/loadingContext";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { LayoutContext } from "../../hooks/dialogContext";
-import { editDisplayName } from "../../lib/absentee";
+import { editAsParticipant } from "../../lib/absentee";
+import {
+  DailyAttendance,
+  MonthlyAttendance,
+} from "../../components/AbsenteeDetail";
 
 export function ListHomeAsUser() {
   const [waktu, setWaktu] = useState(new Date());
@@ -128,7 +120,7 @@ export function ListHomeAsUser() {
 }
 
 export function ListHomeAsAdmin({ setActiveIndex, absent }) {
-  const [attendanceLog, setAttendanceLog] = useState(null);
+  const [absentHours, setAbsentHours] = useState([]);
   const { absentHour, setAbsentHour } = useContext(LayoutContext);
   const { absentName } = useParams();
   const [waktu, setWaktu] = useState(new Date());
@@ -155,7 +147,9 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
 
   useEffect(() => {
     if (absent.absenteeHours.length > 0) {
-      setAttendanceLog(absent.absenteeHours);
+      setAbsentHours(absent.absenteeHours);
+    } else {
+      setAbsentHours([]);
     }
   }, [absent]);
 
@@ -205,26 +199,38 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
           </div>
 
           <ul className="overflow-y-auto max-h-96">
-            {attendanceLog &&
-              attendanceLog.map((log, i) => (
+            {absentHours.length > 0 &&
+              absentHours.map((log, i) => (
                 <li className="even:bg-[#F1F1F1] odd:bg-white" key={i}>
-                  <div className="flex justify-between p-5">
-                    <div className="flex gap-5 items-center">
-                      <div className="circle min-w-6"></div>
-                      <h1 className="font-bold text-sm md:text-base">Farouk</h1>
+                  {log.attendanceLog.length > 0 && (
+                    <div className="flex justify-between p-5 items-center">
+                      <div className="flex gap-5 items-center">
+                        <div className="circle min-w-6"></div>
+                        <h1 className="font-bold text-sm md:text-base">
+                          Farouk
+                        </h1>
+                      </div>
+                      <h3 className="font-bold text-sm md:text-base">
+                        {log.name}
+                      </h3>
+                      <h3 className="font-bold text-sm md:text-base">
+                        Present{" "}
+                        <span className="text-green-500">(On-Time)</span>
+                      </h3>
                     </div>
-                    <h3 className="font-bold text-sm md:text-base">
-                      {log.name}
-                    </h3>
-                    <h3 className="font-bold text-sm md:text-base">
-                      Present <span className="text-green-500">(On-Time)</span>
-                    </h3>
-                  </div>
+                  )}
+                  {log.attendanceLog.length === 0 && (
+                    <div className="py-5">
+                      <h1 className="font-bold text-center">
+                        No one is present yet
+                      </h1>
+                    </div>
+                  )}
                 </li>
               ))}
           </ul>
 
-          {!attendanceLog && (
+          {absentHours.length === 0 && (
             <div className="pt-3 pb-5">
               <img src={shape} alt="" className="mx-auto mb-5" />
               <h1 className="font-bold text-center">
@@ -304,128 +310,6 @@ export function ListPeople({ absent, admin }) {
   );
 }
 
-function TableAttendance() {
-  return (
-    <>
-      <div className="mt-5 border border-[#C4C4C4] rounded-md overflow-hidden">
-        <TableContainer>
-          <Table variant="striped" bg={"white"}>
-            <Thead>
-              <Tr>
-                <Th paddingY="5">#</Th>
-                <Th paddingY="5">Name</Th>
-                <Th paddingY="5">Check-in</Th>
-                <Th paddingY="5">Check-out</Th>
-                <Th paddingY="5">Actual time</Th>
-                <Th paddingY="5">Total time</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>1</Td>
-                <Td>Farrel Giovanni Jaohari</Td>
-                <Td>08:30</Td>
-                <Td>10:00</Td>
-                <Td>1:30 Hr</Td>
-                <Td>1:30 Hr</Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </div>
-    </>
-  );
-}
-
-function DailyAttendance() {
-  return (
-    <>
-      <div className="block sm:flex justify-between items-center">
-        <div className="flex gap-5 mb-5 sm:mb-0 flex-wrap">
-          <div className="flex w-fit items-center bg-white border-2 border-black rounded-[9px] overflow-hidden">
-            <button className="p-2 hover:bg-slate-100 duration-200 transition">
-              <ArrowBack />
-            </button>
-            <input
-              type="date"
-              className="border-x-2 p-2 border-black h-full text-center focus:outline-none"
-            />
-            <button className="p-2 hover:bg-slate-100 duration-200 transition">
-              <ArrowForward />
-            </button>
-          </div>
-
-          <SearchInput />
-
-          <div className="border-2 w-fit border-black bg-white overflow-hidden rounded-[9px] flex">
-            <button className="button-kehadiran">Present</button>
-            <button className="button-kehadiran">Not Present</button>
-            <button className="button-kehadiran">Late</button>
-            <button className="button-kehadiran">Permission</button>
-          </div>
-        </div>
-        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black text-nowrap">
-          Export to Excel
-        </button>
-      </div>
-
-      <TableAttendance />
-    </>
-  );
-}
-
-function MonthlyAttendance() {
-  const [month, setMonth] = useState("January");
-  const [year, setYear] = useState("2024");
-
-  const handleMonth = (event) => {
-    setMonth(event.target.value);
-  };
-
-  const handleYear = (event) => {
-    setYear(event.target.value);
-  };
-
-  return (
-    <>
-      <div className="block sm:flex justify-between items-center">
-        <div className="flex flex-wrap gap-5 mb-5 sm:mb-0">
-          <SearchInput />
-          <div className="flex gap-5 w-full">
-            <Select
-              placeholder="Select Month"
-              onChange={handleMonth}
-              border="2px"
-              borderColor="black"
-              bgColor="white"
-              height="43.33px"
-            >
-              <option value="January">January</option>
-              <option value="February">February</option>
-              <option value="Maret">Maret</option>
-            </Select>
-            <Select
-              placeholder="Select Year"
-              onChange={handleYear}
-              border="2px"
-              borderColor="black"
-              bgColor="white"
-              height="43.33px"
-            >
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-            </Select>
-          </div>
-        </div>
-        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
-          Export to Excel
-        </button>
-      </div>
-      <TableAttendance />
-    </>
-  );
-}
-
 export function AttendanceLog({ absent }) {
   const { setAbsentHour } = useContext(LayoutContext);
   const [currentOption, setCurrentOption] = useState("");
@@ -485,6 +369,10 @@ export function AttendanceLog({ absent }) {
 }
 
 export function SettingsAbsentAdmin({ absent }) {
+  const [editAbsentName, setEditAbsentName] = useState(false);
+  const [editOwnerName, seteditOwnerName] = useState(false);
+
+  const [newAbsentName, setNewAbsentName] = useState("");
   const [newOwnerName, setNewOwnerName] = useState("");
 
   return (
@@ -493,30 +381,69 @@ export function SettingsAbsentAdmin({ absent }) {
         <h1 className="text-xl sm:text-2xl font-bold mb-5">Class Detail</h1>
         <div className="mb-5">
           <div className="flex justify-between items-center">
-            <div>
-              <h1 className="font-bold">Name</h1>
-              <h1 className="text-sm sm:text-base mt-1">{absent.name}</h1>
-            </div>
-            <button className="flex gap-2">
+            <h1 className="font-bold">Name</h1>
+            <button
+              className="flex gap-2"
+              onClick={() => setEditAbsentName(true)}
+            >
               <span className="font-bold">Change</span>
               <DriveFileRenameOutline />
             </button>
           </div>
+          <h1
+            className={`text-sm sm:text-base mt-1 ${
+              editAbsentName ? "hidden" : "block"
+            }`}
+          >
+            {absent.name}
+          </h1>
+          <input
+            type="text"
+            value={newAbsentName}
+            onChange={(e) => setNewAbsentName(e.target.value)}
+            className={`input ${
+              editAbsentName ? "block" : "hidden"
+            } max-w-sm mt-2`}
+          />
         </div>
         <div className="mb-5">
           <div className="flex justify-between items-center">
-            <div>
-              <h1 className="font-bold">Owner Name</h1>
-              <h1 className="text-sm sm:text-base mt-1">{absent.ownerName}</h1>
-            </div>
-            <button className="flex gap-2">
+            <h1 className="font-bold">Owner Name</h1>
+            <button
+              className="flex gap-2"
+              onClick={() => seteditOwnerName(true)}
+            >
               <span className="font-bold">Change</span>
               <DriveFileRenameOutline />
             </button>
           </div>
+          <h1
+            className={`text-sm sm:text-base mt-1 ${
+              editOwnerName ? "hidden" : "block"
+            }`}
+          >
+            {absent.ownerName}
+          </h1>
+          <input
+            type="text"
+            value={newOwnerName}
+            onChange={(e) => setNewOwnerName(e.target.value)}
+            className={`input ${
+              editOwnerName ? "block" : "hidden"
+            } max-w-sm mt-2`}
+          />
         </div>
 
         <div className="flex justify-end gap-5">
+          <button
+            className="p-2 border-2 border-[#d9d9d9] rounded-md"
+            onClick={() => {
+              setEditAbsentName(false);
+              seteditOwnerName(false);
+            }}
+          >
+            Cancel
+          </button>
           <button className="coloredButton py-2 px-7 rounded-md max-w-32">
             Save
           </button>
@@ -584,9 +511,9 @@ export function SettingsAbsentPeserta({ absent }) {
     });
   };
 
-  const updateDisplayName = async () => {
+  const editParticipant = async () => {
     setLoading(true);
-    await editDisplayName(absent._id, data.userId, newDisplayName).then(() =>
+    await editAsParticipant(absent._id, data.userId, newDisplayName).then(() =>
       setLoading(false)
     );
   };
@@ -639,7 +566,7 @@ export function SettingsAbsentPeserta({ absent }) {
                 </button>
                 <button
                   className="coloredButton py-2 px-7 rounded-md max-w-32"
-                  onClick={updateDisplayName}
+                  onClick={editParticipant}
                 >
                   Save
                 </button>

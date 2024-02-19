@@ -5,7 +5,8 @@ const {
   joinAbsent,
   leaveAbsent,
   createAbsentHour,
-  editDisplayName,
+  editAsPaticipant,
+  editAsOwner,
 } = require("../controllers/AbsenteeController");
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.post("/create/:userId", createAbsent);
 router.post("/join", joinAbsent);
 router.patch("/leave/:id/:userId", leaveAbsent);
 router.patch("/createAbsentHour/:absentId", createAbsentHour);
-router.patch("/updateDisplayName/:absentId/:userId", editDisplayName);
+router.patch("/edit/participant/:absentId/:userId", editAsPaticipant);
+router.patch("/edit/owner/:absentId/", editAsOwner);
 
 module.exports = router;
