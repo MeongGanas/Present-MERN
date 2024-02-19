@@ -54,7 +54,7 @@ export default function Layout({ children }) {
               location.pathname === "/home" || location.pathname === "/settings"
                 ? "block"
                 : "hidden"
-            } fixed top-3 right-16 md:right-24 z-[9999]`}
+            } fixed top-3 right-16 md:right-24 z-[100]`}
             onClick={() => setSelectionActive(!selectionActive)}
           >
             <Add />
@@ -62,7 +62,7 @@ export default function Layout({ children }) {
           <div
             className={`fixed right-0 ${
               selectionActive ? "scale-100" : "scale-0"
-            } sm:right-20 z-[9999] top-16 bg-white shadow-md transition-all duration-200 rounded-md overflow-hidden`}
+            } sm:right-20 z-[100] top-16 bg-white shadow-md transition-all duration-200 rounded-md overflow-hidden`}
           >
             <button
               className="selectButton"
@@ -132,7 +132,7 @@ export default function Layout({ children }) {
       >
         <div className="lg:hidden">
           <button
-            className="fixed top-5 left-4 z-[9999]"
+            className="fixed top-5 left-4 z-[200]"
             onClick={() => setActive(!active)}
           >
             <Menu />

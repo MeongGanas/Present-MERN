@@ -212,7 +212,9 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                       <div className="circle min-w-6"></div>
                       <h1 className="font-bold text-sm md:text-base">Farouk</h1>
                     </div>
-                    <h3 className="font-bold">{log.name}</h3>
+                    <h3 className="font-bold text-sm md:text-base">
+                      {log.name}
+                    </h3>
                     <h3 className="font-bold text-sm md:text-base">
                       Present <span className="text-green-500">(On-Time)</span>
                     </h3>
