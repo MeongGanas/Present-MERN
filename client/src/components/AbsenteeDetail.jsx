@@ -201,7 +201,7 @@ export default function AbsenteeDetail({ absent, admin }) {
                   setActiveIndex={setActiveIndex}
                 />
               )}
-              {!admin && <ListHomeAsUser />}
+              {!admin && <ListHomeAsUser absent={absent} />}
             </div>
           </TabPanel>
 

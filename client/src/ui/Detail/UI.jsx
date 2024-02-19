@@ -24,17 +24,16 @@ import { LoadingContext } from "../../hooks/loadingContext";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { LayoutContext } from "../../hooks/dialogContext";
-import { editAsParticipant } from "../../lib/absentee";
+import { editAsOwner, editAsParticipant } from "../../lib/absentee";
 import {
   DailyAttendance,
   MonthlyAttendance,
 } from "../../components/AbsenteeDetail";
 
-export function ListHomeAsUser() {
+export function ListHomeAsUser({ absent }) {
   const [waktu, setWaktu] = useState(new Date());
   const [CheckInActive, setCheckInActive] = useState(false);
   const [PermissionActive, setPermissionActive] = useState(false);
-  const { absentName } = useParams();
   const [shift, setShift] = useState(1);
 
   useEffect(() => {
@@ -64,7 +63,7 @@ export function ListHomeAsUser() {
 
   return (
     <div className="p-5 max-w-screen-lg mx-auto listDetail text-white rounded-md">
-      <h1 className="text-3xl">{absentName}</h1>
+      <h1 className="text-3xl">{absent.name}</h1>
 
       <div className="py-10 text-center">
         <h1 className="mb-2 text-5xl font-bold">
@@ -122,7 +121,6 @@ export function ListHomeAsUser() {
 export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   const [absentHours, setAbsentHours] = useState([]);
   const { absentHour, setAbsentHour } = useContext(LayoutContext);
-  const { absentName } = useParams();
   const [waktu, setWaktu] = useState(new Date());
 
   const handleButtonClick = () => {
@@ -172,7 +170,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
             <span className="font-bold">Customize</span>
           </button>
         </div>
-        <h1 className="text-white text-3xl font-bold">{absentName}</h1>
+        <h1 className="text-white text-3xl font-bold">{absent.name}</h1>
       </div>
       <div className="block md:flex w-full gap-5">
         <div className="w-full mb-5 md:mb-0 bg-white md:max-w-64 border border-[#c4c4c4] rounded-md pt-2 p-5 h-fit">
@@ -371,9 +369,22 @@ export function AttendanceLog({ absent }) {
 export function SettingsAbsentAdmin({ absent }) {
   const [editAbsentName, setEditAbsentName] = useState(false);
   const [editOwnerName, seteditOwnerName] = useState(false);
+  const { setLoading } = useContext(LoadingContext);
 
   const [newAbsentName, setNewAbsentName] = useState("");
   const [newOwnerName, setNewOwnerName] = useState("");
+
+  useEffect(() => {
+    setNewAbsentName(absent.name);
+    setNewOwnerName(absent.ownerName);
+  }, [absent]);
+
+  const editOwner = async () => {
+    setLoading(true);
+    await editAsOwner(absent._id, { newAbsentName, newOwnerName }).then(() =>
+      setLoading(false)
+    );
+  };
 
   return (
     <div className="px-2">
@@ -444,7 +455,10 @@ export function SettingsAbsentAdmin({ absent }) {
           >
             Cancel
           </button>
-          <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+          <button
+            className="coloredButton py-2 px-7 rounded-md max-w-32"
+            onClick={editOwner}
+          >
             Save
           </button>
         </div>
@@ -500,6 +514,12 @@ export function SettingsAbsentPeserta({ absent }) {
     )[0];
     setData(user);
   });
+
+  useEffect(() => {
+    if (data) {
+      setNewDisplayName(data.username);
+    }
+  }, [data]);
 
   const leave = async () => {
     setLoading(true);

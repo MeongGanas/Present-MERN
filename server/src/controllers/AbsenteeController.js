@@ -12,6 +12,17 @@ const getAll = async (req, res) => {
   res.status(200).json({ absentee });
 };
 
+const getAbsentName = async (req, res) => {
+  const { absentId } = req.params;
+
+  try {
+    const absent = await Absentee.findById({ _id: absentId });
+    res.status(200).json(absent.name);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 const createAbsent = async (req, res) => {
   const { name, ownerName, username } = req.body;
   const { userId } = req.params;
@@ -144,6 +155,7 @@ const createAbsentHour = async (req, res) => {
 
 module.exports = {
   getAll,
+  getAbsentName,
   createAbsent,
   joinAbsent,
   leaveAbsent,

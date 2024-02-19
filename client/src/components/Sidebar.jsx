@@ -49,7 +49,7 @@ export default function Sidebar({ resource }) {
                   absenteeData.map((absent) => (
                     <li key={absent._id}>
                       <Link
-                        to={`/${absent.name}/${absent._id}`}
+                        to={`/detailAbsent/${absent._id}`}
                         className="sidemenu"
                       >
                         <span className="border h-6 min-w-6 rounded-full border-black"></span>

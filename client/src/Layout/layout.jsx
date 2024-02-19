@@ -1,5 +1,5 @@
 import { Add, ChevronRight, Menu } from "@mui/icons-material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Suspense, useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
 import { Dialog } from "../components/Dialog";
@@ -8,9 +8,10 @@ import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
 import { ResourceContext } from "../hooks/resourceContext";
 import Skeleton from "../components/skeletons/skeletons";
+import { getAbsentName } from "../lib/absentee";
 
 export default function Layout({ children }) {
-  const location = useLocation();
+  const location = useParams();
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
   const [lgActive, setLgActive] = useState(true);
@@ -21,9 +22,17 @@ export default function Layout({ children }) {
   const [url, setUrl] = useState("");
 
   useEffect(() => {
-    const path = location.pathname;
-    const newpath = path.split("/");
-    setUrl(newpath[1]);
+    const newLocation = location["*"].split("/");
+    const loc = newLocation[newLocation.length - 1];
+    if (loc !== "home" || loc !== "settings") {
+      const getAbsenteeName = async () => {
+        const getName = await getAbsentName(loc);
+        console.log(getName);
+      };
+      getAbsenteeName();
+    } else {
+      setUrl(loc);
+    }
   }, [location]);
 
   useEffect(() => {

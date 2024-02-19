@@ -11,8 +11,11 @@ const {
 const router = express.Router();
 
 router.get("/getAll/:userId", getAll);
+router.get("/getAbsentName/:absentId", getAll);
+
 router.post("/create/:userId", createAbsent);
 router.post("/join", joinAbsent);
+
 router.patch("/leave/:id/:userId", leaveAbsent);
 router.patch("/createAbsentHour/:absentId", createAbsentHour);
 router.patch("/edit/participant/:absentId/:userId", editAsPaticipant);
