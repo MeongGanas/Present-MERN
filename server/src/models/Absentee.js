@@ -28,6 +28,7 @@ const absenteeModel = new Schema({
     },
   ],
   absenteeHours: [{ type: Object }],
+  attendanceLog: [{ type: Object }],
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);
