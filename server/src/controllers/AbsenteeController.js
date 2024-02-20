@@ -173,12 +173,24 @@ const attendance = async (req, res) => {
   }
 };
 
+const disband = async (req, res) => {
+  const { absentId } = req.params;
+
+  try {
+    const absentee = await Absentee.findByIdAndDelete({ _id: absentId });
+    res.status(200).json(absentee);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   getAll,
   getAbsentName,
   createAbsent,
   joinAbsent,
   leaveAbsent,
+  disband,
   editAsOwner,
   editAsPaticipant,
   createAbsentHour,

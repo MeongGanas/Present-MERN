@@ -28,47 +28,50 @@ import {
 } from "@chakra-ui/react";
 import SearchInput from "./SearchInput";
 
-function TableAttendance({ absentHour }) {
+function TableAttendance({ absentHour, attendanceLog }) {
   return (
     <>
       <div className="mt-5 border border-[#C4C4C4] rounded-md overflow-hidden">
-        <TableContainer>
-          <Table variant="striped" bg={"white"}>
-            <Thead>
-              <Tr>
-                <Th paddingY="5">#</Th>
-                <Th paddingY="5">Name</Th>
-                <Th paddingY="5">Check-in</Th>
-                <Th paddingY="5">Check-out</Th>
-                <Th paddingY="5">Actual time</Th>
-                <Th paddingY="5">Total time</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {absentHour.attendanceLog &&
-                absentHour.attendanceLog.map((absent) => (
+        {attendanceLog && (
+          <TableContainer>
+            <Table variant="striped" bg={"white"}>
+              <Thead>
+                <Tr>
+                  <Th paddingY="5">#</Th>
+                  <Th paddingY="5">Name</Th>
+                  <Th paddingY="5">Check-in</Th>
+                  <Th paddingY="5">Check-out</Th>
+                  <Th paddingY="5">Actual time</Th>
+                  <Th paddingY="5">Total time</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {attendanceLog.length > 0 &&
+                  attendanceLog.map((log, i) => (
+                    <Tr key={i}>
+                      <Td>{i + 1}</Td>
+                      <Td>{log.username}</Td>
+                      <Td>08:30</Td>
+                      <Td>10:00</Td>
+                      <Td>1:30 Hr</Td>
+                      <Td>1:30 Hr</Td>
+                    </Tr>
+                  ))}
+                {attendanceLog.length === 0 && (
                   <Tr>
-                    <Td>1</Td>
-                    <Td>Farrel Giovanni Jaohari</Td>
-                    <Td>08:30</Td>
-                    <Td>10:00</Td>
-                    <Td>1:30 Hr</Td>
-                    <Td>1:30 Hr</Td>
+                    <Td colSpan={6}>There are no present yet.</Td>
                   </Tr>
-                ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+                )}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        )}
       </div>
     </>
   );
 }
 
-export function DailyAttendance({ absentHour }) {
-  useEffect(() => {
-    console.log(absentHour);
-  });
-
+export function DailyAttendance({ absentHour, attendanceLog }) {
   return (
     <>
       <div className="block sm:flex justify-between items-center">
@@ -100,12 +103,12 @@ export function DailyAttendance({ absentHour }) {
         </button>
       </div>
 
-      <TableAttendance absentHour={absentHour} />
+      <TableAttendance absentHour={absentHour} attendanceLog={attendanceLog} />
     </>
   );
 }
 
-export function MonthlyAttendance({ absentHour }) {
+export function MonthlyAttendance({ absentHour, attendanceLog }) {
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState("2024");
 
@@ -152,7 +155,7 @@ export function MonthlyAttendance({ absentHour }) {
           Export to Excel
         </button>
       </div>
-      <TableAttendance absentHour={absentHour} />
+      <TableAttendance absentHour={absentHour} attendanceLog={attendanceLog} />
     </>
   );
 }

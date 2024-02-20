@@ -41,14 +41,12 @@ export async function createAbsentHour(absentId, data) {
 
 export async function editAsParticipant(absentId, userId, data) {
   try {
-    await axios
-      .patch(
-        `https://present-server-nine.vercel.app/api/absentee/edit/participant/${absentId}/${userId}`,
-        {
-          newUsername: data,
-        }
-      )
-      .then((res) => console.log(res));
+    await axios.patch(
+      `https://present-server-nine.vercel.app/api/absentee/edit/participant/${absentId}/${userId}`,
+      {
+        newUsername: data,
+      }
+    );
   } catch (err) {
     throw err;
   }
@@ -56,12 +54,31 @@ export async function editAsParticipant(absentId, userId, data) {
 
 export async function editAsOwner(absentId, data) {
   try {
-    await axios
-      .patch(
-        `https://present-server-nine.vercel.app/api/absentee/edit/owner/${absentId}`,
-        data
-      )
-      .then((res) => console.log(res));
+    await axios.patch(
+      `https://present-server-nine.vercel.app/api/absentee/edit/owner/${absentId}`,
+      data
+    );
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function disbandAbsentee(absentId) {
+  try {
+    await axios.delete(
+      `https://present-server-nine.vercel.app/api/absentee/disband/${absentId}`
+    );
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function attendanceUser(absentId, data) {
+  try {
+    await axios.patch(
+      `https://present-server-nine.vercel.app/api/absentee/attendance/${absentId}`,
+      data
+    );
   } catch (err) {
     throw err;
   }

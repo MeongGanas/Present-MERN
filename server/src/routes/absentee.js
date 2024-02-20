@@ -9,6 +9,7 @@ const {
   editAsOwner,
   getAbsentName,
   attendance,
+  disband,
 } = require("../controllers/AbsenteeController");
 const router = express.Router();
 
@@ -23,5 +24,7 @@ router.patch("/createAbsentHour/:absentId", createAbsentHour);
 router.patch("/attendance/:absentId/", attendance);
 router.patch("/edit/participant/:absentId/:userId", editAsPaticipant);
 router.patch("/edit/owner/:absentId/", editAsOwner);
+
+router.delete("/disband/:absentId/", disband);
 
 module.exports = router;

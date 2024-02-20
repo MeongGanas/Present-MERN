@@ -141,6 +141,7 @@ export function ListHomeAsUser({ absent }) {
 
 export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   const [absentHours, setAbsentHours] = useState([]);
+  const [attendanceLog, setAttendanceLog] = useState([]);
   const { absentHour, setAbsentHour } = useContext(LayoutContext);
   const [waktu, setWaktu] = useState(new Date());
 
@@ -165,11 +166,8 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   }, [absentHour]);
 
   useEffect(() => {
-    if (absent.absenteeHours.length > 0) {
-      setAbsentHours(absent.absenteeHours);
-    } else {
-      setAbsentHours([]);
-    }
+    setAbsentHours(absent.absenteeHours);
+    setAttendanceLog(absent.attendanceLog);
   }, [absent]);
 
   const options = {
@@ -217,37 +215,45 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
             </button>
           </div>
 
-          <ul className="overflow-y-auto max-h-96">
-            {absentHours.length > 0 &&
-              absentHours.map((log, i) => (
-                <li className="even:bg-[#F1F1F1] odd:bg-white" key={i}>
-                  {log.attendanceLog.length > 0 && (
+          {absentHours.length > 0 && (
+            <ul className="overflow-y-auto max-h-96">
+              {attendanceLog.length > 0 &&
+                attendanceLog.map((log, i) => (
+                  <li className="even:bg-[#F1F1F1] odd:bg-white" key={i}>
                     <div className="flex justify-between p-5 items-center">
-                      <div className="flex gap-5 items-center">
-                        <div className="circle min-w-6"></div>
-                        <h1 className="font-bold text-sm md:text-base">
-                          Farouk
-                        </h1>
+                      <div>
+                        <div className="flex gap-5 items-center">
+                          <div className="circle min-w-6"></div>
+                          <h1 className="font-bold text-sm md:text-base">
+                            {log.username}
+                          </h1>
+                        </div>
+                        <h3 className="font-bold text-sm md:text-base">
+                          {log.name}
+                        </h3>
                       </div>
                       <h3 className="font-bold text-sm md:text-base">
-                        {log.name}
+                        {log.shift}
                       </h3>
                       <h3 className="font-bold text-sm md:text-base">
-                        Present{" "}
-                        <span className="text-green-500">(On-Time)</span>
+                        {log.status}
+                        <span className="text-green-500">
+                          {" "}
+                          ({log.information})
+                        </span>
                       </h3>
                     </div>
-                  )}
-                  {log.attendanceLog.length === 0 && (
-                    <div className="py-5">
-                      <h1 className="font-bold text-center">
-                        No one is present yet
-                      </h1>
-                    </div>
-                  )}
-                </li>
-              ))}
-          </ul>
+                  </li>
+                ))}
+              {attendanceLog.length === 0 && (
+                <div className="py-5">
+                  <h1 className="font-bold text-center">
+                    No one is present yet
+                  </h1>
+                </div>
+              )}
+            </ul>
+          )}
 
           {absentHours.length === 0 && (
             <div className="pt-3 pb-5">
@@ -331,23 +337,32 @@ export function ListPeople({ absent, admin }) {
 
 export function AttendanceLog({ absent }) {
   const { setAbsentHour } = useContext(LayoutContext);
-  const [currentOption, setCurrentOption] = useState("");
   const [absentHours, setAbsentHours] = useState([]);
+  const [attendanceLog, setAttendanceLog] = useState([]);
+  const [currentHours, setCurrentHours] = useState([]);
 
   useEffect(() => {
+    setAbsentHours(absent.absenteeHours);
+    setCurrentHours(absent.absenteeHours);
+    setAttendanceLog(absent.attendanceLog);
+  }, [absent]);
+
+  const filter = (currentOption) => {
     if (currentOption === "make") {
       setAbsentHour(true);
     } else if (currentOption === "") {
       setAbsentHours(absent.absenteeHours);
+      setCurrentHours(absent.absenteeHours);
+      setAttendanceLog(absent.attendanceLog);
     } else {
-      const newAbsentHour = absentHours.filter((_, i) => i == currentOption);
-      setAbsentHours(newAbsentHour);
+      const newCurrentHours = absentHours.filter((_, i) => i == currentOption);
+      const newAttedanceLog = attendanceLog.filter(
+        (log) => log.shiftIndex == currentOption
+      );
+      setCurrentHours(newCurrentHours);
+      setAttendanceLog(newAttedanceLog);
     }
-  }, [currentOption]);
-
-  useEffect(() => {
-    setAbsentHours(absent.absenteeHours);
-  }, [absent]);
+  };
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -368,7 +383,7 @@ export function AttendanceLog({ absent }) {
                 <Select
                   variant="unstyled"
                   placeholder="Select"
-                  onChange={(e) => setCurrentOption(e.target.value)}
+                  onChange={(e) => filter(e.target.value)}
                 >
                   {absent.absenteeHours.map((absentHour, i) => (
                     <option value={i} key={i} className="p-2">
@@ -386,7 +401,10 @@ export function AttendanceLog({ absent }) {
           <TabPanels>
             <TabPanel paddingX={0}>
               {absentHours.length > 0 && (
-                <DailyAttendance absentHour={absentHours} />
+                <DailyAttendance
+                  absentHour={currentHours}
+                  attendanceLog={attendanceLog}
+                />
               )}
               {absentHours.length === 0 && (
                 <h1>There are no absentee hours yet.</h1>
@@ -394,7 +412,10 @@ export function AttendanceLog({ absent }) {
             </TabPanel>
             <TabPanel paddingX={0}>
               {absentHours.length > 0 && (
-                <MonthlyAttendance absentHour={absentHours} />
+                <MonthlyAttendance
+                  absentHour={currentHours}
+                  attendanceLog={attendanceLog}
+                />
               )}
               {absentHours.length === 0 && (
                 <h1>There are no absentee hours yet.</h1>
@@ -425,6 +446,11 @@ export function SettingsAbsentAdmin({ absent }) {
     await editAsOwner(absent._id, { newAbsentName, newOwnerName }).then(() =>
       setLoading(false)
     );
+  };
+
+  const disband = async () => {
+    setLoading(true);
+    // await
   };
 
   return (
@@ -533,6 +559,14 @@ export function SettingsAbsentAdmin({ absent }) {
         <div className="flex justify-end gap-5">
           <button className="coloredButton py-2 px-7 rounded-md max-w-32">
             Save
+          </button>
+        </div>
+      </div>
+
+      <div className="border-2 mt-5 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
+        <div className="flex justify-end gap-5">
+          <button className="bg-red-600 text-white py-2 px-7 rounded-md">
+            <span>Disband</span>
           </button>
         </div>
       </div>
