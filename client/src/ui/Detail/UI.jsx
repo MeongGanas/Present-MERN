@@ -204,7 +204,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
           <h1 className="font-bold text-2xl">{absent.code}</h1>
         </div>
 
-        <div className="w-full border bg-white border-[#c4c4c4] rounded-md">
+        <div className="w-full border bg-white border-[#c4c4c4] rounded-md overflow-hidden">
           <div className="flex items-center border-b border-[#c4c4c4] p-5 justify-between">
             <div>
               <h1 className="font-bold text-lg">Attendance Log</h1>
