@@ -2,7 +2,7 @@ import { Add, ChevronRight, Menu } from "@mui/icons-material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Suspense, useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
-import { Dialog } from "../components/Dialog";
+import { Dialog, MakeAbsenteeDialog } from "../components/Dialog";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
@@ -20,11 +20,13 @@ export default function Layout({ children }) {
   const { joinActive, createActive, setCreateActive, setJoinActive } =
     useContext(LayoutContext);
   const { resource } = useContext(ResourceContext);
+  const [absentId, setAbsentId] = useState(null);
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
   const getAbsenteeName = async (loc) => {
     setLoading(true);
+    setAbsentId(loc);
     const getName = await getAbsentName(loc);
     setUrl(getName.absentName);
     setLoading(false);
@@ -54,6 +56,8 @@ export default function Layout({ children }) {
         </div>
       }
     >
+      <MakeAbsenteeDialog absentId={absentId} />
+
       <Dialog
         joinActive={joinActive}
         createActive={createActive}
@@ -65,9 +69,7 @@ export default function Layout({ children }) {
         <div>
           <button
             className={`iconbutton ${
-              location.pathname === "/home" || location.pathname === "/settings"
-                ? "block"
-                : "hidden"
+              url === "home" || url === "settings" ? "block" : "hidden"
             } fixed top-3 right-16 md:right-24 z-[100]`}
             onClick={() => setSelectionActive(!selectionActive)}
           >

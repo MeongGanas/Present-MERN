@@ -34,13 +34,21 @@ export function ListHomeAsUser({ absent }) {
   const [waktu, setWaktu] = useState(new Date());
   const [CheckInActive, setCheckInActive] = useState(false);
   const [PermissionActive, setPermissionActive] = useState(false);
-  const [shift, setShift] = useState(1);
+  const [shift, setShift] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
       setWaktu(new Date());
     }, 1000);
   });
+
+  useEffect(() => {
+    if (absent.absenteeHours.length > 0) {
+      setShift(absent.absenteeHours);
+    } else {
+      setShift(null);
+    }
+  }, [absent]);
 
   useEffect(() => {
     if (CheckInActive || PermissionActive) {
@@ -63,57 +71,60 @@ export function ListHomeAsUser({ absent }) {
 
   return (
     <div className="p-5 max-w-screen-lg mx-auto listDetail text-white rounded-md">
-      <h1 className="text-3xl">{absent.name}</h1>
+      <h1 className="text-3xl font-bold">{absent.name}</h1>
 
-      <div className="py-10 text-center">
+      <div className="pt-10 pb-5 text-center">
         <h1 className="mb-2 text-5xl font-bold">
           {padZero(waktu.getHours())}:{padZero(waktu.getMinutes())}
         </h1>
         <p>{waktu.toLocaleString("en-IN", options)}</p>
       </div>
 
-      <div className="text-black bg-white rounded-md">
-        {shift && (
-          <>
-            <div className="text-center border-b-2 py-5">
-              <h4 className="font-bold">Shift 1</h4>
-              <h1 className="text-3xl font-bold my-4">08:30 - 10:00</h1>
-              <p>Toleransi</p>
-            </div>
-            <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
-              <button
-                className="button bg-[#0E2A47] max-w-72 text-white"
-                onClick={() => setCheckInActive(true)}
-              >
-                Check-In
-              </button>
-              <button
-                className="button max-w-72"
-                onClick={() => setPermissionActive(true)}
-              >
-                Permission
-              </button>
-            </div>
+      <ul className="text-black ">
+        {shift &&
+          shift.map((data) => (
+            <li className="bg-white rounded-md mt-5">
+              <div className="text-center border-b-2 py-5">
+                <h4 className="font-bold">{data.name}</h4>
+                <h1 className="text-3xl font-bold my-4">
+                  {data.entry} - {data.leave}
+                </h1>
+                <p>Late tolerance: {data.tolerance}</p>
+              </div>
+              <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
+                <button
+                  className="button bg-[#0E2A47] max-w-72 text-white"
+                  onClick={() => setCheckInActive(true)}
+                >
+                  Check-In
+                </button>
+                <button
+                  className="button max-w-72"
+                  onClick={() => setPermissionActive(true)}
+                >
+                  Permission
+                </button>
+              </div>
 
-            <CheckInDialog
-              active={CheckInActive}
-              setActive={setCheckInActive}
-            />
+              <CheckInDialog
+                active={CheckInActive}
+                setActive={setCheckInActive}
+              />
 
-            <PermissionDialog
-              active={PermissionActive}
-              setActive={setPermissionActive}
-            />
-          </>
-        )}
+              <PermissionDialog
+                active={PermissionActive}
+                setActive={setPermissionActive}
+              />
+            </li>
+          ))}
         {!shift && (
-          <div className="min-h-52 flex items-center justify-center">
+          <div className="min-h-52 bg-white flex items-center justify-center">
             <h1 className="font-bold text-[#7A7A7A] text-2xl">
               No Shifts available 👋
             </h1>
           </div>
         )}
-      </div>
+      </ul>
     </div>
   );
 }

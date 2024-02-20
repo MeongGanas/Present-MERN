@@ -167,7 +167,7 @@ export function Dialog({
   );
 }
 
-export function MakeAbsenteeDialog() {
+export function MakeAbsenteeDialog({ absentId }) {
   const { setLoading } = useContext(LoadingContext);
   const { absentHour, setAbsentHour } = useContext(LayoutContext);
 
@@ -198,8 +198,6 @@ export function MakeAbsenteeDialog() {
   const [entry, setEntry] = useState("");
   const [leave, setLeave] = useState("");
 
-  const { absentId } = useParams();
-
   const handleAbsenteeHour = async () => {
     setLoading(true);
     const selectedDay = checkedItems
@@ -217,7 +215,7 @@ export function MakeAbsenteeDialog() {
           text:
             err.response?.data?.mssg ||
             err.response?.data?.mssg?.message ||
-            "An error occurred during login",
+            "An error occurred during create absent",
           icon: "error",
           confirmButtonText: "Close",
         });
