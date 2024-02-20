@@ -24,7 +24,11 @@ import { LoadingContext } from "../../hooks/loadingContext";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { LayoutContext } from "../../hooks/dialogContext";
-import { editAsOwner, editAsParticipant } from "../../lib/absentee";
+import {
+  disbandAbsentee,
+  editAsOwner,
+  editAsParticipant,
+} from "../../lib/absentee";
 import {
   DailyAttendance,
   MonthlyAttendance,
@@ -429,6 +433,7 @@ export function AttendanceLog({ absent }) {
 }
 
 export function SettingsAbsentAdmin({ absent }) {
+  const navigate = useNavigate();
   const [editAbsentName, setEditAbsentName] = useState(false);
   const [editOwnerName, seteditOwnerName] = useState(false);
   const { setLoading } = useContext(LoadingContext);
@@ -450,7 +455,10 @@ export function SettingsAbsentAdmin({ absent }) {
 
   const disband = async () => {
     setLoading(true);
-    // await
+    await disbandAbsentee(absent._id).then(() => {
+      navigate("/home");
+      setLoading(false);
+    });
   };
 
   return (
@@ -565,7 +573,10 @@ export function SettingsAbsentAdmin({ absent }) {
 
       <div className="border-2 mt-5 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 mx-auto p-5 rounded-md max-w-screen-sm">
         <div className="flex justify-end gap-5">
-          <button className="bg-red-600 text-white py-2 px-7 rounded-md">
+          <button
+            className="bg-red-600 text-white py-2 px-7 rounded-md"
+            onClick={disband}
+          >
             <span>Disband</span>
           </button>
         </div>
