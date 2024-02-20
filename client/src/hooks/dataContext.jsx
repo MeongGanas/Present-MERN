@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const DataContext = createContext();
 
@@ -8,6 +8,10 @@ export const DataProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("userData")) || null
   );
   const [absentee, setAbsentee] = useState(null);
+
+  useEffect(() => {
+    console.log(absentee);
+  }, [absentee]);
 
   return (
     <DataContext.Provider

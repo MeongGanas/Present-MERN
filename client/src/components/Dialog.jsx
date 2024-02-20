@@ -14,7 +14,6 @@ import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
 import { createAbsentHour } from "../lib/absentee";
-import { useParams } from "react-router-dom";
 import { LayoutContext } from "../hooks/dialogContext";
 
 function DialogFormat({
@@ -82,7 +81,7 @@ export function Dialog({
   setCreateActive,
 }) {
   const { setLoading } = useContext(LoadingContext);
-  const { userData, setAbsentee } = useContext(DataContext);
+  const { userData } = useContext(DataContext);
 
   const create = async (absentName, ownerName) => {
     setLoading(true);
@@ -93,7 +92,6 @@ export function Dialog({
         userData._id,
         userData.username
       ).then((response) => {
-        setAbsentee((prev) => [...prev, response]);
         setLoading(false);
         setCreateActive(false);
       });
@@ -117,7 +115,14 @@ export function Dialog({
         userData._id,
         userData.username
       ).then((response) => {
-        setAbsentee((prev) => [...prev, response]);
+        if (!response.absentee) {
+          swal.fire({
+            title: "Failed Join!",
+            text: "There are no such absentee!",
+            icon: "error",
+            confirmButtonText: "Close",
+          });
+        }
         setLoading(false);
         setJoinActive(false);
       });
@@ -222,6 +227,14 @@ export function MakeAbsenteeDialog({ absentId }) {
       });
   };
 
+  const handleTimeChange = (value) => {
+    let hours = parseInt(value.split(":")[0], 10);
+    let minutes = value.split(":")[1];
+
+    let formattedTime = `${hours.toString().padStart(2, "0")}:${minutes}`;
+    return formattedTime;
+  };
+
   return (
     <div
       className={`dialog ${
@@ -256,7 +269,10 @@ export function MakeAbsenteeDialog({ absentId }) {
                 id="late"
                 className="border-2 w-full border-[#D9D9D9] focus:outline-none block p-2 rounded-s-md"
                 required
-                onChange={(e) => setTolerance(e.target.value)}
+                onChange={(e) => {
+                  const newTime = handleTimeChange(e.target.value);
+                  setTolerance(newTime);
+                }}
               />
               <div className="bg-[#D9D9D9] p-2 min-h-fit flex items-center rounded-e-md">
                 <h1>Minutes</h1>
@@ -310,13 +326,19 @@ export function MakeAbsenteeDialog({ absentId }) {
                 type="time"
                 className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
                 required
-                onChange={(e) => setEntry(e.target.value)}
+                onChange={(e) => {
+                  const newTime = handleTimeChange(e.target.value);
+                  setEntry(newTime);
+                }}
               />
               <input
                 type="time"
                 className="border-2 text-center w-1/2 border-[#D9D9D9] block p-2 rounded-md"
                 required
-                onChange={(e) => setLeave(e.target.value)}
+                onChange={(e) => {
+                  const newTime = handleTimeChange(e.target.value);
+                  setLeave(newTime);
+                }}
               />
             </div>
           </div>

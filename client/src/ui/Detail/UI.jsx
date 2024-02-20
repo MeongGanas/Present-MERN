@@ -82,8 +82,8 @@ export function ListHomeAsUser({ absent }) {
 
       <ul className="text-black ">
         {shift &&
-          shift.map((data) => (
-            <li className="bg-white rounded-md mt-5">
+          shift.map((data, i) => (
+            <li className="bg-white rounded-md mt-5" key={i}>
               <div className="text-center border-b-2 py-5">
                 <h4 className="font-bold">{data.name}</h4>
                 <h1 className="text-3xl font-bold my-4">
