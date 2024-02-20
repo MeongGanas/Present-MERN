@@ -7,7 +7,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import { Close } from "@mui/icons-material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import location from "../img/image 2.svg";
 import { createAbsentee, joinAbsentee } from "../lib/actions";
 import { LoadingContext } from "../hooks/loadingContext";
@@ -365,7 +365,11 @@ export function MakeAbsenteeDialog({ absentId }) {
   );
 }
 
-export function CheckInDialog({ active, setActive }) {
+export function CheckInDialog({ active, setActive, absentId, shiftIndex }) {
+  useEffect(() => {
+    console.log(absentId, shiftIndex);
+  }, [absentId]);
+
   return (
     <div
       className={`dialog ${
@@ -434,7 +438,7 @@ export function CheckInDialog({ active, setActive }) {
   );
 }
 
-export function PermissionDialog({ active, setActive }) {
+export function PermissionDialog({ active, setActive, absentId, shiftIndex }) {
   return (
     <div
       className={`dialog ${

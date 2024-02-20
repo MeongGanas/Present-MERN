@@ -9,10 +9,6 @@ export const DataProvider = ({ children }) => {
   );
   const [absentee, setAbsentee] = useState(null);
 
-  useEffect(() => {
-    console.log(absentee);
-  }, [absentee]);
-
   return (
     <DataContext.Provider
       value={{

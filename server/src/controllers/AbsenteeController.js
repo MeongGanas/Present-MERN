@@ -40,6 +40,8 @@ const createAbsent = async (req, res) => {
       userId,
       code,
       usersJoin: [],
+      absenteeHours: [],
+      attendanceLog: [],
     });
 
     res.status(200).json({ absentee });
@@ -143,11 +145,29 @@ const createAbsentHour = async (req, res) => {
       { _id: absentId },
       {
         $addToSet: {
-          absenteeHours: { ...req.body, attendanceLog: [] },
+          absenteeHours: { ...req.body },
         },
       }
     );
     res.status(200).json(absentHour);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const attendance = async (req, res) => {
+  const { absentId } = req.params;
+
+  try {
+    const attendancLog = await Absentee.findByIdAndUpdate(
+      { _id: absentId },
+      {
+        $addToSet: {
+          attendanceLog: { ...req.body },
+        },
+      }
+    );
+    res.status(200).json(attendancLog);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -162,4 +182,5 @@ module.exports = {
   editAsOwner,
   editAsPaticipant,
   createAbsentHour,
+  attendance,
 };

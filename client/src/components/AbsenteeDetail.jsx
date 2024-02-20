@@ -28,7 +28,7 @@ import {
 } from "@chakra-ui/react";
 import SearchInput from "./SearchInput";
 
-function TableAttendance() {
+function TableAttendance({ absentHour }) {
   return (
     <>
       <div className="mt-5 border border-[#C4C4C4] rounded-md overflow-hidden">
@@ -45,14 +45,17 @@ function TableAttendance() {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>1</Td>
-                <Td>Farrel Giovanni Jaohari</Td>
-                <Td>08:30</Td>
-                <Td>10:00</Td>
-                <Td>1:30 Hr</Td>
-                <Td>1:30 Hr</Td>
-              </Tr>
+              {absentHour.attendanceLog &&
+                absentHour.attendanceLog.map((absent) => (
+                  <Tr>
+                    <Td>1</Td>
+                    <Td>Farrel Giovanni Jaohari</Td>
+                    <Td>08:30</Td>
+                    <Td>10:00</Td>
+                    <Td>1:30 Hr</Td>
+                    <Td>1:30 Hr</Td>
+                  </Tr>
+                ))}
             </Tbody>
           </Table>
         </TableContainer>
@@ -61,7 +64,11 @@ function TableAttendance() {
   );
 }
 
-export function DailyAttendance() {
+export function DailyAttendance({ absentHour }) {
+  useEffect(() => {
+    console.log(absentHour);
+  });
+
   return (
     <>
       <div className="block sm:flex justify-between items-center">
@@ -93,12 +100,12 @@ export function DailyAttendance() {
         </button>
       </div>
 
-      <TableAttendance />
+      <TableAttendance absentHour={absentHour} />
     </>
   );
 }
 
-export function MonthlyAttendance() {
+export function MonthlyAttendance({ absentHour }) {
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState("2024");
 
@@ -145,7 +152,7 @@ export function MonthlyAttendance() {
           Export to Excel
         </button>
       </div>
-      <TableAttendance />
+      <TableAttendance absentHour={absentHour} />
     </>
   );
 }

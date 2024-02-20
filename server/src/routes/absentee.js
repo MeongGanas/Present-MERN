@@ -8,6 +8,7 @@ const {
   editAsPaticipant,
   editAsOwner,
   getAbsentName,
+  attendance,
 } = require("../controllers/AbsenteeController");
 const router = express.Router();
 
@@ -19,6 +20,7 @@ router.post("/join", joinAbsent);
 
 router.patch("/leave/:id/:userId", leaveAbsent);
 router.patch("/createAbsentHour/:absentId", createAbsentHour);
+router.patch("/attendance/:absentId/", attendance);
 router.patch("/edit/participant/:absentId/:userId", editAsPaticipant);
 router.patch("/edit/owner/:absentId/", editAsOwner);
 

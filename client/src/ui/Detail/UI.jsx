@@ -35,6 +35,7 @@ export function ListHomeAsUser({ absent }) {
   const [CheckInActive, setCheckInActive] = useState(false);
   const [PermissionActive, setPermissionActive] = useState(false);
   const [shift, setShift] = useState(null);
+  const [shiftIndex, setShiftIndex] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -94,29 +95,38 @@ export function ListHomeAsUser({ absent }) {
               <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
                 <button
                   className="button bg-[#0E2A47] max-w-72 text-white"
-                  onClick={() => setCheckInActive(true)}
+                  onClick={() => {
+                    setShiftIndex(i);
+                    setCheckInActive(true);
+                  }}
                 >
                   Check-In
                 </button>
                 <button
                   className="button max-w-72"
-                  onClick={() => setPermissionActive(true)}
+                  onClick={() => {
+                    setShiftIndex(i);
+                    setPermissionActive(true);
+                  }}
                 >
                   Permission
                 </button>
               </div>
-
-              <CheckInDialog
-                active={CheckInActive}
-                setActive={setCheckInActive}
-              />
-
-              <PermissionDialog
-                active={PermissionActive}
-                setActive={setPermissionActive}
-              />
             </li>
           ))}
+        <CheckInDialog
+          active={CheckInActive}
+          absentId={absent._id}
+          absentHour={shiftIndex}
+          setActive={setCheckInActive}
+        />
+
+        <PermissionDialog
+          active={PermissionActive}
+          absentId={absent._id}
+          absentHour={shiftIndex}
+          setActive={setPermissionActive}
+        />
         {!shift && (
           <div className="min-h-52 bg-white flex items-center justify-center">
             <h1 className="font-bold text-[#7A7A7A] text-2xl">
@@ -322,12 +332,22 @@ export function ListPeople({ absent, admin }) {
 export function AttendanceLog({ absent }) {
   const { setAbsentHour } = useContext(LayoutContext);
   const [currentOption, setCurrentOption] = useState("");
+  const [absentHours, setAbsentHours] = useState([]);
 
   useEffect(() => {
     if (currentOption === "make") {
       setAbsentHour(true);
+    } else if (currentOption === "") {
+      setAbsentHours(absent.absenteeHours);
+    } else {
+      const newAbsentHour = absentHours.filter((_, i) => i == currentOption);
+      setAbsentHours(newAbsentHour);
     }
   }, [currentOption]);
+
+  useEffect(() => {
+    setAbsentHours(absent.absenteeHours);
+  }, [absent]);
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -365,10 +385,20 @@ export function AttendanceLog({ absent }) {
 
           <TabPanels>
             <TabPanel paddingX={0}>
-              <DailyAttendance />
+              {absentHours.length > 0 && (
+                <DailyAttendance absentHour={absentHours} />
+              )}
+              {absentHours.length === 0 && (
+                <h1>There are no absentee hours yet.</h1>
+              )}
             </TabPanel>
             <TabPanel paddingX={0}>
-              <MonthlyAttendance />
+              {absentHours.length > 0 && (
+                <MonthlyAttendance absentHour={absentHours} />
+              )}
+              {absentHours.length === 0 && (
+                <h1>There are no absentee hours yet.</h1>
+              )}
             </TabPanel>
           </TabPanels>
         </Tabs>
