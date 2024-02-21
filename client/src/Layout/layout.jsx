@@ -56,14 +56,18 @@ export default function Layout({ children }) {
         </div>
       }
     >
-      <MakeAbsenteeDialog absentId={absentId} />
+      {url === "home" && (
+        <>
+          <MakeAbsenteeDialog absentId={absentId} />
 
-      <Dialog
-        joinActive={joinActive}
-        createActive={createActive}
-        setCreateActive={setCreateActive}
-        setJoinActive={setJoinActive}
-      />
+          <Dialog
+            joinActive={joinActive}
+            createActive={createActive}
+            setCreateActive={setCreateActive}
+            setJoinActive={setJoinActive}
+          />
+        </>
+      )}
 
       <ClickAwayListener onClickAway={() => setSelectionActive(false)}>
         <div>

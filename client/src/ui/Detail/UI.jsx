@@ -17,7 +17,7 @@ import shape from "../../img/Scribble-28.svg.svg";
 import background from "../../img/Mask group.png";
 import SearchInput from "../../components/SearchInput";
 import { CheckInDialog, PermissionDialog } from "../../components/Dialog";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../hooks/dataContext";
 import { leaveAbsentee } from "../../lib/actions";
 import { LoadingContext } from "../../hooks/loadingContext";
@@ -116,21 +116,27 @@ export function ListHomeAsUser({ absent }) {
                   Permission
                 </button>
               </div>
+              {shiftIndex === i && (
+                <>
+                  <CheckInDialog
+                    active={CheckInActive}
+                    absentId={absent._id}
+                    shiftIndex={i}
+                    setActive={setCheckInActive}
+                    absentHour={data}
+                    currentTime={`${waktu.getHours()}:${waktu.getMinutes()}`}
+                  />
+                  <PermissionDialog
+                    active={PermissionActive}
+                    absentId={absent._id}
+                    shiftIndex={i}
+                    setActive={setPermissionActive}
+                  />
+                </>
+              )}
             </li>
           ))}
-        <CheckInDialog
-          active={CheckInActive}
-          absentId={absent._id}
-          absentHour={shiftIndex}
-          setActive={setCheckInActive}
-        />
 
-        <PermissionDialog
-          active={PermissionActive}
-          absentId={absent._id}
-          absentHour={shiftIndex}
-          setActive={setPermissionActive}
-        />
         {!shift && (
           <div className="min-h-52 bg-white flex items-center justify-center">
             <h1 className="font-bold text-[#7A7A7A] text-2xl">

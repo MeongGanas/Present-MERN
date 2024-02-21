@@ -73,12 +73,15 @@ export async function disbandAbsentee(absentId) {
   }
 }
 
-export async function attendanceUser(absentId, data) {
+// https://present-server-nine.vercel.app
+
+export async function checkInUser(absentId, data) {
   try {
-    await axios.patch(
+    const response = await axios.patch(
       `https://present-server-nine.vercel.app/api/absentee/attendance/${absentId}`,
       data
     );
+    return response.data;
   } catch (err) {
     throw err;
   }

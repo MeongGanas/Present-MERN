@@ -13,7 +13,7 @@ import { createAbsentee, joinAbsentee } from "../lib/actions";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
-import { createAbsentHour } from "../lib/absentee";
+import { checkInUser, createAbsentHour } from "../lib/absentee";
 import { LayoutContext } from "../hooks/dialogContext";
 
 function DialogFormat({
@@ -365,10 +365,44 @@ export function MakeAbsenteeDialog({ absentId }) {
   );
 }
 
-export function CheckInDialog({ active, setActive, absentId, shiftIndex }) {
-  useEffect(() => {
-    console.log(absentId, shiftIndex);
-  }, [absentId]);
+export function CheckInDialog({
+  active,
+  setActive,
+  absentId,
+  shiftIndex,
+  currentTime,
+  absentHour,
+}) {
+  const { userData } = useContext(DataContext);
+  const { setLoading } = useContext(LoadingContext);
+
+  const isLate = () => {
+    const absentHourEntry = absentHour.entry.split(":");
+    const absentHourTolerance = absentHour.tolerance.split(":");
+    const splitCurrentTime = currentTime.split(":");
+
+    const checkHour =
+      parseInt(splitCurrentTime[0]) >= parseInt(absentHourEntry[0]) &&
+      parseInt(splitCurrentTime[0]) <= parseInt(absentHourTolerance[0]);
+
+    const checkMinute =
+      parseInt(splitCurrentTime[1]) >= parseInt(absentHourEntry[1]) &&
+      parseInt(splitCurrentTime[1]) <= parseInt(absentHourTolerance[1]);
+
+    return checkMinute && checkHour ? "On-Time" : "Late";
+  };
+
+  const checkIn = async () => {
+    const data = {
+      userId: userData._id,
+      username: userData.username,
+      shiftIndex,
+      status: "Present",
+      detail: isLate(),
+    };
+    console.log(data);
+    // const response = await checkInUser(absentId, shiftIndex);
+  };
 
   return (
     <div
@@ -387,48 +421,23 @@ export function CheckInDialog({ active, setActive, absentId, shiftIndex }) {
           <h1>maps</h1>
         </div>
         <div className="border-t-2 border-[#d9d9d9] h-full bg-[#F8F8F9]">
-          <Tabs colorScheme="black">
-            <TabList bgColor="white">
-              <div className="px-3 flex">
-                <Tab>
-                  <div className="p-2 font-bold">Location</div>
-                </Tab>
-                <Tab>
-                  <div className="p-2 font-bold">Shift</div>
-                </Tab>
+          <div className="py-2 px-4">
+            <div className="p-2 border-[1.5px] bg-white rounded-md border-black flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <img src={location} alt="" />
+                <div>
+                  <h1 className="font-bold">Main</h1>
+                  <h3 className="font-bold text-sm">Btp Blok A 235</h3>
+                </div>
               </div>
-            </TabList>
-
-            <TabPanels>
-              <TabPanel paddingX={0}>
-                <div className="py-2 px-4">
-                  <div className="p-2 border-[1.5px] bg-white rounded-md border-black flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <img src={location} alt="" />
-                      <div>
-                        <h1 className="font-bold">Main</h1>
-                        <h3 className="font-bold text-sm">Btp Blok A 235</h3>
-                      </div>
-                    </div>
-                    <input type="radio" className="w-6 h-6" />
-                  </div>
-                </div>
-              </TabPanel>
-              <TabPanel paddingX={0}>
-                <div className="py-2 px-4">
-                  <div className="py-2 px-4 bg-white border-[1.5px] rounded-md border-black flex items-center justify-between">
-                    <div>
-                      <h1 className="font-bold">Shift 1</h1>
-                      <h3 className="font-bold text-sm">10:00 - 11:00</h3>
-                    </div>
-                    <input type="radio" className="w-6 h-6" />
-                  </div>
-                </div>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+              <input type="radio" className="w-6 h-6" />
+            </div>
+          </div>
           <div className="px-4 py-3">
-            <button className="text-center w-full py-3 bg-[#0E2A47] rounded-md text-white font-bold">
+            <button
+              className="text-center w-full py-3 bg-[#0E2A47] rounded-md text-white font-bold"
+              onClick={checkIn}
+            >
               Check-In
             </button>
           </div>
