@@ -89,10 +89,6 @@ export function ListHomeAsUser({ absent }) {
     }
   }, [CheckInActive, PermissionActive]);
 
-  function padZero(num) {
-    return String(num).padStart(2, "0");
-  }
-
   const options = {
     weekday: "long",
     year: "numeric",
@@ -106,7 +102,11 @@ export function ListHomeAsUser({ absent }) {
 
       <div className="pt-10 pb-5 text-center">
         <h1 className="mb-2 text-5xl font-bold">
-          {padZero(waktu.getHours())}:{padZero(waktu.getMinutes())}
+          {waktu.toLocaleTimeString("en-US", {
+            hour12: false,
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </h1>
         <p>{waktu.toLocaleString("en-IN", options)}</p>
       </div>
@@ -150,7 +150,8 @@ export function ListHomeAsUser({ absent }) {
                     shiftId={data._id}
                     setActive={setCheckInActive}
                     absentHour={data}
-                    currentTime={`${waktu.getHours()}:${waktu.getMinutes()}`}
+                    attendanceLog={absent.attendanceLog}
+                    currentTime={waktu}
                   />
                   <PermissionDialog
                     active={PermissionActive}

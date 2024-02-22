@@ -30,7 +30,7 @@ export function getSingleAbsentee(absentee, absentId) {
 export async function createAbsentHour(absentId, data) {
   try {
     const response = await axios.patch(
-      `http://localhost:4000/api/absentee/createAbsentHour/${absentId}`,
+      `https://present-server-nine.vercel.app/api/absentee/createAbsentHour/${absentId}`,
       data
     );
     return response.data;
@@ -78,7 +78,7 @@ export async function disbandAbsentee(absentId) {
 export async function checkInUser(absentId, data) {
   try {
     const response = await axios.patch(
-      `http://localhost:4000/api/absentee/attendance/${absentId}`,
+      `https://present-server-nine.vercel.app/api/absentee/attendance/${absentId}`,
       data
     );
     return response.data;

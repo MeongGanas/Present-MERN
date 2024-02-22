@@ -1,11 +1,4 @@
-import {
-  Checkbox,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
 import { Close } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
 import location from "../img/image 2.svg";
@@ -372,6 +365,7 @@ export function CheckInDialog({
   shiftId,
   currentTime,
   absentHour,
+  attendanceLog,
 }) {
   const { userData } = useContext(DataContext);
   const { setLoading } = useContext(LoadingContext);
@@ -401,7 +395,11 @@ export function CheckInDialog({
       shiftId,
       status: "Present",
       detail: isLate(),
-      checkInTime: currentTime,
+      checkInTime: currentTime.toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
       checkOutTime: "-",
     };
     await checkInUser(absentId, data)
@@ -411,6 +409,10 @@ export function CheckInDialog({
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    console.log(attendanceLog);
+  });
 
   return (
     <div
