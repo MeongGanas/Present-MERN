@@ -369,7 +369,7 @@ export function CheckInDialog({
   active,
   setActive,
   absentId,
-  shiftIndex,
+  shiftId,
   currentTime,
   absentHour,
 }) {
@@ -398,9 +398,11 @@ export function CheckInDialog({
       userId: userData._id,
       username: userData.username,
       shift: absentHour.name,
-      shiftIndex,
+      shiftId,
       status: "Present",
       detail: isLate(),
+      checkInTime: currentTime,
+      checkOutTime: "-",
     };
     await checkInUser(absentId, data)
       .then(() => {
@@ -453,7 +455,7 @@ export function CheckInDialog({
   );
 }
 
-export function PermissionDialog({ active, setActive, absentId, shiftIndex }) {
+export function PermissionDialog({ active, setActive, absentId, shiftId }) {
   return (
     <div
       className={`dialog ${

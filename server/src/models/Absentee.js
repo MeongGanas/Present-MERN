@@ -1,6 +1,67 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const attendanceLogSchema = new Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    shift: {
+      type: String,
+      required: true,
+    },
+    shiftId: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+    detail: {
+      type: String,
+      required: true,
+    },
+    checkInTime: {
+      type: String,
+      required: true,
+    },
+    checkOutTime: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const shiftSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  entry: {
+    type: String,
+    required: true,
+  },
+  leave: {
+    type: String,
+    required: true,
+  },
+  tolerance: {
+    type: String,
+    required: true,
+  },
+  selectedDay: {
+    type: Array,
+    required: true,
+  },
+});
+
 const absenteeModel = new Schema({
   userId: {
     type: String,
@@ -27,8 +88,8 @@ const absenteeModel = new Schema({
       type: Object,
     },
   ],
-  absenteeHours: [{ type: Object }],
-  attendanceLog: [{ type: Object }],
+  absenteeHours: [shiftSchema],
+  attendanceLog: [attendanceLogSchema],
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);

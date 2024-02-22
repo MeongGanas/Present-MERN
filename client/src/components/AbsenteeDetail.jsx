@@ -38,23 +38,25 @@ function TableAttendance({ absentHour, attendanceLog }) {
               <Thead>
                 <Tr>
                   <Th paddingY="5">#</Th>
-                  <Th paddingY="5">Name</Th>
-                  <Th paddingY="5">Check-in</Th>
-                  <Th paddingY="5">Check-out</Th>
-                  <Th paddingY="5">Actual time</Th>
-                  <Th paddingY="5">Total time</Th>
+                  <Th paddingY="5" textAlign="center">
+                    Name
+                  </Th>
+                  <Th paddingY="5" textAlign="center">
+                    Check-in
+                  </Th>
+                  <Th paddingY="5" textAlign="center">
+                    Check-out
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {attendanceLog.length > 0 &&
                   attendanceLog.map((log, i) => (
-                    <Tr key={i}>
+                    <Tr key={log._id}>
                       <Td>{i + 1}</Td>
-                      <Td>{log.username}</Td>
-                      <Td>08:30</Td>
-                      <Td>10:00</Td>
-                      <Td>1:30 Hr</Td>
-                      <Td>1:30 Hr</Td>
+                      <Td textAlign="center">{log.username}</Td>
+                      <Td textAlign="center">{log.checkInTime}</Td>
+                      <Td textAlign="center">{log.checkOutTime}</Td>
                     </Tr>
                   ))}
                 {attendanceLog.length === 0 && (

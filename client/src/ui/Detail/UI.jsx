@@ -114,7 +114,7 @@ export function ListHomeAsUser({ absent }) {
       <ul className="text-black ">
         {shift.length > 0 &&
           shift.map((data, i) => (
-            <li className="bg-white rounded-md mt-5" key={i}>
+            <li className="bg-white rounded-md mt-5" key={data._id}>
               <div className="text-center border-b-2 py-5">
                 <h4 className="font-bold">{data.name}</h4>
                 <h1 className="text-3xl font-bold my-4">
@@ -147,7 +147,7 @@ export function ListHomeAsUser({ absent }) {
                   <CheckInDialog
                     active={CheckInActive}
                     absentId={absent._id}
-                    shiftIndex={i}
+                    shiftId={data._id}
                     setActive={setCheckInActive}
                     absentHour={data}
                     currentTime={`${waktu.getHours()}:${waktu.getMinutes()}`}
@@ -155,7 +155,7 @@ export function ListHomeAsUser({ absent }) {
                   <PermissionDialog
                     active={PermissionActive}
                     absentId={absent._id}
-                    shiftIndex={i}
+                    shiftId={data._id}
                     setActive={setPermissionActive}
                   />
                 </>
@@ -252,12 +252,15 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
           </div>
 
           {absentHours.length > 0 && (
-            <ul className="overflow-y-auto max-h-96">
-              {attendanceLog.length > 0 &&
-                attendanceLog.map((log, i) => (
-                  <li className="even:bg-[#F1F1F1] odd:bg-white" key={i}>
-                    <div className="flex justify-between p-5 items-center">
-                      <div>
+            <table className="overflow-y-auto max-h-96 w-full">
+              <tbody>
+                {attendanceLog.length > 0 &&
+                  attendanceLog.map((log) => (
+                    <tr
+                      className="even:bg-[#F1F1F1] odd:bg-white w-full"
+                      key={log._id}
+                    >
+                      <td className="p-5 w-1/3" align="left">
                         <div className="flex gap-5 items-center">
                           <div className="circle min-w-6"></div>
                           <h1 className="font-bold text-sm md:text-base">
@@ -267,33 +270,42 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                         <h3 className="font-bold text-sm md:text-base">
                           {log.name}
                         </h3>
-                      </div>
-                      <h3 className="font-bold text-sm md:text-base">
-                        {log.shift}
-                      </h3>
-                      <h3 className="font-bold text-sm md:text-base">
-                        {log.status}
-                        {log.detail === "Late" && (
-                          <span className="text-red-700"> ({log.detail})</span>
-                        )}
-                        {log.detail === "On-Time" && (
-                          <span className="text-green-500">
-                            {" "}
-                            ({log.detail})
-                          </span>
-                        )}
-                      </h3>
-                    </div>
-                  </li>
-                ))}
-              {attendanceLog.length === 0 && (
-                <div className="py-5">
-                  <h1 className="font-bold text-center">
-                    No one is present yet
-                  </h1>
-                </div>
-              )}
-            </ul>
+                      </td>
+
+                      <td className="p-5 w-1/3" align="center">
+                        <h3 className="font-bold text-sm md:text-base">
+                          {log.shift}
+                        </h3>
+                      </td>
+
+                      <td className="p-5 w-1/3" align="end">
+                        <h3 className="font-bold text-sm md:text-base">
+                          {log.status}
+                          {log.detail === "Late" && (
+                            <span className="text-red-700">
+                              {" "}
+                              ({log.detail})
+                            </span>
+                          )}
+                          {log.detail === "On-Time" && (
+                            <span className="text-green-500">
+                              {" "}
+                              ({log.detail})
+                            </span>
+                          )}
+                        </h3>
+                      </td>
+                    </tr>
+                  ))}
+                {attendanceLog.length === 0 && (
+                  <tr className="py-5">
+                    <td className="font-bold text-center">
+                      No one is present yet
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           )}
 
           {absentHours.length === 0 && (
@@ -396,9 +408,11 @@ export function AttendanceLog({ absent }) {
       setCurrentHours(absent.absenteeHours);
       setAttendanceLog(absent.attendanceLog);
     } else {
-      const newCurrentHours = absentHours.filter((_, i) => i == currentOption);
-      const newAttedanceLog = attendanceLog.filter(
-        (log) => log.shiftIndex == currentOption
+      const newCurrentHours = absent.absenteeHours.filter(
+        (hours) => hours._id == currentOption
+      );
+      const newAttedanceLog = absent.attendanceLog.filter(
+        (log) => log.shiftId == currentOption
       );
       setCurrentHours(newCurrentHours);
       setAttendanceLog(newAttedanceLog);
@@ -428,8 +442,12 @@ export function AttendanceLog({ absent }) {
                   placeholder="Select"
                   onChange={(e) => filter(e.target.value)}
                 >
-                  {absent.absenteeHours.map((absentHour, i) => (
-                    <option value={i} key={i} className="p-2">
+                  {absent.absenteeHours.map((absentHour) => (
+                    <option
+                      value={absentHour._id}
+                      key={absentHour._id}
+                      className="p-2"
+                    >
                       {absentHour.name}
                     </option>
                   ))}
