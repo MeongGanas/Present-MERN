@@ -393,15 +393,21 @@ export function CheckInDialog({
   };
 
   const checkIn = async () => {
+    setLoading(true);
     const data = {
       userId: userData._id,
       username: userData.username,
+      shift: absentHour.name,
       shiftIndex,
       status: "Present",
       detail: isLate(),
     };
-    console.log(data);
-    // const response = await checkInUser(absentId, shiftIndex);
+    await checkInUser(absentId, data)
+      .then(() => {
+        setLoading(false);
+        setActive(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

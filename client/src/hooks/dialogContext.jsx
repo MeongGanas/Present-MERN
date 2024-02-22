@@ -1,6 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { MakeAbsenteeDialog } from "../components/Dialog";
-import { useParams } from "react-router-dom";
 
 export const LayoutContext = createContext();
 

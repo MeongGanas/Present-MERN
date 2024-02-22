@@ -16,7 +16,11 @@ import {
 import shape from "../../img/Scribble-28.svg.svg";
 import background from "../../img/Mask group.png";
 import SearchInput from "../../components/SearchInput";
-import { CheckInDialog, PermissionDialog } from "../../components/Dialog";
+import {
+  CheckInDialog,
+  MakeAbsenteeDialog,
+  PermissionDialog,
+} from "../../components/Dialog";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../hooks/dataContext";
 import { leaveAbsentee } from "../../lib/actions";
@@ -38,8 +42,21 @@ export function ListHomeAsUser({ absent }) {
   const [waktu, setWaktu] = useState(new Date());
   const [CheckInActive, setCheckInActive] = useState(false);
   const [PermissionActive, setPermissionActive] = useState(false);
-  const [shift, setShift] = useState(null);
+  const [shift, setShift] = useState([]);
   const [shiftIndex, setShiftIndex] = useState(null);
+
+  const isCurrentTimeWithinShift = (currentTime, entryTime, leaveTime) => {
+    const [currentHours, currentMinutes] = currentTime.split(":").map(Number);
+    const [entryHours, entryMinutes] = entryTime.split(":").map(Number);
+    const [leaveHours, leaveMinutes] = leaveTime.split(":").map(Number);
+
+    return (
+      (currentHours > entryHours ||
+        (currentHours === entryHours && currentMinutes >= entryMinutes)) &&
+      (currentHours < leaveHours ||
+        (currentHours === leaveHours && currentMinutes <= leaveMinutes))
+    );
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -49,9 +66,18 @@ export function ListHomeAsUser({ absent }) {
 
   useEffect(() => {
     if (absent.absenteeHours.length > 0) {
-      setShift(absent.absenteeHours);
+      const shifts = absent.absenteeHours;
+      const currentTime = waktu.toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const currentShifts = shifts.filter((shift) =>
+        isCurrentTimeWithinShift(currentTime, shift.entry, shift.leave)
+      );
+      setShift(currentShifts);
     } else {
-      setShift(null);
+      setShift([]);
     }
   }, [absent]);
 
@@ -86,7 +112,7 @@ export function ListHomeAsUser({ absent }) {
       </div>
 
       <ul className="text-black ">
-        {shift &&
+        {shift.length > 0 &&
           shift.map((data, i) => (
             <li className="bg-white rounded-md mt-5" key={i}>
               <div className="text-center border-b-2 py-5">
@@ -137,7 +163,7 @@ export function ListHomeAsUser({ absent }) {
             </li>
           ))}
 
-        {!shift && (
+        {shift.length === 0 && (
           <div className="min-h-52 bg-white flex items-center justify-center">
             <h1 className="font-bold text-[#7A7A7A] text-2xl">
               No Shifts available 👋
@@ -247,10 +273,15 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                       </h3>
                       <h3 className="font-bold text-sm md:text-base">
                         {log.status}
-                        <span className="text-green-500">
-                          {" "}
-                          ({log.information})
-                        </span>
+                        {log.detail === "Late" && (
+                          <span className="text-red-700"> ({log.detail})</span>
+                        )}
+                        {log.detail === "On-Time" && (
+                          <span className="text-green-500">
+                            {" "}
+                            ({log.detail})
+                          </span>
+                        )}
                       </h3>
                     </div>
                   </li>
@@ -376,6 +407,8 @@ export function AttendanceLog({ absent }) {
 
   return (
     <div className="max-w-screen-lg mx-auto">
+      <MakeAbsenteeDialog absentId={absent._id} />
+
       <h1 className="text-2xl font-bold mt-3 mb-5">Attendance Log</h1>
 
       {absent && (
