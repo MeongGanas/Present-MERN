@@ -8,6 +8,7 @@ import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
 import { checkInUser, createAbsentHour } from "../lib/absentee";
 import { LayoutContext } from "../hooks/dialogContext";
+import { WaktuContext } from "../hooks/waktuContext";
 
 function DialogFormat({
   handleClose,
@@ -363,17 +364,17 @@ export function CheckInDialog({
   setActive,
   absentId,
   shiftId,
-  currentTime,
   absentHour,
-  attendanceLog,
+  isCheckIn,
 }) {
   const { userData } = useContext(DataContext);
   const { setLoading } = useContext(LoadingContext);
+  const { waktu } = useContext(WaktuContext);
 
   const isLate = () => {
     const absentHourEntry = absentHour.entry.split(":");
     const absentHourTolerance = absentHour.tolerance.split(":");
-    const splitCurrentTime = currentTime.split(":");
+    const splitCurrentTime = getWaktu().split(":");
 
     const checkHour =
       parseInt(splitCurrentTime[0]) >= parseInt(absentHourEntry[0]) &&
@@ -386,6 +387,14 @@ export function CheckInDialog({
     return checkMinute && checkHour ? "On-Time" : "Late";
   };
 
+  const getWaktu = () => {
+    return waktu.toLocaleTimeString("en-US", {
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   const checkIn = async () => {
     setLoading(true);
     const data = {
@@ -394,12 +403,8 @@ export function CheckInDialog({
       shift: absentHour.name,
       shiftId,
       status: "Present",
-      detail: isLate(),
-      checkInTime: currentTime.toLocaleTimeString("en-US", {
-        hour12: false,
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      detail: isLate(getWaktu()),
+      checkInTime: getWaktu(),
       checkOutTime: "-",
     };
     await checkInUser(absentId, data)
@@ -409,10 +414,6 @@ export function CheckInDialog({
       })
       .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    console.log(attendanceLog);
-  });
 
   return (
     <div
@@ -431,24 +432,12 @@ export function CheckInDialog({
           <h1>maps</h1>
         </div>
         <div className="border-t-2 border-[#d9d9d9] h-full bg-[#F8F8F9]">
-          <div className="py-2 px-4">
-            <div className="p-2 border-[1.5px] bg-white rounded-md border-black flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <img src={location} alt="" />
-                <div>
-                  <h1 className="font-bold">Main</h1>
-                  <h3 className="font-bold text-sm">Btp Blok A 235</h3>
-                </div>
-              </div>
-              <input type="radio" className="w-6 h-6" />
-            </div>
-          </div>
           <div className="px-4 py-3">
             <button
               className="text-center w-full py-3 bg-[#0E2A47] rounded-md text-white font-bold"
               onClick={checkIn}
             >
-              Check-In
+              {isCheckIn ? "Check-Out" : "Check-in"}
             </button>
           </div>
         </div>

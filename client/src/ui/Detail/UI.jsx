@@ -37,9 +37,11 @@ import {
   DailyAttendance,
   MonthlyAttendance,
 } from "../../components/AbsenteeDetail";
+import { WaktuContext } from "../../hooks/waktuContext";
 
 export function ListHomeAsUser({ absent }) {
-  const [waktu, setWaktu] = useState(new Date());
+  const { waktu } = useContext(WaktuContext);
+  const { userData } = useContext(DataContext);
   const [CheckInActive, setCheckInActive] = useState(false);
   const [PermissionActive, setPermissionActive] = useState(false);
   const [shift, setShift] = useState([]);
@@ -50,19 +52,25 @@ export function ListHomeAsUser({ absent }) {
     const [entryHours, entryMinutes] = entryTime.split(":").map(Number);
     const [leaveHours, leaveMinutes] = leaveTime.split(":").map(Number);
 
-    return (
-      (currentHours > entryHours ||
-        (currentHours === entryHours && currentMinutes >= entryMinutes)) &&
-      (currentHours < leaveHours ||
-        (currentHours === leaveHours && currentMinutes <= leaveMinutes))
-    );
+    if (
+      entryHours > leaveHours ||
+      (entryHours === leaveHours && entryMinutes > leaveMinutes)
+    ) {
+      return (
+        (currentHours > entryHours ||
+          (currentHours === entryHours && currentMinutes >= entryMinutes)) &&
+        (currentHours < 24 ||
+          (currentHours === 0 && currentMinutes <= leaveMinutes))
+      );
+    } else {
+      return (
+        (currentHours > entryHours ||
+          (currentHours === entryHours && currentMinutes >= entryMinutes)) &&
+        (currentHours < leaveHours ||
+          (currentHours === leaveHours && currentMinutes <= leaveMinutes))
+      );
+    }
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setWaktu(new Date());
-    }, 1000);
-  });
 
   useEffect(() => {
     if (absent.absenteeHours.length > 0) {
@@ -94,6 +102,12 @@ export function ListHomeAsUser({ absent }) {
     year: "numeric",
     month: "long",
     day: "numeric",
+  };
+
+  const checkCheckIn = (shiftId) => {
+    return absent.attendanceLog.some(
+      (log) => log.userId === userData._id && log.shiftId === shiftId
+    );
   };
 
   return (
@@ -130,7 +144,7 @@ export function ListHomeAsUser({ absent }) {
                     setCheckInActive(true);
                   }}
                 >
-                  Check-In
+                  {checkCheckIn(data._id) ? "Check-Out" : "Check-In"}
                 </button>
                 <button
                   className="button max-w-72"
@@ -150,8 +164,8 @@ export function ListHomeAsUser({ absent }) {
                     shiftId={data._id}
                     setActive={setCheckInActive}
                     absentHour={data}
+                    isCheckIn={checkCheckIn(data._id)}
                     attendanceLog={absent.attendanceLog}
-                    currentTime={waktu}
                   />
                   <PermissionDialog
                     active={PermissionActive}
@@ -180,7 +194,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   const [absentHours, setAbsentHours] = useState([]);
   const [attendanceLog, setAttendanceLog] = useState([]);
   const { absentHour, setAbsentHour } = useContext(LayoutContext);
-  const [waktu, setWaktu] = useState(new Date());
+  const { waktu } = useContext(WaktuContext);
 
   const handleButtonClick = () => {
     setActiveIndex(1);

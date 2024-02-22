@@ -11,6 +11,7 @@ import { TabProvider } from "./hooks/tabContext";
 import { LoadingProvider } from "./hooks/loadingContext";
 import { DataProvider } from "./hooks/dataContext";
 import { ResourceProvider } from "./hooks/resourceContext";
+import { WaktuProvider } from "./hooks/waktuContext";
 
 export default function App() {
   return (
@@ -31,7 +32,11 @@ export default function App() {
                         <Route path="/home" element={<Home />} />
                         <Route
                           path="/detailAbsent/:absentId"
-                          element={<AbsentDetail />}
+                          element={
+                            <WaktuProvider>
+                              <AbsentDetail />
+                            </WaktuProvider>
+                          }
                         />
                         <Route path="/settings" element={<Settings />} />
                       </Routes>
