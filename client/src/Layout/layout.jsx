@@ -2,14 +2,12 @@ import { Add, ChevronRight, Menu } from "@mui/icons-material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Suspense, useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
-import { Dialog, MakeAbsenteeDialog } from "../components/Dialog";
+import { Dialog } from "../components/Dialog";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
 import { ResourceContext } from "../hooks/resourceContext";
 import Skeleton from "../components/skeletons/skeletons";
-import { getAbsentName } from "../lib/absentee";
-import Loading from "../components/Loading";
 
 export default function Layout({ children }) {
   const location = useParams();
@@ -20,26 +18,15 @@ export default function Layout({ children }) {
   const { joinActive, createActive, setCreateActive, setJoinActive } =
     useContext(LayoutContext);
   const { resource } = useContext(ResourceContext);
-  const [absentId, setAbsentId] = useState(null);
   const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const getAbsenteeName = async (loc) => {
-    setLoading(true);
-    setAbsentId(loc);
-    const getName = await getAbsentName(loc);
-    setUrl(getName.absentName);
-    setLoading(false);
-  };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     const newLocation = location["*"].split("/");
     const loc = newLocation[newLocation.length - 1];
-    if (loc !== "home" && loc !== "settings") {
-      getAbsenteeName(loc);
-    } else {
-      setUrl(loc);
-    }
+    setUrl(loc);
+    setLoading(false);
   }, [location]);
 
   useEffect(() => {
@@ -58,8 +45,6 @@ export default function Layout({ children }) {
     >
       {url === "home" && (
         <>
-          <MakeAbsenteeDialog absentId={absentId} />
-
           <Dialog
             joinActive={joinActive}
             createActive={createActive}
@@ -172,11 +157,6 @@ export default function Layout({ children }) {
           lgActive ? "lg:pl-56" : "lg:pl-0"
         } transition-all duration-300 pt-16 w-full min-h-screen bg-[#f8f8f9]`}
       >
-        {loading && (
-          <div className="-mt-16">
-            <Loading />
-          </div>
-        )}
         {!loading && <div>{children}</div>}
       </main>
     </Suspense>

@@ -31,7 +31,7 @@ export default function App() {
                       <Routes>
                         <Route path="/home" element={<Home />} />
                         <Route
-                          path="/detailAbsent/:absentId"
+                          path="/detailAbsent/:absentId/:absentName"
                           element={
                             <WaktuProvider>
                               <AbsentDetail />

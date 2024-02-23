@@ -218,7 +218,11 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
 
   useEffect(() => {
     setAbsentHours(absent.absenteeHours);
-    setAttendanceLog(absent.attendanceLog);
+    setAttendanceLog(
+      absent.attendanceLog.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      )
+    );
   }, [absent]);
 
   const options = {
@@ -229,7 +233,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
   };
 
   return (
-    <div>
+    <>
       <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between">
         <div className="w-full flex justify-end">
           <button
@@ -341,7 +345,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -520,9 +524,10 @@ export function SettingsAbsentAdmin({ absent }) {
 
   const editOwner = async () => {
     setLoading(true);
-    await editAsOwner(absent._id, { newAbsentName, newOwnerName }).then(() =>
-      setLoading(false)
-    );
+    await editAsOwner(absent._id, { newAbsentName, newOwnerName }).then(() => {
+      setLoading(false);
+      navigate(`/detailAbsent/${absent._id}/${newAbsentName}`);
+    });
   };
 
   const disband = async () => {

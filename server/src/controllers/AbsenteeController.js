@@ -12,17 +12,6 @@ const getAll = async (req, res) => {
   res.status(200).json({ absentee });
 };
 
-const getAbsentName = async (req, res) => {
-  const { absentId } = req.params;
-
-  try {
-    const absent = await Absentee.findById({ _id: absentId });
-    res.status(200).json({ absentName: absent.name });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
 const createAbsent = async (req, res) => {
   const { name, ownerName, username } = req.body;
   const { userId } = req.params;
@@ -131,6 +120,7 @@ const editAsOwner = async (req, res) => {
       { _id: absentId },
       { ownerName: newOwnerName, name: newAbsentName }
     );
+
     res.status(200).json(updateAbsentee);
   } catch (err) {
     res.status(500).json(err);
@@ -186,7 +176,6 @@ const disband = async (req, res) => {
 
 module.exports = {
   getAll,
-  getAbsentName,
   createAbsent,
   joinAbsent,
   leaveAbsent,

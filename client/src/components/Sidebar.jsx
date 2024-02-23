@@ -57,7 +57,7 @@ export default function Sidebar({ resource, setActive }) {
                   absenteeData.map((absent) => (
                     <li key={absent._id}>
                       <Link
-                        to={`/detailAbsent/${absent._id}`}
+                        to={`/detailAbsent/${absent._id}/${absent.name}`}
                         className="sidemenu"
                         onClick={() => {
                           if (setActive) {
