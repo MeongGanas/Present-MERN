@@ -73,15 +73,12 @@ const leaveAbsent = async (req, res) => {
   const { id, userId } = req.params;
 
   try {
-    const absentee = await Absentee.find({ _id: id });
+    const absentee = await Absentee.findById(id);
     const usersJoin = absentee[0].usersJoin.filter(
       (user) => user.userId !== userId
     );
 
-    const newAbsentee = await Absentee.findByIdAndUpdate(
-      { _id: id },
-      { usersJoin }
-    );
+    const newAbsentee = await Absentee.findByIdAndUpdate(id, { usersJoin });
 
     res.status(200).json(newAbsentee);
   } catch (err) {
@@ -93,7 +90,7 @@ const editAsPaticipant = async (req, res) => {
   const { absentId, userId } = req.params;
 
   try {
-    const absentee = await Absentee.find({ _id: absentId });
+    const absentee = await Absentee.findById(absentId);
     const updatedUsersJoin = absentee[0].usersJoin.map((user) => {
       if (user.userId === userId) {
         return { ...user, username: req.body.newUsername };
@@ -101,10 +98,9 @@ const editAsPaticipant = async (req, res) => {
       return user;
     });
 
-    const updateAbsentee = await Absentee.findByIdAndUpdate(
-      { _id: absentId },
-      { usersJoin: updatedUsersJoin }
-    );
+    const updateAbsentee = await Absentee.findByIdAndUpdate(absentId, {
+      usersJoin: updatedUsersJoin,
+    });
     res.status(200).json(updateAbsentee);
   } catch (err) {
     res.status(500).json(err);
@@ -116,10 +112,10 @@ const editAsOwner = async (req, res) => {
   const { newAbsentName, newOwnerName } = req.body;
 
   try {
-    const updateAbsentee = await Absentee.findByIdAndUpdate(
-      { _id: absentId },
-      { ownerName: newOwnerName, name: newAbsentName }
-    );
+    const updateAbsentee = await Absentee.findByIdAndUpdate(absentId, {
+      ownerName: newOwnerName,
+      name: newAbsentName,
+    });
 
     res.status(200).json(updateAbsentee);
   } catch (err) {
@@ -131,14 +127,11 @@ const createAbsentHour = async (req, res) => {
   const { absentId } = req.params;
 
   try {
-    const absentHour = await Absentee.findByIdAndUpdate(
-      { _id: absentId },
-      {
-        $addToSet: {
-          absenteeHours: { ...req.body },
-        },
-      }
-    );
+    const absentHour = await Absentee.findByIdAndUpdate(absentId, {
+      $addToSet: {
+        absenteeHours: { ...req.body },
+      },
+    });
     res.status(200).json(absentHour);
   } catch (err) {
     res.status(500).json(err);
@@ -149,14 +142,11 @@ const attendance = async (req, res) => {
   const { absentId } = req.params;
 
   try {
-    const attendancLog = await Absentee.findByIdAndUpdate(
-      { _id: absentId },
-      {
-        $addToSet: {
-          attendanceLog: { ...req.body },
-        },
-      }
-    );
+    const attendancLog = await Absentee.findByIdAndUpdate(absentId, {
+      $addToSet: {
+        attendanceLog: { ...req.body },
+      },
+    });
     res.status(200).json(attendancLog);
   } catch (err) {
     res.status(500).json(err);
@@ -174,6 +164,29 @@ const disband = async (req, res) => {
   }
 };
 
+const checkOut = async (req, res) => {
+  const { absentId, shiftId, userId } = req.params;
+
+  try {
+    const absentee = await Absentee.findById(absentId);
+    const newAttendance = absentee.attendanceLog.map((log) => {
+      if (log.shiftId === shiftId && log.userId === userId) {
+        log.checkOutTime = req.body.time;
+        return log;
+      }
+      return log;
+    });
+    const updateAbsent = await Absentee.findByIdAndUpdate(
+      absentId,
+      { attendanceLog: newAttendance },
+      { new: true }
+    );
+    res.status(200).json(updateAbsent);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   getAll,
   createAbsent,
@@ -184,4 +197,5 @@ module.exports = {
   editAsPaticipant,
   createAbsentHour,
   attendance,
+  checkOut,
 };

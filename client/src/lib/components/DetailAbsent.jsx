@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import AbsenteeDetail from "../../components/AbsenteeDetail";
 import { DataContext } from "../../hooks/dataContext";
 import { getSingleAbsentee } from "../absentee";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AbsenteeDetail from "../../components/absentDetail/AbsenteeDetail";
 
 export default function DetailAbsent({ resource }) {
   const [admin, setAdmin] = useState(false);

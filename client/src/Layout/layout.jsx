@@ -2,12 +2,12 @@ import { Add, ChevronRight, Menu } from "@mui/icons-material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Suspense, useContext, useEffect, useState } from "react";
 import orang from "../img/4836491 1.svg";
-import { Dialog } from "../components/Dialog";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
 import { ResourceContext } from "../hooks/resourceContext";
 import Skeleton from "../components/skeletons/skeletons";
+import Dialog from "../components/dialog/HomeDialog";
 
 export default function Layout({ children }) {
   const location = useParams();

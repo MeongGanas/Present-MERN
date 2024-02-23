@@ -75,3 +75,17 @@ export async function checkInUser(absentId, data) {
     throw err;
   }
 }
+
+export async function checkOutUser(absentId, userId, shiftId, time) {
+  try {
+    const response = await axios.patch(
+      `http://localhost:4000/api/absentee/checkout/${absentId}/${shiftId}/${userId}`,
+      {
+        time,
+      }
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}

@@ -4,7 +4,7 @@ import DetailAbsent from "../lib/components/DetailAbsent";
 import { ResourceContext } from "../hooks/resourceContext";
 import { DataContext } from "../hooks/dataContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { MakeAbsenteeDialog } from "../components/Dialog";
+import MakeAbsenteeDialog from "../components/dialog/MakeAbsent";
 
 export default function AbsentDetail() {
   const navigate = useNavigate();

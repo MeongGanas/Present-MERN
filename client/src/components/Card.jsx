@@ -30,7 +30,7 @@ export default function Card({ absent }) {
 
   return (
     <div className="w-full bg-white min-w-80 max-w-sm shadow-md rounded-md overflow-hidden">
-      <Link to={`/detailAbsent/${absent._id}`}>
+      <Link to={`/detailAbsent/${absent._id}/${absent.name}`}>
         <img
           src={background}
           alt=""
@@ -39,7 +39,7 @@ export default function Card({ absent }) {
       </Link>
       <div className="px-5 py-3">
         <div className="flex justify-between items-center">
-          <Link to={`/detailAbsent/${absent._id}`}>
+          <Link to={`/detailAbsent/${absent._id}/${absent.name}`}>
             <h1 className="text-xl font-bold underline cursor-pointer">
               {absent.name}
             </h1>
@@ -59,7 +59,7 @@ export default function Card({ absent }) {
                     className="selectButton"
                     onClick={() => {
                       setActiveIndex(2);
-                      navigate(`/detailAbsent/${absent._id}`);
+                      navigate(`/detailAbsent/${absent._id}/${absent.name}`);
                     }}
                   >
                     <Info className="mr-2" />
@@ -86,7 +86,7 @@ export default function Card({ absent }) {
               className="iconbutton"
               onClick={() => {
                 setActiveIndex(3);
-                navigate(`/detailAbsent/${absent._id}`);
+                navigate(`/detailAbsent/${absent._id}/${absent.name}`);
               }}
             >
               <img src={setting} alt="" width="24" />
