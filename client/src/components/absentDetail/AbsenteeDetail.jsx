@@ -44,14 +44,14 @@ export default function AbsenteeDetail({ absent, admin }) {
             </Tab>
           </div>
           {admin && (
-            <div className="absolute right-0 sm:right-5 top-2.5">
+            <div className="absolute right-2 sm:right-5 top-2.5">
               <button className="iconbutton" onClick={() => setActiveIndex(3)}>
                 <img src={setting} alt="" width="24" />
               </button>
             </div>
           )}
           {!admin && (
-            <div className="absolute right-0 sm:right-5 top-2.5">
+            <div className="absolute right-2 sm:right-5 top-2.5">
               <button className="iconbutton" onClick={() => setActiveIndex(2)}>
                 <MoreHoriz />
               </button>
