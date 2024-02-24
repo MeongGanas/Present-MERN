@@ -35,6 +35,7 @@ const attendanceLogSchema = new Schema(
       type: String,
       required: true,
     },
+    date: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
@@ -90,6 +91,7 @@ const absenteeModel = new Schema({
   ],
   absenteeHours: [shiftSchema],
   attendanceLog: [attendanceLogSchema],
+  attendanceHistory: [attendanceLogSchema],
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);

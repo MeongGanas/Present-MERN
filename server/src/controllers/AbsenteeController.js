@@ -187,6 +187,8 @@ const checkOut = async (req, res) => {
   }
 };
 
+const moveAttendaceLog = async (req, res) => {};
+
 module.exports = {
   getAll,
   createAbsent,

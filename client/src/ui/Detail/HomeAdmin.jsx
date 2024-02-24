@@ -137,8 +137,8 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                     </tr>
                   ))}
                 {attendanceLog.length === 0 && (
-                  <tr className="py-5">
-                    <td className="font-bold text-center">
+                  <tr>
+                    <td className="font-bold text-center py-5">
                       No one is present yet
                     </td>
                   </tr>
