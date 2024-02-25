@@ -120,7 +120,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                       <td className="p-5 w-1/3" align="end">
                         <h3 className="font-bold text-sm md:text-base">
                           {log.status === "Present" && (
-                            <h1>
+                            <span>
                               {log.status}{" "}
                               {log.detail === "Late" && (
                                 <span className="text-red-700">
@@ -134,13 +134,13 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                                   ({log.detail})
                                 </span>
                               )}
-                            </h1>
+                            </span>
                           )}
                           {log.status === "Permission" && (
-                            <h1 className="text-primary">
+                            <span className="text-primary">
                               {log.status}{" "}
                               <span className="text-black">({log.detail})</span>
-                            </h1>
+                            </span>
                           )}
                         </h3>
                       </td>

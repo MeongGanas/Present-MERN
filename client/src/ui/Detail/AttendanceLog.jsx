@@ -11,9 +11,11 @@ import { LayoutContext } from "../../hooks/dialogContext";
 import MakeAbsenteeDialog from "../../components/dialog/MakeAbsent";
 import MonthlyAttendance from "../../components/absentDetail/MonthlyAttendance";
 import DailyAttendance from "../../components/absentDetail/DailyAttendance";
+import { WaktuContext } from "../../hooks/waktuContext";
 
 export function AttendanceLog({ absent }) {
   const { setAbsentHour } = useContext(LayoutContext);
+  const { waktu } = useContext(WaktuContext);
   const [absentHours, setAbsentHours] = useState([]);
   const [attendanceLog, setAttendanceLog] = useState([]);
   const [currentHours, setCurrentHours] = useState([]);
@@ -23,6 +25,12 @@ export function AttendanceLog({ absent }) {
     setCurrentHours(absent.absenteeHours);
     setAttendanceLog(absent.attendanceLog);
   }, [absent]);
+
+  const isCurrentDay = (selectedDay) => {
+    const currentDay = waktu.toLocaleString("en-US", { weekday: "long" });
+    const isCurrent = selectedDay.includes(currentDay);
+    return isCurrent;
+  };
 
   const filter = (currentOption) => {
     if (currentOption === "make") {
@@ -64,6 +72,7 @@ export function AttendanceLog({ absent }) {
                 <Select
                   variant="unstyled"
                   placeholder="Select"
+                  className="cursor-pointer"
                   onChange={(e) => filter(e.target.value)}
                 >
                   {absent.absenteeHours.map((absentHour) => (
