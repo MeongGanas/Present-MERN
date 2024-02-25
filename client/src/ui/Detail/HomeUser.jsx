@@ -84,6 +84,15 @@ export function ListHomeAsUser({ absent }) {
     );
   };
 
+  const checkCheckOut = (shiftId) => {
+    return absent.attendanceLog.some(
+      (log) =>
+        log.userId === userData._id &&
+        log.shiftId === shiftId &&
+        log.checkOutTime !== "-"
+    );
+  };
+
   return (
     <div className="p-5 max-w-screen-lg mx-auto listDetail text-white rounded-md">
       <h1 className="text-3xl font-bold">{absent.name}</h1>
@@ -102,55 +111,64 @@ export function ListHomeAsUser({ absent }) {
       <ul className="text-black ">
         {shift.length > 0 &&
           shift.map((data, i) => (
-            <li className="bg-white rounded-md mt-5" key={data._id}>
-              <div className="text-center border-b-2 py-5">
-                <h4 className="font-bold">{data.name}</h4>
-                <h1 className="text-3xl font-bold my-4">
-                  {data.entry} - {data.leave}
-                </h1>
-                <p>Late tolerance: {data.tolerance}</p>
-              </div>
-              <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
-                <button
-                  className="button bg-[#0E2A47] max-w-72 text-white"
-                  onClick={() => {
-                    setShiftIndex(i);
-                    setCheckInActive(true);
-                  }}
-                >
-                  {checkCheckIn(data._id) ? "Check-Out" : "Check-In"}
-                </button>
-                <button
-                  className="button max-w-72"
-                  onClick={() => {
-                    setShiftIndex(i);
-                    setPermissionActive(true);
-                  }}
-                >
-                  Permission
-                </button>
-              </div>
-              {shiftIndex === i && (
-                <>
-                  <CheckInDialog
-                    active={CheckInActive}
-                    absentId={absent._id}
-                    shiftId={data._id}
-                    setActive={setCheckInActive}
-                    absentHour={data}
-                    isCheckIn={checkCheckIn(data._id)}
-                    attendanceLog={absent.attendanceLog}
-                  />
-                  <PermissionDialog
-                    active={PermissionActive}
-                    absentId={absent._id}
-                    shiftId={data._id}
-                    setActive={setPermissionActive}
-                    absentHour={data}
-                  />
-                </>
-              )}
-            </li>
+            <>
+              <li className="bg-white rounded-md mt-5" key={data._id}>
+                <div className="text-center border-b-2 py-5">
+                  <h4 className="font-bold">{data.name}</h4>
+                  <h1 className="text-3xl font-bold my-4">
+                    {data.entry} - {data.leave}
+                  </h1>
+                  <p>Late tolerance: {data.tolerance}</p>
+                </div>
+                <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
+                  {checkCheckOut(data._id) && (
+                    <h1>You already check-out from this shift</h1>
+                  )}
+                  {!checkCheckOut(data._id) && (
+                    <>
+                      <button
+                        className="button bg-[#0E2A47] max-w-72 text-white"
+                        onClick={() => {
+                          setShiftIndex(i);
+                          setCheckInActive(true);
+                        }}
+                      >
+                        {checkCheckIn(data._id) ? "Check-Out" : "Check-In"}
+                      </button>
+                      <button
+                        className="button max-w-72"
+                        onClick={() => {
+                          setShiftIndex(i);
+                          setPermissionActive(true);
+                        }}
+                      >
+                        Permission
+                      </button>
+                    </>
+                  )}
+                </div>
+                {shiftIndex === i && (
+                  <>
+                    <CheckInDialog
+                      active={CheckInActive}
+                      absentId={absent._id}
+                      shiftId={data._id}
+                      setActive={setCheckInActive}
+                      absentHour={data}
+                      isCheckIn={checkCheckIn(data._id)}
+                      attendanceLog={absent.attendanceLog}
+                    />
+                    <PermissionDialog
+                      active={PermissionActive}
+                      absentId={absent._id}
+                      shiftId={data._id}
+                      setActive={setPermissionActive}
+                      absentHour={data}
+                    />
+                  </>
+                )}
+              </li>
+            </>
           ))}
 
         {shift.length === 0 && (

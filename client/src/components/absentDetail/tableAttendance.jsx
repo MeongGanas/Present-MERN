@@ -8,7 +8,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-export default function TableAttendance({ absentHour, attendanceLog }) {
+export default function TableAttendance({ attendanceLog }) {
   return (
     <>
       <div className="mt-5 border border-[#C4C4C4] rounded-md overflow-hidden">
@@ -30,6 +30,9 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                   <Th paddingY="5" textAlign="center">
                     Status
                   </Th>
+                  <Th paddingY="5" textAlign="center">
+                    Date
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -41,6 +44,9 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                       <Td textAlign="center">{log.checkInTime}</Td>
                       <Td textAlign="center">{log.checkOutTime}</Td>
                       <Td textAlign="center">{log.status}</Td>
+                      <Td textAlign="center">
+                        {new Date(log.date).toLocaleDateString("id-ID")}
+                      </Td>
                     </Tr>
                   ))}
                 {attendanceLog.length === 0 && (
