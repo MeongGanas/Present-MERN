@@ -119,18 +119,28 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
 
                       <td className="p-5 w-1/3" align="end">
                         <h3 className="font-bold text-sm md:text-base">
-                          {log.status}
-                          {log.detail === "Late" && (
-                            <span className="text-red-700">
-                              {" "}
-                              ({log.detail})
-                            </span>
+                          {log.status === "Present" && (
+                            <h1>
+                              {log.status}{" "}
+                              {log.detail === "Late" && (
+                                <span className="text-red-700">
+                                  {" "}
+                                  ({log.detail})
+                                </span>
+                              )}
+                              {log.detail === "On-Time" && (
+                                <span className="text-green-500">
+                                  {" "}
+                                  ({log.detail})
+                                </span>
+                              )}
+                            </h1>
                           )}
-                          {log.detail === "On-Time" && (
-                            <span className="text-green-500">
-                              {" "}
-                              ({log.detail})
-                            </span>
+                          {log.status === "Permission" && (
+                            <h1 className="text-primary">
+                              {log.status}{" "}
+                              <span className="text-black">({log.detail})</span>
+                            </h1>
                           )}
                         </h3>
                       </td>

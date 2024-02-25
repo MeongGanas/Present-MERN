@@ -187,7 +187,20 @@ const checkOut = async (req, res) => {
   }
 };
 
-const moveAttendaceLog = async (req, res) => {};
+const permission = async (req, res) => {
+  const { absentId } = req.params;
+
+  try {
+    const absentee = await Absentee.findByIdAndUpdate(absentId, {
+      $addToSet: {
+        attendanceLog: { ...req.body },
+      },
+    });
+    res.status(200).json(absentee);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 module.exports = {
   getAll,
@@ -200,4 +213,5 @@ module.exports = {
   createAbsentHour,
   attendance,
   checkOut,
+  permission,
 };

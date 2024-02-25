@@ -51,7 +51,6 @@ export default function CheckInDialog({
       status: "Present",
       detail: isLate(getWaktu()),
       checkInTime: getWaktu(),
-      checkOutTime: "-",
     };
     await checkInUser(absentId, data)
       .then(() => {

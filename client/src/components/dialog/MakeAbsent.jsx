@@ -38,26 +38,42 @@ export default function MakeAbsenteeDialog({ absentId }) {
 
   const handleAbsenteeHour = async () => {
     setLoading(true);
+
     const selectedDay = checkedItems
-      .filter((item) => {
-        return item;
-      })
-      .map((_, i) => days[i]);
-    const absentHourData = { name, selectedDay, tolerance, entry, leave };
-    await createAbsentHour(absentId, absentHourData)
-      .then(() => setLoading(false))
-      .catch((err) => {
-        setLoading(false);
-        swal.fire({
+      .reduce((acc, item, index) => {
+        if (item) {
+          acc.push(index);
+        }
+        return acc;
+      }, [])
+      .map((index) => days[index]);
+
+    if (name && tolerance && entry && leave && selectedDay) {
+      const absentHourData = { name, selectedDay, tolerance, entry, leave };
+      await createAbsentHour(absentId, absentHourData)
+        .then(() => setLoading(false))
+        .catch((err) => {
+          setLoading(false);
+          swal.fire({
+            title: "Create Absent Hour Fail!",
+            text:
+              err.response?.data?.mssg ||
+              err.response?.data?.mssg?.message ||
+              "An error occurred during create absent",
+            icon: "error",
+            confirmButtonText: "Close",
+          });
+        });
+    } else {
+      swal
+        .fire({
           title: "Create Absent Hour Fail!",
-          text:
-            err.response?.data?.mssg ||
-            err.response?.data?.mssg?.message ||
-            "An error occurred during create absent",
+          text: "Isi data dengan lengkap!!",
           icon: "error",
           confirmButtonText: "Close",
-        });
-      });
+        })
+        .then(() => setLoading(false));
+    }
   };
 
   const handleTimeChange = (value) => {

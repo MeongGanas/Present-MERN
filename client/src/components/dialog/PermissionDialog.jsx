@@ -1,11 +1,35 @@
 import { Close } from "@mui/icons-material";
+import { useContext, useState } from "react";
+import { LoadingContext } from "../../hooks/loadingContext";
+import { DataContext } from "../../hooks/dataContext";
+import { permissionUser } from "../../lib/absentee";
 
 export default function PermissionDialog({
   active,
   setActive,
   absentId,
   shiftId,
+  absentHour,
 }) {
+  const { setLoading } = useContext(LoadingContext);
+  const { userData } = useContext(DataContext);
+  const [title, setTitle] = useState("");
+  const [description, setDiscription] = useState("");
+
+  const handlePermission = async () => {
+    setLoading(true);
+    const data = {
+      userId: userData._id,
+      shiftId,
+      username: userData.username,
+      shift: absentHour.name,
+      status: "Permission",
+      detail: title,
+      notes: description,
+    };
+    await permissionUser(absentId, data).then(() => setLoading(false));
+  };
+
   return (
     <div
       className={`dialog ${
@@ -29,6 +53,7 @@ export default function PermissionDialog({
               name="title"
               id="title"
               className="border-[1.5px] border-black p-3 w-full rounded-md"
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
@@ -41,10 +66,14 @@ export default function PermissionDialog({
               id="desc"
               rows={10}
               className="w-full border-[1.5px] p-2 border-black rounded-md"
+              onChange={(e) => setDiscription(e.target.value)}
             ></textarea>
           </div>
 
-          <button className="text-center w-full py-3 bg-[#0E2A47] rounded-md text-white font-bold">
+          <button
+            className="text-center w-full py-3 bg-[#0E2A47] rounded-md text-white font-bold"
+            onClick={handlePermission}
+          >
             Check-In
           </button>
         </div>

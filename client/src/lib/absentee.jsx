@@ -79,10 +79,22 @@ export async function checkInUser(absentId, data) {
 export async function checkOutUser(absentId, userId, shiftId, time) {
   try {
     const response = await axios.patch(
-      `http://localhost:4000/api/absentee/checkout/${absentId}/${shiftId}/${userId}`,
+      `https://present-server-nine.vercel.app/api/absentee/checkout/${absentId}/${shiftId}/${userId}`,
       {
         time,
       }
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function permissionUser(absentId, data) {
+  try {
+    const response = await axios.patch(
+      `http://localhost:4000/api/absentee/permission/${absentId}`,
+      data
     );
     return response.data;
   } catch (err) {

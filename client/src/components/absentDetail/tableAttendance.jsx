@@ -27,6 +27,9 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                   <Th paddingY="5" textAlign="center">
                     Check-out
                   </Th>
+                  <Th paddingY="5" textAlign="center">
+                    Status
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -37,6 +40,7 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                       <Td textAlign="center">{log.username}</Td>
                       <Td textAlign="center">{log.checkInTime}</Td>
                       <Td textAlign="center">{log.checkOutTime}</Td>
+                      <Td textAlign="center">{log.status}</Td>
                     </Tr>
                   ))}
                 {attendanceLog.length === 0 && (

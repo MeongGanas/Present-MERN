@@ -38,6 +38,12 @@ export function ListHomeAsUser({ absent }) {
     }
   };
 
+  const isCurrentDay = (selectedDay) => {
+    const currentDay = waktu.toLocaleString("en-US", { weekday: "long" });
+    const isCurrent = selectedDay.includes(currentDay);
+    return isCurrent;
+  };
+
   useEffect(() => {
     if (absent.absenteeHours.length > 0) {
       const shifts = absent.absenteeHours;
@@ -46,8 +52,10 @@ export function ListHomeAsUser({ absent }) {
         hour: "2-digit",
         minute: "2-digit",
       });
-      const currentShifts = shifts.filter((shift) =>
-        isCurrentTimeWithinShift(currentTime, shift.entry, shift.leave)
+      const currentShifts = shifts.filter(
+        (shift) =>
+          isCurrentTimeWithinShift(currentTime, shift.entry, shift.leave) &&
+          isCurrentDay(shift.selectedDay)
       );
       setShift(currentShifts);
     } else {
@@ -138,6 +146,7 @@ export function ListHomeAsUser({ absent }) {
                     absentId={absent._id}
                     shiftId={data._id}
                     setActive={setPermissionActive}
+                    absentHour={data}
                   />
                 </>
               )}
@@ -147,7 +156,7 @@ export function ListHomeAsUser({ absent }) {
         {shift.length === 0 && (
           <div className="min-h-52 bg-white flex items-center justify-center">
             <h1 className="font-bold text-[#7A7A7A] text-2xl">
-              No Shifts available 👋
+              No Shifts available today 👋
             </h1>
           </div>
         )}

@@ -29,11 +29,15 @@ const attendanceLogSchema = new Schema(
     },
     checkInTime: {
       type: String,
-      required: true,
+      default: "-",
     },
     checkOutTime: {
       type: String,
-      required: true,
+      default: "-",
+    },
+    notes: {
+      type: String,
+      default: "-",
     },
     date: { type: Date, default: Date.now },
   },
