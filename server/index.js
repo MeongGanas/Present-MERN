@@ -37,8 +37,6 @@ const moveData = async () => {
             $set: { attendanceLog: [] },
           }
         );
-
-        console.log(`Data berhasil dipindahkan untuk user ${absentee.userId}`);
       }
     });
   } catch (err) {
@@ -46,7 +44,7 @@ const moveData = async () => {
   }
 };
 
-cron.schedule("0  0 * * *", moveData);
+cron.schedule("0 0 * * *", moveData);
 
 mongoose
   .connect(process.env.MONGO_URL)
