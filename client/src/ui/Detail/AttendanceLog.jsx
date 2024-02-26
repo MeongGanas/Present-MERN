@@ -123,17 +123,12 @@ export function AttendanceLog({ absent }) {
 
           <TabPanels>
             <TabPanel paddingX={0}>
-              {absentHours.length > 0 && (
-                <DailyAttendance
-                  absentHour={currentHours}
-                  attendanceLog={attendanceLog}
-                  setCurrentDay={setCurrentDay}
-                  currentDay={currentDay}
-                />
-              )}
-              {absentHours.length === 0 && (
-                <h1>There are no absentee hours yet.</h1>
-              )}
+              <DailyAttendance
+                absentHour={currentHours}
+                attendanceLog={attendanceLog}
+                setCurrentDay={setCurrentDay}
+                currentDay={currentDay}
+              />
             </TabPanel>
             <TabPanel paddingX={0}>
               {absentHours.length > 0 && (

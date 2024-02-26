@@ -1,8 +1,6 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import SearchInput from "../SearchInput";
 import TableAttendance from "./tableAttendance";
-import { useContext, useState } from "react";
-import { WaktuContext } from "../../hooks/waktuContext";
 
 export default function DailyAttendance({
   absentHour,

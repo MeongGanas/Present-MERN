@@ -8,11 +8,15 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-export default function TableAttendance({ attendanceLog }) {
+export default function TableAttendance({ absentHour, attendanceLog }) {
   return (
     <>
-      <div className="mt-5 border border-[#C4C4C4] rounded-md overflow-hidden">
-        {attendanceLog && (
+      <div className="mt-5 border border-[#C4C4C4] bg-white rounded-md overflow-hidden">
+        {absentHour.length === 0 && (
+          <h1 className="p-5">There are no absentee hours yet.</h1>
+        )}
+
+        {attendanceLog && absentHour.length > 0 && (
           <TableContainer>
             <Table variant="striped" bg={"white"}>
               <Thead>
