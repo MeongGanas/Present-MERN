@@ -36,8 +36,21 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
     }
   }, [absentHour]);
 
+  const isCurrentDay = (selectedDay) => {
+    const today = waktu.toLocaleString("en-US", { weekday: "long" });
+    const isCurrent = selectedDay.includes(today);
+    return isCurrent;
+  };
+
+  const getCurrentDayAbsent = () => {
+    const absentHour = absent.absenteeHours.filter((absentHour) =>
+      isCurrentDay(absentHour.selectedDay)
+    );
+    return absentHour;
+  };
+
   useEffect(() => {
-    setAbsentHours(absent.absenteeHours);
+    setAbsentHours(getCurrentDayAbsent());
     setAttendanceLog(
       absent.attendanceLog.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
