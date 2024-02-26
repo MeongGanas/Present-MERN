@@ -43,17 +43,12 @@ export default function Layout({ children }) {
         </div>
       }
     >
-      {url === "home" ||
-        (url === "settings" && (
-          <>
-            <Dialog
-              joinActive={joinActive}
-              createActive={createActive}
-              setCreateActive={setCreateActive}
-              setJoinActive={setJoinActive}
-            />
-          </>
-        ))}
+      <Dialog
+        joinActive={joinActive}
+        createActive={createActive}
+        setCreateActive={setCreateActive}
+        setJoinActive={setJoinActive}
+      />
 
       <ClickAwayListener onClickAway={() => setSelectionActive(false)}>
         <div>
@@ -126,7 +121,7 @@ export default function Layout({ children }) {
 
       <div
         className={`bg-white z-10 fixed left-0 top-0 ${
-          lgActive ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
+          lgActive ? "block w-72 translate-x-0" : "w-72 -translate-x-full"
         } h-screen pt-16 border-r-2 border-[#D9D9D9] hidden lg:block transition-all duration-300`}
       >
         <Sidebar resource={resource} />
@@ -145,7 +140,7 @@ export default function Layout({ children }) {
           </button>
           <div
             className={`bg-white z-10 fixed left-0 top-0 ${
-              active ? "block w-56 translate-x-0" : "w-56 -translate-x-full"
+              active ? "block w-72 translate-x-0" : "w-72 -translate-x-full"
             } h-screen pt-16 border-r-2 border-[#D9D9D9] block lg:hidden transition-all duration-300`}
           >
             <Sidebar resource={resource} setActive={setActive} />
@@ -155,7 +150,7 @@ export default function Layout({ children }) {
 
       <main
         className={`${
-          lgActive ? "lg:pl-56" : "lg:pl-0"
+          lgActive ? "lg:pl-72" : "lg:pl-0"
         } transition-all duration-300 pt-16 w-full min-h-screen bg-[#f8f8f9]`}
       >
         {!loading && <div>{children}</div>}

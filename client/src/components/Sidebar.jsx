@@ -42,9 +42,9 @@ export default function Sidebar({ resource, setActive }) {
       <div className="py-3">
         <Accordion allowMultiple defaultIndex={[0]}>
           <AccordionItem>
-            <h2>
+            <h2 className="px-10">
               <AccordionButton>
-                <div className="flex items-center gap-8 py-3 px-10 font-bold">
+                <div className="flex items-center gap-8 py-3 font-bold w-full">
                   <img src={list} alt="" width="24" />
                   Lists
                 </div>

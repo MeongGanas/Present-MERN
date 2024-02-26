@@ -17,7 +17,7 @@ export default function Skeleton() {
         </div>
       </nav>
 
-      <div className="bg-gray-100 z-10 fixed left-0 top-0 min-w-56 -translate-x-full h-screen pt-20 border-r-2 border-gray-200 lg:translate-x-0 transition-all duration-300 p-5">
+      <div className="bg-gray-100 z-10 fixed left-0 top-0 min-w-72 -translate-x-full h-screen pt-20 border-r-2 border-gray-200 lg:translate-x-0 transition-all duration-300 p-5">
         <div className="h-2 bg-gray-200 rounded-full max-w-56 mb-5"></div>
         <div className="h-2 bg-gray-200 rounded-full max-w-40 mb-5"></div>
         <div className="h-2 bg-gray-200 rounded-full max-w-56 mb-5"></div>
