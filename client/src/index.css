@@ -8,6 +8,11 @@ body {
   font-family: "Poppins", sans-serif !important;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
 .sidemenu {
   @apply flex items-center gap-6 py-3 px-10 hover:bg-slate-100 duration-200 transition w-full font-bold;
 }

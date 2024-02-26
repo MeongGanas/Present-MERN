@@ -124,7 +124,7 @@ export default function Layout({ children }) {
           lgActive
             ? "block w-[265px] translate-x-0"
             : "w-[265px] -translate-x-full"
-        } h-screen pt-16 border-r-2 border-[#D9D9D9] hidden lg:block transition-all duration-300`}
+        } h-screen pt-16 border-r-2 border-[#D9D9D9] hidden lg:block transition-all duration-300 overflow-y-auto `}
       >
         <Sidebar resource={resource} />
       </div>

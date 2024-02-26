@@ -58,7 +58,7 @@ export default function Sidebar({ resource, setActive }) {
                     <li key={absent._id}>
                       <Link
                         to={`/detailAbsent/${absent._id}/${absent.name}`}
-                        className="sidemenu"
+                        className="flex items-center gap-6 py-3 pl-9 pr-10 hover:bg-slate-100 duration-200 transition w-full font-bold"
                         onClick={() => {
                           if (setActive) {
                             setActive(false);
@@ -66,7 +66,8 @@ export default function Sidebar({ resource, setActive }) {
                         }}
                       >
                         <span
-                          className={`border h-6 min-w-6 rounded-full border-black uppercase flex items-center justify-center bg-${absent.color}`}
+                          className={`border h-8 min-w-8 rounded-full border-black uppercase flex items-center justify-center text-white`}
+                          style={{ backgroundColor: absent.color }}
                         >
                           {absent.name[0]}
                         </span>
