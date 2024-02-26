@@ -1,6 +1,7 @@
 const { isValidObjectId } = require("mongoose");
 const Absentee = require("../models/Absentee");
 const crypto = require("crypto");
+const randomColor = require("randomcolor");
 
 const getAll = async (req, res) => {
   const { userId } = req.params;
@@ -22,6 +23,12 @@ const createAbsent = async (req, res) => {
 
   const code = crypto.randomBytes(6).toString("hex").slice(0, 6).toUpperCase();
 
+  const options = {
+    hue: "monochrome",
+    luminosity: "dark",
+  };
+  const color = randomColor(options);
+
   try {
     const absentee = await Absentee.create({
       name,
@@ -31,6 +38,7 @@ const createAbsent = async (req, res) => {
       usersJoin: [],
       absenteeHours: [],
       attendanceLog: [],
+      color,
     });
 
     res.status(200).json({ absentee });

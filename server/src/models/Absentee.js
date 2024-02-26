@@ -96,6 +96,10 @@ const absenteeModel = new Schema({
   absenteeHours: [shiftSchema],
   attendanceLog: [attendanceLogSchema],
   attendanceHistory: [attendanceLogSchema],
+  color: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);
