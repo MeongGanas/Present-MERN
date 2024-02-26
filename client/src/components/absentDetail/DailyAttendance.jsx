@@ -7,28 +7,44 @@ import { WaktuContext } from "../../hooks/waktuContext";
 export default function DailyAttendance({
   absentHour,
   attendanceLog,
+  currentDay,
   setCurrentDay,
 }) {
-  const { waktu } = useContext(WaktuContext);
-  const formattedDate = `${waktu.getFullYear()}-${String(
-    waktu.getMonth() + 1
-  ).padStart(2, "0")}-${String(waktu.getDate()).padStart(2, "0")}`;
+  const formattedDate = currentDay.toISOString().split("T")[0];
+
+  const handleBackClick = () => {
+    const newDate = new Date(currentDay);
+    newDate.setDate(currentDay.getDate() - 1);
+    setCurrentDay(newDate);
+  };
+
+  const handleForwardClick = () => {
+    const newDate = new Date(currentDay);
+    newDate.setDate(currentDay.getDate() + 1);
+    setCurrentDay(newDate);
+  };
 
   return (
     <>
       <div className="block sm:flex justify-between items-center">
         <div className="flex gap-5 mb-5 sm:mb-0 flex-wrap">
           <div className="flex w-fit items-center bg-white border-2 border-black rounded-[9px] overflow-hidden">
-            <button className="p-2 hover:bg-slate-100 duration-200 transition">
+            <button
+              className="p-2 hover:bg-slate-100 duration-200 transition"
+              onClick={handleBackClick}
+            >
               <ArrowBack />
             </button>
             <input
               type="date"
-              defaultValue={formattedDate}
+              value={formattedDate}
               onChange={(e) => setCurrentDay(new Date(e.target.value))}
               className="border-x-2 p-2 border-black h-full text-center focus:outline-none"
             />
-            <button className="p-2 hover:bg-slate-100 duration-200 transition">
+            <button
+              className="p-2 hover:bg-slate-100 duration-200 transition"
+              onClick={handleForwardClick}
+            >
               <ArrowForward />
             </button>
           </div>

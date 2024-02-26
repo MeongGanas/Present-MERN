@@ -128,6 +128,7 @@ export function AttendanceLog({ absent }) {
                   absentHour={currentHours}
                   attendanceLog={attendanceLog}
                   setCurrentDay={setCurrentDay}
+                  currentDay={currentDay}
                 />
               )}
               {absentHours.length === 0 && (
