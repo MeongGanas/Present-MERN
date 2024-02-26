@@ -23,11 +23,7 @@ const createAbsent = async (req, res) => {
 
   const code = crypto.randomBytes(6).toString("hex").slice(0, 6).toUpperCase();
 
-  const options = {
-    hue: "monochrome",
-    luminosity: "dark",
-  };
-  const color = randomColor(options);
+  const color = randomColor();
 
   try {
     const absentee = await Absentee.create({
