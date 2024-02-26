@@ -11,7 +11,6 @@ export function ListHomeAsUser({ absent }) {
   const [PermissionActive, setPermissionActive] = useState(false);
   const [shift, setShift] = useState([]);
   const [shiftIndex, setShiftIndex] = useState(null);
-  const [isCheckOut, setIsCheckOut] = useState(false);
 
   const isCurrentTimeWithinShift = (currentTime, entryTime, leaveTime) => {
     const [currentHours, currentMinutes] = currentTime.split(":").map(Number);
@@ -120,33 +119,34 @@ export function ListHomeAsUser({ absent }) {
                   </h1>
                   <p>Late tolerance: {data.tolerance}</p>
                 </div>
-                <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
-                  {checkCheckOut(data._id) && (
-                    <h1>You already check-out from this shift</h1>
-                  )}
-                  {!checkCheckOut(data._id) && (
-                    <>
-                      <button
-                        className="button bg-[#0E2A47] max-w-72 text-white"
-                        onClick={() => {
-                          setShiftIndex(i);
-                          setCheckInActive(true);
-                        }}
-                      >
-                        {checkCheckIn(data._id) ? "Check-Out" : "Check-In"}
-                      </button>
-                      <button
-                        className="button max-w-72"
-                        onClick={() => {
-                          setShiftIndex(i);
-                          setPermissionActive(true);
-                        }}
-                      >
-                        Permission
-                      </button>
-                    </>
-                  )}
-                </div>
+
+                {checkCheckOut(data._id) && (
+                  <h1 className="text-center py-5">
+                    You already check-out from this shift
+                  </h1>
+                )}
+                {!checkCheckOut(data._id) && (
+                  <div className="flex px-5 sm:px-10 justify-center gap-5 py-5">
+                    <button
+                      className="button bg-[#0E2A47] max-w-72 text-white"
+                      onClick={() => {
+                        setShiftIndex(i);
+                        setCheckInActive(true);
+                      }}
+                    >
+                      {checkCheckIn(data._id) ? "Check-Out" : "Check-In"}
+                    </button>
+                    <button
+                      className="button max-w-72"
+                      onClick={() => {
+                        setShiftIndex(i);
+                        setPermissionActive(true);
+                      }}
+                    >
+                      Permission
+                    </button>
+                  </div>
+                )}
                 {shiftIndex === i && (
                   <>
                     <CheckInDialog
