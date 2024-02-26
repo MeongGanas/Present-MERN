@@ -52,7 +52,7 @@ body {
 }
 
 .button-kehadiran {
-  @apply p-2 hover:bg-slate-100 transition duration-200;
+  @apply p-2 hover:bg-slate-100 transition duration-200 text-sm md:text-base;
 }
 
 .button-kehadiran:not(:last-child) {

@@ -1,5 +1,5 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import SearchInput from "../SearchInput";
+import { AttendanceSearchInput } from "../SearchInput";
 import TableAttendance from "./tableAttendance";
 
 export default function DailyAttendance({
@@ -76,7 +76,10 @@ export default function DailyAttendance({
             </button>
           </div>
 
-          <SearchInput />
+          <AttendanceSearchInput
+            tempAttendanceLog={tempAttendanceLog}
+            setAttendanceLog={setAttendanceLog}
+          />
 
           <div className="border-2 w-fit border-black bg-white overflow-hidden rounded-[9px] flex">
             <button className="button-kehadiran" onClick={() => filter("all")}>

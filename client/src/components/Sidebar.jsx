@@ -77,6 +77,10 @@ export default function Sidebar({ resource, setActive }) {
                       </Link>
                     </li>
                   ))}
+
+                {absenteeData.length === 0 && (
+                  <li className="px-10 py-3">No class joined</li>
+                )}
               </ul>
             </AccordionPanel>
           </AccordionItem>

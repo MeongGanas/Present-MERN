@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Select } from "@chakra-ui/react";
-import SearchInput from "../SearchInput";
+import { AttendanceSearchInput } from "../SearchInput";
 import TableAttendance from "./tableAttendance";
 
 export default function MonthlyAttendance({ absentHour, attendanceLog }) {
@@ -19,7 +19,7 @@ export default function MonthlyAttendance({ absentHour, attendanceLog }) {
     <>
       <div className="block sm:flex justify-between items-center">
         <div className="flex flex-wrap gap-5 mb-5 sm:mb-0">
-          <SearchInput />
+          <AttendanceSearchInput />
           <div className="flex gap-5 w-full">
             <Select
               placeholder="Select Month"
