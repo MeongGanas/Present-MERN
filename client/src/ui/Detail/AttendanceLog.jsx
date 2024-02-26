@@ -19,31 +19,60 @@ export function AttendanceLog({ absent }) {
   const [absentHours, setAbsentHours] = useState([]);
   const [attendanceLog, setAttendanceLog] = useState([]);
   const [currentHours, setCurrentHours] = useState([]);
-
-  useEffect(() => {
-    setAbsentHours(absent.absenteeHours);
-    setCurrentHours(absent.absenteeHours);
-    setAttendanceLog(absent.attendanceLog);
-  }, [absent]);
+  const [currentDay, setCurrentDay] = useState(new Date());
 
   const isCurrentDay = (selectedDay) => {
-    const currentDay = waktu.toLocaleString("en-US", { weekday: "long" });
-    const isCurrent = selectedDay.includes(currentDay);
+    const today = currentDay.toLocaleString("en-US", { weekday: "long" });
+    const isCurrent = selectedDay.includes(today);
     return isCurrent;
   };
+
+  const getCurrentDayAbsent = () => {
+    const absentHour = absent.absenteeHours.filter((absentHour) =>
+      isCurrentDay(absentHour.selectedDay)
+    );
+    return absentHour;
+  };
+
+  const isTodayAttendance = (date) => {
+    const attendanceDate = new Date(date);
+    return (
+      attendanceDate.toLocaleDateString() === currentDay.toLocaleDateString()
+    );
+  };
+
+  const getCurrentDayAttendance = () => {
+    let attendance;
+    if (currentDay.toLocaleDateString() === waktu.toLocaleDateString()) {
+      attendance = absent.attendanceLog.filter((attendance) =>
+        isTodayAttendance(attendance.date)
+      );
+    } else {
+      attendance = absent.attendanceHistory.filter((attendance) => {
+        return isTodayAttendance(attendance.date);
+      });
+    }
+    return attendance;
+  };
+
+  useEffect(() => {
+    setAbsentHours(getCurrentDayAbsent());
+    setCurrentHours(getCurrentDayAbsent());
+    setAttendanceLog(getCurrentDayAttendance());
+  }, [absent, currentDay]);
 
   const filter = (currentOption) => {
     if (currentOption === "make") {
       setAbsentHour(true);
     } else if (currentOption === "") {
-      setAbsentHours(absent.absenteeHours);
-      setCurrentHours(absent.absenteeHours);
-      setAttendanceLog(absent.attendanceLog);
+      setAbsentHours(getCurrentDayAbsent());
+      setCurrentHours(getCurrentDayAbsent());
+      setAttendanceLog(getCurrentDayAttendance());
     } else {
-      const newCurrentHours = absent.absenteeHours.filter(
+      const newCurrentHours = absentHours.filter(
         (hours) => hours._id == currentOption
       );
-      const newAttedanceLog = absent.attendanceLog.filter(
+      const newAttedanceLog = attendanceLog.filter(
         (log) => log.shiftId == currentOption
       );
       setCurrentHours(newCurrentHours);
@@ -75,7 +104,7 @@ export function AttendanceLog({ absent }) {
                   className="cursor-pointer"
                   onChange={(e) => filter(e.target.value)}
                 >
-                  {absent.absenteeHours.map((absentHour) => (
+                  {absentHours.map((absentHour) => (
                     <option
                       value={absentHour._id}
                       key={absentHour._id}
@@ -98,6 +127,7 @@ export function AttendanceLog({ absent }) {
                 <DailyAttendance
                   absentHour={currentHours}
                   attendanceLog={attendanceLog}
+                  setCurrentDay={setCurrentDay}
                 />
               )}
               {absentHours.length === 0 && (

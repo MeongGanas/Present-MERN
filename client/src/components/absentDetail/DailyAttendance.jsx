@@ -4,12 +4,15 @@ import TableAttendance from "./tableAttendance";
 import { useContext, useState } from "react";
 import { WaktuContext } from "../../hooks/waktuContext";
 
-export default function DailyAttendance({ absentHour, attendanceLog }) {
+export default function DailyAttendance({
+  absentHour,
+  attendanceLog,
+  setCurrentDay,
+}) {
   const { waktu } = useContext(WaktuContext);
   const formattedDate = `${waktu.getFullYear()}-${String(
     waktu.getMonth() + 1
   ).padStart(2, "0")}-${String(waktu.getDate()).padStart(2, "0")}`;
-  const [selectedDate, setSelectedDate] = useState(null);
 
   return (
     <>
@@ -22,7 +25,7 @@ export default function DailyAttendance({ absentHour, attendanceLog }) {
             <input
               type="date"
               defaultValue={formattedDate}
-              onChange={(e) => setSelectedDate(new Date(e.target.value))}
+              onChange={(e) => setCurrentDay(new Date(e.target.value))}
               className="border-x-2 p-2 border-black h-full text-center focus:outline-none"
             />
             <button className="p-2 hover:bg-slate-100 duration-200 transition">
