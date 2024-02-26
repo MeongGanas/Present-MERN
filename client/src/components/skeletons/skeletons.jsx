@@ -32,7 +32,7 @@ export default function Skeleton() {
         <div className="h-2 bg-gray-200 rounded-full max-w-28 mb-5"></div>
       </div>
 
-      <main className="pl-0 lg:pl-52 transition-all duration-300 w-full min-h-screen bg-[#f8f8f9]">
+      <main className="pl-0 lg:pl-[265px] transition-all duration-300 w-full min-h-screen bg-[#f8f8f9]">
         <Loading />
       </main>
     </div>

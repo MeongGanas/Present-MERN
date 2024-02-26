@@ -34,6 +34,9 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                   Status
                 </Th>
                 <Th paddingY="5" textAlign="center">
+                  Detail
+                </Th>
+                <Th paddingY="5" textAlign="center">
                   Date
                 </Th>
               </Tr>
@@ -47,6 +50,7 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                     <Td textAlign="center">{log.checkInTime}</Td>
                     <Td textAlign="center">{log.checkOutTime}</Td>
                     <Td textAlign="center">{log.status}</Td>
+                    <Td textAlign="center">{log.detail}</Td>
                     <Td textAlign="center">
                       {new Date(log.date).toLocaleDateString("id-ID")}
                     </Td>
@@ -54,7 +58,7 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                 ))}
               {attendanceLog.length === 0 && (
                 <Tr>
-                  <Td colSpan={6}>There are no present yet.</Td>
+                  <Td colSpan={7}>Belum ada peserta yang mengisi absensi.</Td>
                 </Tr>
               )}
             </Tbody>

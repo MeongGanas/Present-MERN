@@ -17,6 +17,7 @@ export function AttendanceLog({ absent }) {
   const { setAbsentHour } = useContext(LayoutContext);
   const { waktu } = useContext(WaktuContext);
   const [absentHours, setAbsentHours] = useState([]);
+  const [tempAttendanceLog, setTempAttendanceLog] = useState([]);
   const [attendanceLog, setAttendanceLog] = useState([]);
   const [currentHours, setCurrentHours] = useState([]);
   const [currentDay, setCurrentDay] = useState(new Date());
@@ -59,6 +60,7 @@ export function AttendanceLog({ absent }) {
     setAbsentHours(getCurrentDayAbsent());
     setCurrentHours(getCurrentDayAbsent());
     setAttendanceLog(getCurrentDayAttendance());
+    setTempAttendanceLog(getCurrentDayAttendance());
   }, [absent, currentDay]);
 
   const filter = (currentOption) => {
@@ -72,7 +74,7 @@ export function AttendanceLog({ absent }) {
       const newCurrentHours = absentHours.filter(
         (hours) => hours._id == currentOption
       );
-      const newAttedanceLog = attendanceLog.filter(
+      const newAttedanceLog = tempAttendanceLog.filter(
         (log) => log.shiftId == currentOption
       );
       setCurrentHours(newCurrentHours);
@@ -126,6 +128,8 @@ export function AttendanceLog({ absent }) {
               <DailyAttendance
                 absentHour={currentHours}
                 attendanceLog={attendanceLog}
+                tempAttendanceLog={tempAttendanceLog}
+                setAttendanceLog={setAttendanceLog}
                 setCurrentDay={setCurrentDay}
                 currentDay={currentDay}
               />

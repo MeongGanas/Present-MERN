@@ -4,7 +4,9 @@ import TableAttendance from "./tableAttendance";
 
 export default function DailyAttendance({
   absentHour,
+  tempAttendanceLog,
   attendanceLog,
+  setAttendanceLog,
   currentDay,
   setCurrentDay,
 }) {
@@ -20,6 +22,33 @@ export default function DailyAttendance({
     const newDate = new Date(currentDay);
     newDate.setDate(currentDay.getDate() + 1);
     setCurrentDay(newDate);
+  };
+
+  const filterAttendance = (data) => {
+    const newLog = tempAttendanceLog.filter((log) => {
+      return log.status === data;
+    });
+    return newLog;
+  };
+
+  const filter = (filterType) => {
+    if (filterType === "all") {
+      setAttendanceLog(tempAttendanceLog);
+    } else if (filterType === "present") {
+      const newLog = filterAttendance("Present");
+      setAttendanceLog(newLog);
+    } else if (filterType === "notpresent") {
+      const newLog = filterAttendance("Not Present");
+      setAttendanceLog(newLog);
+    } else if (filterType === "permission") {
+      const newLog = filterAttendance("Permission");
+      setAttendanceLog(newLog);
+    } else {
+      const newLog = tempAttendanceLog.filter((log) => {
+        return log.detail === "Late";
+      });
+      setAttendanceLog(newLog);
+    }
   };
 
   return (
@@ -50,10 +79,30 @@ export default function DailyAttendance({
           <SearchInput />
 
           <div className="border-2 w-fit border-black bg-white overflow-hidden rounded-[9px] flex">
-            <button className="button-kehadiran">Present</button>
-            <button className="button-kehadiran">Not Present</button>
-            <button className="button-kehadiran">Late</button>
-            <button className="button-kehadiran">Permission</button>
+            <button className="button-kehadiran" onClick={() => filter("all")}>
+              All
+            </button>
+            <button
+              className="button-kehadiran"
+              onClick={() => filter("present")}
+            >
+              Present
+            </button>
+            <button
+              className="button-kehadiran"
+              onClick={() => filter("notpresent")}
+            >
+              Not Present
+            </button>
+            <button className="button-kehadiran" onClick={() => filter("late")}>
+              Late
+            </button>
+            <button
+              className="button-kehadiran"
+              onClick={() => filter("permission")}
+            >
+              Permission
+            </button>
           </div>
         </div>
         <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black text-nowrap">
