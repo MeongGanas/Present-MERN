@@ -66,8 +66,10 @@ export default function Sidebar({ resource, setActive }) {
                         }}
                       >
                         <span
-                          className={`border h-8 min-w-8 rounded-full border-black uppercase flex items-center justify-center text-white`}
-                          style={{ backgroundColor: absent.color }}
+                          className="border h-8 min-w-8 rounded-full uppercase flex items-center justify-center text-slate-100"
+                          style={{
+                            backgroundColor: absent.color,
+                          }}
                         >
                           {absent.name[0]}
                         </span>

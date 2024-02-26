@@ -172,8 +172,8 @@ export function ListHomeAsUser({ absent }) {
           ))}
 
         {shift.length === 0 && (
-          <div className="min-h-52 bg-white flex items-center justify-center">
-            <h1 className="font-bold text-[#7A7A7A] text-2xl">
+          <div className="min-h-52 bg-white rounded-md flex items-center justify-center">
+            <h1 className="font-bold text-[#7A7A7A] text-center text-2xl">
               No Shifts available today 👋
             </h1>
           </div>
