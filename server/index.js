@@ -20,9 +20,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/absentee", AbsenteeRoutes);
-app.use("/api/user", UserRoutes);
-
 const moveData = async () => {
   try {
     const absentees = await Absentee.find({});
@@ -44,7 +41,9 @@ const moveData = async () => {
   }
 };
 
-cron.schedule("0 0 * * *", moveData);
+app.use("/api/absentee", AbsenteeRoutes);
+app.use("/api/user", UserRoutes);
+app.use("/api/cron", moveData);
 
 mongoose
   .connect(process.env.MONGO_URL)
