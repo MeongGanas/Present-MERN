@@ -20,30 +20,8 @@ app.use((req, res, next) => {
   next();
 });
 
-const moveData = async () => {
-  try {
-    const absentees = await Absentee.find({});
-    absentees.forEach(async (absentee) => {
-      if (absentee.attendanceLog && absentee.attendanceLog.length > 0) {
-        await Absentee.updateOne(
-          { _id: absentee._id },
-          {
-            $push: {
-              attendanceHistory: { $each: absentee.attendanceLog },
-            },
-            $set: { attendanceLog: [] },
-          }
-        );
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 app.use("/api/absentee", AbsenteeRoutes);
 app.use("/api/user", UserRoutes);
-app.use("/api/cron", moveData);
 
 mongoose
   .connect(process.env.MONGO_URL)
