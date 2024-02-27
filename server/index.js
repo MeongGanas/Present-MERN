@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT;
-const cron = require("node-cron");
 
 const mongoose = require("mongoose");
 const cors = require("cors");
