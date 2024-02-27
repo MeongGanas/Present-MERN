@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import orang from "../img/4836491 1.svg";
 import { DriveFileRenameOutline, Logout } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { logoutUser, updateUser } from "../lib/actions";
@@ -62,7 +61,7 @@ export default function Settings() {
             <div className="flex items-center gap-5 my-5">
               <div>
                 <div className="border-2 w-fit rounded-full p-2 border-black">
-                  <img src={orang} alt="" />
+                  <img src={"/img/4836491 1.svg"} alt="" />
                 </div>
               </div>
               <button className="flex gap-2" onClick={() => setEditPhoto(true)}>

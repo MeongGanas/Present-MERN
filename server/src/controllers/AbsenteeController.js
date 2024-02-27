@@ -22,7 +22,6 @@ const createAbsent = async (req, res) => {
   }
 
   const code = crypto.randomBytes(6).toString("hex").slice(0, 6).toUpperCase();
-
   const color = randomColor();
 
   try {
@@ -35,6 +34,7 @@ const createAbsent = async (req, res) => {
       absenteeHours: [],
       attendanceLog: [],
       color,
+      theme: Math.floor(Math.random() * (4 - 1 + 1)) + 1,
     });
 
     res.status(200).json({ absentee });

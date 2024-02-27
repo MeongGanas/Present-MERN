@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
-import { ReactComponent as Google } from "../img/7123025_logo_google_g_icon 1.svg";
 import { useContext, useEffect } from "react";
 import { DataContext } from "../hooks/dataContext";
 
@@ -38,7 +37,7 @@ export default function Selection() {
             <span className="line"></span>
           </div>
           <button className="flex border-2 border-black py-1 w-full rounded-xl justify-center items-center">
-            <Google />
+            <img src={"/img/7123025_logo_google_g_icon 1.svg"} alt="" />
             <span className="mr-3">Google</span>
           </button>
         </div>

@@ -1,6 +1,4 @@
 import { Info, Logout, MoreHoriz } from "@mui/icons-material";
-import background from "../img/Mask group.png";
-import setting from "../img/4860084 1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
@@ -32,9 +30,9 @@ export default function Card({ absent }) {
     <div className="w-full bg-white min-w-80 max-w-sm shadow-md rounded-md overflow-hidden">
       <Link to={`/detailAbsent/${absent._id}/${absent.name}`}>
         <img
-          src={background}
+          src={`/img/Mask group (${absent.theme}).svg`}
           alt=""
-          className="w-full max-h-40 cursor-pointer"
+          className="w-full object-cover max-h-40 cursor-pointer"
         />
       </Link>
       <div className="px-5 py-3">
@@ -89,7 +87,7 @@ export default function Card({ absent }) {
                 navigate(`/detailAbsent/${absent._id}/${absent.name}`);
               }}
             >
-              <img src={setting} alt="" width="24" />
+              <img src={"/img/4860084 1.svg"} alt="" width="24" />
             </button>
           </div>
         )}

@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Select } from "@chakra-ui/react";
 import { AttendanceSearchInput } from "../SearchInput";
 import TableAttendance from "./tableAttendance";
+import { WaktuContext } from "../../hooks/waktuContext";
 
-export default function MonthlyAttendance({ absentHour, attendanceLog }) {
-  const [month, setMonth] = useState("January");
-  const [year, setYear] = useState("2024");
+export default function MonthlyAttendance({
+  absentHour,
+  tempAttendanceLog,
+  attendanceLog,
+  setAttendanceLog,
+}) {
+  const { waktu } = useContext(WaktuContext);
+  const [month, setMonth] = useState(waktu.getMonth());
+  const [year, setYear] = useState(waktu.getYear());
+
+  const getMonth = () => {
+    const options = { month: "long", timeZone: "UTC" };
+    const monthNameInEnglish = waktu.toLocaleString("en-US", options);
+
+    return monthNameInEnglish;
+  };
 
   const handleMonth = (event) => {
     setMonth(event.target.value);
@@ -19,22 +33,25 @@ export default function MonthlyAttendance({ absentHour, attendanceLog }) {
     <>
       <div className="block sm:flex justify-between items-center">
         <div className="flex flex-wrap gap-5 mb-5 sm:mb-0">
-          <AttendanceSearchInput />
+          <AttendanceSearchInput
+            tempAttendanceLog={tempAttendanceLog}
+            setAttendanceLog={setAttendanceLog}
+          />
           <div className="flex gap-5 w-full">
             <Select
-              placeholder="Select Month"
+              defaultValue={waktu.getMonth()}
               onChange={handleMonth}
               border="2px"
               borderColor="black"
               bgColor="white"
               height="43.33px"
             >
-              <option value="January">January</option>
-              <option value="February">February</option>
-              <option value="Maret">Maret</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">Maret</option>
             </Select>
             <Select
-              placeholder="Select Year"
+              defaultValue={waktu.getYear()}
               onChange={handleYear}
               border="2px"
               borderColor="black"

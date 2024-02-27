@@ -1,11 +1,9 @@
-import shape from "../../img/shape.svg";
-
 export default function NotJoin({ setCreateActive, setJoinActive }) {
   return (
     <div className="h-screen -mt-16 flex justify-center items-center">
       <div className="w-full min-w-80 max-w-md md:w-1/2">
         <div className="flex justify-center mb-5">
-          <img src={shape} alt="" className="w-1/2" />
+          <img src={"/img/shape.svg"} alt="" className="w-1/2" />
         </div>
         <h4 className="font-bold mb-5 text-center text-sm sm:text-base">
           Feels kind of empty here, let’s change that

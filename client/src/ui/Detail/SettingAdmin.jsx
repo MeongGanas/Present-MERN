@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { DriveFileRenameOutline } from "@mui/icons-material";
-import background from "../../img/Mask group.png";
 import { useNavigate } from "react-router-dom";
 import { LoadingContext } from "../../hooks/loadingContext";
 import { disbandAbsentee, editAsOwner } from "../../lib/absentee";
@@ -117,8 +116,12 @@ export function SettingsAdmin({ absent }) {
         <h1 className="text-xl sm:text-2xl font-bold mb-5">
           Customize Apperance
         </h1>
-        <div className="mb-5">
-          <img src={background} alt="" className="max-h-64 w-full rounded-md" />
+        <div className="mb-5 w-full">
+          <img
+            src={"/img/Mask group (4).svg"}
+            alt=""
+            className="max-h-64 object-cover w-full rounded-md"
+          />
         </div>
         <div className="mb-5">
           <h1 className="text-lg font-bold mb-5">Select Theme</h1>

@@ -1,7 +1,6 @@
 import { Add, ChevronRight, Menu } from "@mui/icons-material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Suspense, useContext, useEffect, useState } from "react";
-import orang from "../img/4836491 1.svg";
 import Sidebar from "../components/Sidebar";
 import ClickAwayListener from "react-click-away-listener";
 import { LayoutContext } from "../hooks/dialogContext";
@@ -114,7 +113,7 @@ export default function Layout({ children }) {
         </div>
         <div className="flex items-center gap-2">
           <Link to="/settings" className="iconbutton">
-            <img src={orang} alt="" width={26} />
+            <img src={"/img/4836491 1.svg"} alt="" width={26} />
           </Link>
         </div>
       </nav>

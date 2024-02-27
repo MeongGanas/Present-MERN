@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import { TabContext } from "../../hooks/tabContext";
-import setting from "../../img/4860084 1.svg";
 import { MoreHoriz } from "@mui/icons-material";
 import {
   TabList,
@@ -46,7 +45,7 @@ export default function AbsenteeDetail({ absent, admin }) {
           {admin && (
             <div className="absolute right-2 sm:right-5 top-2.5">
               <button className="iconbutton" onClick={() => setActiveIndex(3)}>
-                <img src={setting} alt="" width="24" />
+                <img src={"/img/4860084 1.svg"} alt="" width="24" />
               </button>
             </div>
           )}

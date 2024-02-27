@@ -100,6 +100,10 @@ const absenteeModel = new Schema({
     type: String,
     required: true,
   },
+  theme: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Absentee", absenteeModel);

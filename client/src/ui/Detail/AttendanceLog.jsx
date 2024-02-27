@@ -139,6 +139,8 @@ export function AttendanceLog({ absent }) {
                 <MonthlyAttendance
                   absentHour={currentHours}
                   attendanceLog={attendanceLog}
+                  tempAttendanceLog={tempAttendanceLog}
+                  setAttendanceLog={setAttendanceLog}
                 />
               )}
               {absentHours.length === 0 && (

@@ -4,7 +4,6 @@ import {
   ContentCopy,
   DriveFileRenameOutline,
 } from "@mui/icons-material";
-import shape from "../../img/Scribble-28.svg.svg";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { LayoutContext } from "../../hooks/dialogContext";
@@ -67,7 +66,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
 
   return (
     <>
-      <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between">
+      <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between overflow-hidden">
         <div className="w-full flex justify-end">
           <button
             className="bg-white py-2 px-3 rounded-md shadow-sm flex gap-2"
@@ -172,7 +171,11 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
 
           {absentHours.length === 0 && (
             <div className="pt-3 pb-5">
-              <img src={shape} alt="" className="mx-auto mb-5" />
+              <img
+                src={"/img/Scribble-28.svg.svg"}
+                alt=""
+                className="mx-auto mb-5"
+              />
               <h1 className="font-bold text-center">
                 No absentee hour listed,{" "}
                 <span

@@ -5,10 +5,6 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
-
-import home from "../img/4836512 1.svg";
-import setting from "../img/4860084 1.svg";
-import list from "../img/5504165 1.svg";
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { DataContext } from "../hooks/dataContext";
@@ -35,7 +31,7 @@ export default function Sidebar({ resource, setActive }) {
             }
           }}
         >
-          <img src={home} alt="" width="24" />
+          <img src={"/img/4836512 1.svg"} alt="" width="24" />
           <span>Home</span>
         </Link>
       </div>
@@ -45,7 +41,7 @@ export default function Sidebar({ resource, setActive }) {
             <h2 className="px-10">
               <AccordionButton>
                 <div className="flex items-center gap-6 py-3 font-bold w-full">
-                  <img src={list} alt="" width="24" />
+                  <img src={"/img/5504165 1.svg"} alt="" width="24" />
                   Lists
                 </div>
                 <AccordionIcon />
@@ -96,7 +92,7 @@ export default function Sidebar({ resource, setActive }) {
             }
           }}
         >
-          <img src={setting} alt="" width="24" />
+          <img src={"/img/4860084 1.svg"} alt="" width="24" />
           <span>Settings</span>
         </Link>
       </div>
