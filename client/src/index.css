@@ -26,10 +26,22 @@ body {
 }
 
 .listDetail {
-  background-image: url("../public/img/Mask\ group (1).svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.listDetail-1 {
+  background-image: url("../public/img/Mask\ group (1).svg");
+}
+.listDetail-2 {
+  background-image: url("../public/img/Mask\ group (2).svg");
+}
+.listDetail-3 {
+  background-image: url("../public/img/Mask\ group (3).svg");
+}
+.listDetail-4 {
+  background-image: url("../public/img/Mask\ group (4).svg");
 }
 
 .circle {

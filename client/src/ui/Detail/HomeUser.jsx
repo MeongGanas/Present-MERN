@@ -93,7 +93,9 @@ export function ListHomeAsUser({ absent }) {
   };
 
   return (
-    <div className="p-5 max-w-screen-lg mx-auto listDetail text-white rounded-md">
+    <div
+      className={`p-5 max-w-screen-lg mx-auto listDetail listDetail-${absent.theme} text-white rounded-md`}
+    >
       <h1 className="text-3xl font-bold">{absent.name}</h1>
 
       <div className="pt-10 pb-5 text-center">

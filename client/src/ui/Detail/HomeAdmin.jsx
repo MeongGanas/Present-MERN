@@ -66,7 +66,9 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
 
   return (
     <>
-      <div className="w-full p-5 mb-5 listDetail rounded-md min-h-64 flex flex-col justify-between overflow-hidden">
+      <div
+        className={`w-full p-5 mb-5 listDetail listDetail-${absent.theme} rounded-md min-h-64 flex flex-col justify-between`}
+      >
         <div className="w-full flex justify-end">
           <button
             className="bg-white py-2 px-3 rounded-md shadow-sm flex gap-2"

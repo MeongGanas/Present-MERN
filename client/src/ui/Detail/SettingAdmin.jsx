@@ -116,11 +116,11 @@ export function SettingsAdmin({ absent }) {
         <h1 className="text-xl sm:text-2xl font-bold mb-5">
           Customize Apperance
         </h1>
-        <div className="mb-5 w-full">
+        <div className="mb-5 w-full rounded-md overflow-hidden">
           <img
-            src={"/img/Mask group (4).svg"}
+            src={`/img/Mask group (${absent.theme}).svg`}
             alt=""
-            className="max-h-64 object-cover w-full rounded-md"
+            className="max-h-64 object-cover w-full"
           />
         </div>
         <div className="mb-5">

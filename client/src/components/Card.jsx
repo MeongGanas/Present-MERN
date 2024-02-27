@@ -28,7 +28,10 @@ export default function Card({ absent }) {
 
   return (
     <div className="w-full bg-white min-w-80 max-w-sm shadow-md rounded-md overflow-hidden">
-      <Link to={`/detailAbsent/${absent._id}/${absent.name}`}>
+      <Link
+        to={`/detailAbsent/${absent._id}/${absent.name}`}
+        className="w-full"
+      >
         <img
           src={`/img/Mask group (${absent.theme}).svg`}
           alt=""
