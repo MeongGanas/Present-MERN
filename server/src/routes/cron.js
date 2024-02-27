@@ -4,20 +4,23 @@ const router = express.Router();
 
 const moveData = async () => {
   try {
-    const absentees = await Absentee.find({});
-    const bulkOperations = absentees.map((absentee) => ({
-      updateOne: {
-        filter: { _id: absentee._id },
-        update: {
-          $push: {
-            attendanceHistory: { $each: absentee.attendanceLog },
+    const allAbsentees = await Absentee.find({});
+    const bulkOperations = allAbsentees.map((absentee) => {
+      const update = {
+        updateOne: {
+          filter: { _id: absentee._id },
+          update: {
+            $push: { attendanceHistory: { $each: absentee.attendanceLog } },
+            $set: { attendanceLog: [] },
           },
-          $set: { attendanceLog: [] },
         },
-      },
-    }));
+      };
+      return update;
+    });
 
-    await Absentee.bulkWrite(bulkOperations, { ordered: false });
+    if (bulkOperations.length > 0) {
+      await Absentee.bulkWrite(bulkOperations);
+    }
   } catch (err) {
     console.log(err);
   }
