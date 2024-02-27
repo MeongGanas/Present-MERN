@@ -113,12 +113,10 @@ const editAsPaticipant = async (req, res) => {
 
 const editAsOwner = async (req, res) => {
   const { absentId } = req.params;
-  const { newAbsentName, newOwnerName } = req.body;
 
   try {
     const updateAbsentee = await Absentee.findByIdAndUpdate(absentId, {
-      ownerName: newOwnerName,
-      name: newAbsentName,
+      ...req.body,
     });
 
     res.status(200).json(updateAbsentee);

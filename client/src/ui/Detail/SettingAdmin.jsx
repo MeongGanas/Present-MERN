@@ -12,17 +12,29 @@ export function SettingsAdmin({ absent }) {
 
   const [newAbsentName, setNewAbsentName] = useState("");
   const [newOwnerName, setNewOwnerName] = useState("");
+  const [newTheme, setNewTheme] = useState("");
 
   useEffect(() => {
     setNewAbsentName(absent.name);
     setNewOwnerName(absent.ownerName);
+    setNewTheme(absent.theme);
   }, [absent]);
 
   const editOwner = async () => {
     setLoading(true);
-    await editAsOwner(absent._id, { newAbsentName, newOwnerName }).then(() => {
+    await editAsOwner(absent._id, {
+      name: newAbsentName,
+      ownerName: newOwnerName,
+    }).then(() => {
       setLoading(false);
       navigate(`/detailAbsent/${absent._id}/${newAbsentName}`);
+    });
+  };
+
+  const editTheme = async () => {
+    setLoading(true);
+    await editAsOwner(absent._id, { theme: newTheme }).then(() => {
+      setLoading(false);
     });
   };
 
@@ -118,7 +130,7 @@ export function SettingsAdmin({ absent }) {
         </h1>
         <div className="mb-5 w-full rounded-md overflow-hidden">
           <img
-            src={`/img/Mask group (${absent.theme}).svg`}
+            src={`/img/Mask group (${newTheme}).svg`}
             alt=""
             className="max-h-64 object-cover w-full"
           />
@@ -126,23 +138,42 @@ export function SettingsAdmin({ absent }) {
         <div className="mb-5">
           <h1 className="text-lg font-bold mb-5">Select Theme</h1>
           <div className="flex gap-5 flex-wrap">
-            <button>
+            <button
+              onClick={() => {
+                setNewTheme(1);
+              }}
+            >
               <div className="w-20 h-20 rounded-full bg-[#0E2A47]"></div>
             </button>
-            <button>
+            <button
+              onClick={() => {
+                setNewTheme(4);
+              }}
+            >
               <div className="w-20 h-20 rounded-full bg-[#C62E2E]"></div>
             </button>
-            <button>
+            <button
+              onClick={() => {
+                setNewTheme(2);
+              }}
+            >
               <div className="w-20 h-20 rounded-full bg-[#3EBA4E]"></div>
             </button>
-            <button>
+            <button
+              onClick={() => {
+                setNewTheme(3);
+              }}
+            >
               <div className="w-20 h-20 rounded-full bg-[#404040]"></div>
             </button>
           </div>
         </div>
 
         <div className="flex justify-end gap-5">
-          <button className="coloredButton py-2 px-7 rounded-md max-w-32">
+          <button
+            className="coloredButton py-2 px-7 rounded-md max-w-32"
+            onClick={editTheme}
+          >
             Save
           </button>
         </div>

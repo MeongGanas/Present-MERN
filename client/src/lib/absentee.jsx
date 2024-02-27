@@ -93,7 +93,7 @@ export async function checkOutUser(absentId, userId, shiftId, time) {
 export async function permissionUser(absentId, data) {
   try {
     const response = await axios.patch(
-      `http://localhost:4000/api/absentee/permission/${absentId}`,
+      `https://present-server-nine.vercel.app/api/absentee/permission/${absentId}`,
       data
     );
     return response.data;
