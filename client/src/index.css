@@ -46,7 +46,7 @@ body {
 }
 
 .circle {
-  @apply w-6 h-6 rounded-full border border-black;
+  @apply w-8 h-8 rounded-full border border-black;
 }
 
 .people {

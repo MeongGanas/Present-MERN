@@ -34,7 +34,9 @@ export function ListPeople({ absent, admin }) {
             Admin
           </h1>
           <div className="flex gap-5 items-center">
-            <div className="w-6 h-6 rounded-full border border-black"></div>
+            <div className="circle flex justify-center items-center">
+              <h1 className="font-bold">{absent.ownerName[0]}</h1>
+            </div>
             <h1 className="text-lg">{absent.ownerName}</h1>
           </div>
         </div>
@@ -50,7 +52,9 @@ export function ListPeople({ absent, admin }) {
                 <li className="people" key={participant.userId}>
                   <div className="flex justify-between items-center">
                     <div className="flex gap-5 items-center">
-                      <div className="circle"></div>
+                      <div className="circle flex items-center justify-center">
+                        <h1>{participant.username[0]}</h1>
+                      </div>
                       <h1 className="text-lg">{participant.username}</h1>
                     </div>
                     {admin && (

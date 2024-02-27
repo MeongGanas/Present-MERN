@@ -59,10 +59,8 @@ export default function Settings() {
           <div className="border-2 mx-auto border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 p-5 rounded-md max-w-screen-sm">
             <h1 className="text-xl sm:text-2xl font-bold">Profile</h1>
             <div className="flex items-center gap-5 my-5">
-              <div>
-                <div className="border-2 w-fit rounded-full p-2 border-black">
-                  <img src={"/img/4836491 1.svg"} alt="" />
-                </div>
+              <div className="border-2 w-10 h-10 rounded-full flex items-center justify-center p-2 border-black">
+                <h1 className="uppercase font-bold">{userData.username[0]}</h1>
               </div>
               <button className="flex gap-2" onClick={() => setEditPhoto(true)}>
                 <span className="font-bold">Change</span>
