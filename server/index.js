@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const UserRoutes = require("./src/routes/user");
+const CronRoutes = require("./src/routes/cron");
 const AbsenteeRoutes = require("./src/routes/absentee");
 const Absentee = require("./src/models/Absentee");
 
@@ -22,30 +23,7 @@ app.use((req, res, next) => {
 app.use("/api/absentee", AbsenteeRoutes);
 app.use("/api/user", UserRoutes);
 
-const moveData = async () => {
-  try {
-    const absentees = await Absentee.find({});
-    await Promise.all(
-      absentees.map(async (absentee) => {
-        if (absentee.attendanceLog && absentee.attendanceLog.length > 0) {
-          await Absentee.updateOne(
-            { _id: absentee._id },
-            {
-              $push: {
-                attendanceHistory: { $each: absentee.attendanceLog },
-              },
-              $set: { attendanceLog: [] },
-            }
-          );
-        }
-      })
-    );
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-app.get("/api/cron", moveData);
+app.use("/api/cron", CronRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL)
