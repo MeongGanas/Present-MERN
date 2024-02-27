@@ -35,7 +35,7 @@ export default function Card({ absent }) {
         <img
           src={`/img/Mask group (${absent.theme}).svg`}
           alt=""
-          className="w-full object-cover max-h-40 cursor-pointer"
+          className="w-full object-cover cursor-pointer"
         />
       </Link>
       <div className="px-5 py-3">
