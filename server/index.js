@@ -9,7 +9,6 @@ const cors = require("cors");
 const UserRoutes = require("./src/routes/user");
 const CronRoutes = require("./src/routes/cron");
 const AbsenteeRoutes = require("./src/routes/absentee");
-const Absentee = require("./src/models/Absentee");
 
 app.use(cors());
 

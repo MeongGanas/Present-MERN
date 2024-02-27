@@ -1,4 +1,5 @@
 const express = require("express");
+const Absentee = require("../models/Absentee");
 const router = express.Router();
 
 const moveData = async () => {
