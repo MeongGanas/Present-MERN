@@ -33,6 +33,7 @@ export default function MonthlyAttendance({ absent }) {
   useEffect(() => {
     setMonthAttendanceLog(getMontlyAttendance());
     setMonthlyAttendanceLog(getMontlyAttendance());
+    console.log(currentMonth);
   }, [currentMonth]);
 
   const getMonth = () => {
@@ -86,7 +87,7 @@ export default function MonthlyAttendance({ absent }) {
           <input
             type="month"
             defaultValue={currentMonth.toISOString().slice(0, 7)}
-            onChange={(e) => console.log(e.target.value)}
+            onChange={(e) => setCurrentMonth(new Date(e.target.value))}
             className="border-2 border-black rounded-md px-5"
           />
         </div>
