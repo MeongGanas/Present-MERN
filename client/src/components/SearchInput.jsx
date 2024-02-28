@@ -34,7 +34,7 @@ export function PeopleSearchInput({ participantsTemp, setParticipants }) {
   };
 
   return (
-    <form className="relative max-w-60 min-w-52">
+    <form className="relative w-full max-w-64">
       <Search className="absolute left-3 top-2.5" />
       <input
         type="text"

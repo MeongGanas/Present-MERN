@@ -1,16 +1,79 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { AttendanceSearchInput } from "../SearchInput";
 import TableAttendance from "./tableAttendance";
+import { useContext, useEffect, useState } from "react";
+import { LayoutContext } from "../../hooks/dialogContext";
+import { WaktuContext } from "../../hooks/waktuContext";
+import { Select } from "@chakra-ui/react";
 
-export default function DailyAttendance({
-  absentHour,
-  tempAttendanceLog,
-  attendanceLog,
-  setAttendanceLog,
-  currentDay,
-  setCurrentDay,
-}) {
-  const formattedDate = currentDay.toISOString().split("T")[0];
+export default function DailyAttendance({ absent }) {
+  const { setAbsentHour } = useContext(LayoutContext);
+  const { waktu } = useContext(WaktuContext);
+  const [absentHours, setAbsentHours] = useState([]);
+  const [tempAttendanceLog, setTempAttendanceLog] = useState([]);
+  const [attendanceLog, setAttendanceLog] = useState([]);
+  const [currentHours, setCurrentHours] = useState([]);
+  const [currentDay, setCurrentDay] = useState(new Date());
+
+  const isCurrentDay = (selectedDay) => {
+    const today = currentDay.toLocaleString("en-US", { weekday: "long" });
+    const isCurrent = selectedDay.includes(today);
+    return isCurrent;
+  };
+
+  const getCurrentDayAbsent = () => {
+    const absentHour = absent.absenteeHours.filter((absentHour) =>
+      isCurrentDay(absentHour.selectedDay)
+    );
+    return absentHour;
+  };
+
+  const isTodayAttendance = (date) => {
+    const attendanceDate = new Date(date);
+    return (
+      attendanceDate.toLocaleDateString() === currentDay.toLocaleDateString()
+    );
+  };
+
+  const getCurrentDayAttendance = () => {
+    let attendance;
+    if (currentDay.toLocaleDateString() === waktu.toLocaleDateString()) {
+      attendance = absent.attendanceLog.filter((attendance) =>
+        isTodayAttendance(attendance.date)
+      );
+    } else {
+      attendance = absent.attendanceHistory.filter((attendance) => {
+        return isTodayAttendance(attendance.date);
+      });
+    }
+    return attendance;
+  };
+
+  useEffect(() => {
+    setAbsentHours(getCurrentDayAbsent());
+    setCurrentHours(getCurrentDayAbsent());
+    setAttendanceLog(getCurrentDayAttendance());
+    setTempAttendanceLog(getCurrentDayAttendance());
+  }, [absent, currentDay]);
+
+  const filter = (currentOption) => {
+    if (currentOption === "make") {
+      setAbsentHour(true);
+    } else if (currentOption === "") {
+      setAbsentHours(getCurrentDayAbsent());
+      setCurrentHours(getCurrentDayAbsent());
+      setAttendanceLog(getCurrentDayAttendance());
+    } else {
+      const newCurrentHours = absentHours.filter(
+        (hours) => hours._id == currentOption
+      );
+      const newAttedanceLog = tempAttendanceLog.filter(
+        (log) => log.shiftId == currentOption
+      );
+      setCurrentHours(newCurrentHours);
+      setAttendanceLog(newAttedanceLog);
+    }
+  };
 
   const handleBackClick = () => {
     const newDate = new Date(currentDay);
@@ -31,7 +94,7 @@ export default function DailyAttendance({
     return newLog;
   };
 
-  const filter = (filterType) => {
+  const filterType = (filterType) => {
     if (filterType === "all") {
       setAttendanceLog(tempAttendanceLog);
     } else if (filterType === "present") {
@@ -51,8 +114,33 @@ export default function DailyAttendance({
     }
   };
 
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
   return (
     <>
+      <div className="absolute right-0 top-4">
+        <Select
+          variant="unstyled"
+          placeholder="Select"
+          className="cursor-pointer"
+          onChange={(e) => filter(e.target.value)}
+        >
+          {absent.absenteeHours.map((absentHour) => (
+            <option value={absentHour._id} key={absentHour._id} className="p-2">
+              {absentHour.name}
+            </option>
+          ))}
+          <option className="p-2" value="make">
+            Create
+          </option>
+        </Select>
+      </div>
       <div className="block sm:flex justify-between items-center">
         <div className="flex gap-5 mb-5 sm:mb-0 flex-wrap">
           <div className="flex w-fit items-center bg-white border-2 border-black rounded-[9px] overflow-hidden">
@@ -64,7 +152,7 @@ export default function DailyAttendance({
             </button>
             <input
               type="date"
-              value={formattedDate}
+              value={formatDate(currentDay)}
               onChange={(e) => setCurrentDay(new Date(e.target.value))}
               className="border-x-2 p-2 border-black h-full text-center focus:outline-none"
             />
@@ -82,27 +170,33 @@ export default function DailyAttendance({
           />
 
           <div className="border-2 w-fit border-black bg-white overflow-hidden rounded-[9px] flex">
-            <button className="button-kehadiran" onClick={() => filter("all")}>
+            <button
+              className="button-kehadiran"
+              onClick={() => filterType("all")}
+            >
               All
             </button>
             <button
               className="button-kehadiran"
-              onClick={() => filter("present")}
+              onClick={() => filterType("present")}
             >
               Present
             </button>
             <button
               className="button-kehadiran"
-              onClick={() => filter("notpresent")}
+              onClick={() => filterType("notpresent")}
             >
               Not Present
             </button>
-            <button className="button-kehadiran" onClick={() => filter("late")}>
+            <button
+              className="button-kehadiran"
+              onClick={() => filterType("late")}
+            >
               Late
             </button>
             <button
               className="button-kehadiran"
-              onClick={() => filter("permission")}
+              onClick={() => filterType("permission")}
             >
               Permission
             </button>
@@ -113,7 +207,10 @@ export default function DailyAttendance({
         </button>
       </div>
 
-      <TableAttendance absentHour={absentHour} attendanceLog={attendanceLog} />
+      <TableAttendance
+        absentHour={currentHours}
+        attendanceLog={attendanceLog}
+      />
     </>
   );
 }

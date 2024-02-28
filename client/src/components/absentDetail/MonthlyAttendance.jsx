@@ -1,18 +1,39 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Select } from "@chakra-ui/react";
 import { AttendanceSearchInput } from "../SearchInput";
 import TableAttendance from "./tableAttendance";
 import { WaktuContext } from "../../hooks/waktuContext";
+import { LayoutContext } from "../../hooks/dialogContext";
 
-export default function MonthlyAttendance({
-  absentHour,
-  tempAttendanceLog,
-  attendanceLog,
-  setAttendanceLog,
-}) {
+export default function MonthlyAttendance({ absent }) {
   const { waktu } = useContext(WaktuContext);
-  const [month, setMonth] = useState(waktu.getMonth());
-  const [year, setYear] = useState(waktu.getYear());
+  const { setAbsentHour } = useContext(LayoutContext);
+  const [currentMonth, setCurrentMonth] = useState(waktu);
+  const [monthlyAttendanceLog, setMonthlyAttendanceLog] = useState([]);
+  const [monthAttendanceLog, setMonthAttendanceLog] = useState([]);
+
+  const isMonthlyAttendance = (date) => {
+    const attendanceDate = new Date(date);
+    return (
+      attendanceDate.toLocaleString("us-EN", { month: "long" }) ===
+      currentMonth.toLocaleString("us-EN", { month: "long" })
+    );
+  };
+
+  const getMontlyAttendance = () => {
+    const attendanceToday = absent.attendanceLog.filter((attendance) =>
+      isMonthlyAttendance(attendance.date)
+    );
+    const attendanceHistory = absent.attendanceHistory.filter((attendance) => {
+      return isMonthlyAttendance(attendance.date);
+    });
+    return [...attendanceHistory, ...attendanceToday];
+  };
+
+  useEffect(() => {
+    setMonthAttendanceLog(getMontlyAttendance());
+    setMonthlyAttendanceLog(getMontlyAttendance());
+  }, [currentMonth]);
 
   const getMonth = () => {
     const options = { month: "long", timeZone: "UTC" };
@@ -21,53 +42,63 @@ export default function MonthlyAttendance({
     return monthNameInEnglish;
   };
 
-  const handleMonth = (event) => {
-    setMonth(event.target.value);
-  };
-
-  const handleYear = (event) => {
-    setYear(event.target.value);
+  const filter = (currentOption) => {
+    if (currentOption === "make") {
+      setAbsentHour(true);
+    } else if (currentOption === "") {
+      setMonthAttendanceLog(getMontlyAttendance());
+      setMonthlyAttendanceLog(getMontlyAttendance());
+    } else {
+      const newAttedanceLog = monthlyAttendanceLog.filter(
+        (log) =>
+          new Date(log.date).getMonth() == currentMonth.getMonth() &&
+          currentOption === log.shiftId
+      );
+      setMonthAttendanceLog(newAttedanceLog);
+    }
   };
 
   return (
     <>
+      <div className="absolute right-0 top-4">
+        <Select
+          variant="unstyled"
+          placeholder="Select"
+          className="cursor-pointer"
+          onChange={(e) => filter(e.target.value)}
+        >
+          {absent.absenteeHours.map((absentHour) => (
+            <option value={absentHour._id} key={absentHour._id} className="p-2">
+              {absentHour.name}
+            </option>
+          ))}
+          <option className="p-2" value="make">
+            Create
+          </option>
+        </Select>
+      </div>
       <div className="block sm:flex justify-between items-center">
         <div className="flex flex-wrap gap-5 mb-5 sm:mb-0">
           <AttendanceSearchInput
-            tempAttendanceLog={tempAttendanceLog}
-            setAttendanceLog={setAttendanceLog}
+            tempAttendanceLog={monthlyAttendanceLog}
+            setAttendanceLog={setMonthAttendanceLog}
           />
-          <div className="flex gap-5 w-full">
-            <Select
-              defaultValue={waktu.getMonth()}
-              onChange={handleMonth}
-              border="2px"
-              borderColor="black"
-              bgColor="white"
-              height="43.33px"
-            >
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">Maret</option>
-            </Select>
-            <Select
-              defaultValue={waktu.getYear()}
-              onChange={handleYear}
-              border="2px"
-              borderColor="black"
-              bgColor="white"
-              height="43.33px"
-            >
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-            </Select>
-          </div>
+          <input
+            type="month"
+            defaultValue={currentMonth.toISOString().slice(0, 7)}
+            onChange={(e) => console.log(e.target.value)}
+            className="border-2 border-black rounded-md px-5"
+          />
         </div>
         <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
           Export to Excel
         </button>
       </div>
-      <TableAttendance absentHour={absentHour} attendanceLog={attendanceLog} />
+
+      <TableAttendance
+        absentHour={absent.absenteeHours}
+        attendanceLog={monthAttendanceLog}
+      />
     </>
   );
 }

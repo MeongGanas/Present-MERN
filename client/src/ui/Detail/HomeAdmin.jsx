@@ -48,10 +48,18 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
     return absentHour;
   };
 
+  const isTodayAttendance = (date) => {
+    const attendanceDate = new Date(date);
+    return attendanceDate.toLocaleDateString() === waktu.toLocaleDateString();
+  };
+
   useEffect(() => {
+    const attendanceLog = absent.attendanceLog.filter((log) => {
+      return isTodayAttendance(log.date);
+    });
     setAbsentHours(getCurrentDayAbsent());
     setAttendanceLog(
-      absent.attendanceLog.sort(
+      attendanceLog.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       )
     );
