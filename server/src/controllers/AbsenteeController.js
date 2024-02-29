@@ -1,4 +1,4 @@
-const { isValidObjectId } = require("mongoose");
+const { isValidObjectId, default: mongoose } = require("mongoose");
 const Absentee = require("../models/Absentee");
 const crypto = require("crypto");
 const randomColor = require("randomcolor");
@@ -130,7 +130,7 @@ const createAbsentHour = async (req, res) => {
 
   try {
     const absentHour = await Absentee.findByIdAndUpdate(absentId, {
-      $addToSet: {
+      $push: {
         absenteeHours: { ...req.body },
       },
     });

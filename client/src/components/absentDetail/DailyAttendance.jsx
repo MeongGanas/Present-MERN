@@ -15,6 +15,9 @@ export default function DailyAttendance({ absent }) {
   const [currentHours, setCurrentHours] = useState([]);
   const [currentDay, setCurrentDay] = useState(new Date());
 
+  const [optionTemp, setOptionTemp] = useState([]);
+  const [currentOption, setCurrentOption] = useState("");
+
   const isCurrentDay = (selectedDay) => {
     const today = currentDay.toLocaleString("en-US", { weekday: "long" });
     const isCurrent = selectedDay.includes(today);
@@ -67,11 +70,12 @@ export default function DailyAttendance({ absent }) {
       const newCurrentHours = absentHours.filter(
         (hours) => hours._id == currentOption
       );
-      const newAttedanceLog = tempAttendanceLog.filter(
+      const newAttendanceLog = tempAttendanceLog.filter(
         (log) => log.shiftId == currentOption
       );
       setCurrentHours(newCurrentHours);
-      setAttendanceLog(newAttedanceLog);
+      setOptionTemp(newAttendanceLog);
+      setAttendanceLog(newAttendanceLog);
     }
   };
 
@@ -88,15 +92,26 @@ export default function DailyAttendance({ absent }) {
   };
 
   const filterAttendance = (data) => {
-    const newLog = tempAttendanceLog.filter((log) => {
-      return log.status === data;
-    });
+    let newLog;
+    if (currentOption !== "") {
+      newLog = optionTemp.filter((log) => {
+        return log.status === data;
+      });
+    } else {
+      newLog = tempAttendanceLog.filter((log) => {
+        return log.status === data;
+      });
+    }
     return newLog;
   };
 
   const filterType = (filterType) => {
     if (filterType === "all") {
-      setAttendanceLog(tempAttendanceLog);
+      if (currentOption === "") {
+        setAttendanceLog(tempAttendanceLog);
+      } else {
+        setAttendanceLog(optionTemp);
+      }
     } else if (filterType === "present") {
       const newLog = filterAttendance("Present");
       setAttendanceLog(newLog);
@@ -107,9 +122,16 @@ export default function DailyAttendance({ absent }) {
       const newLog = filterAttendance("Permission");
       setAttendanceLog(newLog);
     } else {
-      const newLog = tempAttendanceLog.filter((log) => {
-        return log.detail === "Late";
-      });
+      let newLog;
+      if (currentOption !== "") {
+        newLog = optionTemp.filter((log) => {
+          return log.detail === "Late";
+        });
+      } else {
+        newLog = tempAttendanceLog.filter((log) => {
+          return log.detail === "Late";
+        });
+      }
       setAttendanceLog(newLog);
     }
   };
@@ -129,9 +151,12 @@ export default function DailyAttendance({ absent }) {
           variant="unstyled"
           placeholder="Select"
           className="cursor-pointer"
-          onChange={(e) => filter(e.target.value)}
+          onChange={(e) => {
+            filter(e.target.value);
+            setCurrentOption(e.target.value);
+          }}
         >
-          {absent.absenteeHours.map((absentHour) => (
+          {absentHours.map((absentHour) => (
             <option value={absentHour._id} key={absentHour._id} className="p-2">
               {absentHour.name}
             </option>
