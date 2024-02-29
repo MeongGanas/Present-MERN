@@ -88,7 +88,7 @@ export default function MonthlyAttendance({ absent }) {
             type="month"
             defaultValue={currentMonth.toISOString().slice(0, 7)}
             onChange={(e) => setCurrentMonth(new Date(e.target.value))}
-            className="border-2 border-black rounded-md px-5"
+            className="border-2 border-black rounded-md px-5 min-h-11"
           />
         </div>
         <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">

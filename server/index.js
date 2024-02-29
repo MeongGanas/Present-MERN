@@ -9,6 +9,7 @@ const cors = require("cors");
 const UserRoutes = require("./src/routes/user");
 const CronRoutes = require("./src/routes/cron");
 const AbsenteeRoutes = require("./src/routes/absentee");
+const middlewareRoutes = require("./src/routes/middleware");
 
 app.use(cors());
 
@@ -21,7 +22,7 @@ app.use((req, res, next) => {
 
 app.use("/api/absentee", AbsenteeRoutes);
 app.use("/api/user", UserRoutes);
-
+app.use("/middleware", middlewareRoutes);
 app.use("/api/cron", CronRoutes);
 
 mongoose
