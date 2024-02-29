@@ -16,10 +16,10 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
 
-  const { token } = useContext(DataContext);
+  const { token, userData } = useContext(DataContext);
 
   useEffect(() => {
-    if (token) {
+    if (token && userData) {
       navigate("/home");
     }
   }, [token]);

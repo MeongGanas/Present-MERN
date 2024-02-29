@@ -33,7 +33,6 @@ export default function MonthlyAttendance({ absent }) {
   useEffect(() => {
     setMonthAttendanceLog(getMontlyAttendance());
     setMonthlyAttendanceLog(getMontlyAttendance());
-    console.log(currentMonth);
   }, [currentMonth]);
 
   const getMonth = () => {

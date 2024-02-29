@@ -13,10 +13,10 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const { token, setToken, setUserData } = useContext(DataContext);
+  const { token, setToken, userData, setUserData } = useContext(DataContext);
 
   useEffect(() => {
-    if (token) {
+    if (token && userData) {
       navigate("/home");
     }
   }, [token]);

@@ -8,12 +8,12 @@ import { ResourceContext } from "../hooks/resourceContext";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { token } = useContext(DataContext);
+  const { token, userData } = useContext(DataContext);
   const { resource } = useContext(ResourceContext);
   const { setActiveIndex } = useContext(TabContext);
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !userData) {
       navigate("/login");
     }
     setActiveIndex(0);

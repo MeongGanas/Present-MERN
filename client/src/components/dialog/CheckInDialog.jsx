@@ -1,5 +1,5 @@
 import { Close } from "@mui/icons-material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoadingContext } from "../../hooks/loadingContext";
 import { DataContext } from "../../hooks/dataContext";
 import { checkInUser, checkOutUser } from "../../lib/absentee";
@@ -16,6 +16,16 @@ export default function CheckInDialog({
   const { userData } = useContext(DataContext);
   const { setLoading } = useContext(LoadingContext);
   const { waktu } = useContext(WaktuContext);
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((positions) => {
+      const { latitude, longitude } = positions.coords;
+      setLatitude(latitude);
+      setLongitude(longitude);
+    });
+  });
 
   const isLate = () => {
     const absentHourEntry = absentHour.entry.split(":");
@@ -51,6 +61,7 @@ export default function CheckInDialog({
       status: "Present",
       detail: isLate(getWaktu()),
       checkInTime: getWaktu(),
+      maps: `https://www.google.com/maps/place/${latitude},${longitude}`,
     };
     await checkInUser(absentId, data)
       .then(() => {
@@ -82,9 +93,6 @@ export default function CheckInDialog({
             <Close />
           </button>
           <h1 className="font-bold ml-3">Check-In</h1>
-        </div>
-        <div className="min-h-40">
-          <h1>maps</h1>
         </div>
         <div className="border-t-2 border-[#d9d9d9] h-full bg-[#F8F8F9]">
           <div className="px-4 py-3">
