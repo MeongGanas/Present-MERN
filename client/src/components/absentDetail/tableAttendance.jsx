@@ -26,6 +26,9 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                   Name
                 </Th>
                 <Th paddingY="5" textAlign="center">
+                  Shift
+                </Th>
+                <Th paddingY="5" textAlign="center">
                   Check-in
                 </Th>
                 <Th paddingY="5" textAlign="center">
@@ -45,7 +48,7 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
             <Tbody>
               {attendanceLog.length > 0 &&
                 attendanceLog.map((log, i) => (
-                  <Tr key={log._id}>
+                  <Tr key={i}>
                     <Td>{i + 1}</Td>
                     <Td textAlign="center">
                       {log.maps !== "-" && (
@@ -59,6 +62,7 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                       )}
                       {log.maps === "-" && <h1>{log.username}</h1>}
                     </Td>
+                    <Td textAlign="center">{log.shift}</Td>
                     <Td textAlign="center">{log.checkInTime}</Td>
                     <Td textAlign="center">{log.checkOutTime}</Td>
                     <Td textAlign="center">{log.status}</Td>
@@ -70,7 +74,7 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                 ))}
               {attendanceLog.length === 0 && (
                 <Tr>
-                  <Td colSpan={7}>Belum ada peserta yang mengisi absensi.</Td>
+                  <Td colSpan={8}>Belum ada peserta yang mengisi absensi.</Td>
                 </Tr>
               )}
             </Tbody>

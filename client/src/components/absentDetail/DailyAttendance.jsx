@@ -105,37 +105,6 @@ export default function DailyAttendance({ absent }) {
     return newLog;
   };
 
-  const filterType = (filterType) => {
-    if (filterType === "all") {
-      if (currentOption === "") {
-        setAttendanceLog(tempAttendanceLog);
-      } else {
-        setAttendanceLog(optionTemp);
-      }
-    } else if (filterType === "present") {
-      const newLog = filterAttendance("Present");
-      setAttendanceLog(newLog);
-    } else if (filterType === "notpresent") {
-      const newLog = filterAttendance("Not Present");
-      setAttendanceLog(newLog);
-    } else if (filterType === "permission") {
-      const newLog = filterAttendance("Permission");
-      setAttendanceLog(newLog);
-    } else {
-      let newLog;
-      if (currentOption !== "") {
-        newLog = optionTemp.filter((log) => {
-          return log.detail === "Late";
-        });
-      } else {
-        newLog = tempAttendanceLog.filter((log) => {
-          return log.detail === "Late";
-        });
-      }
-      setAttendanceLog(newLog);
-    }
-  };
-
   function formatDate(date) {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -143,6 +112,72 @@ export default function DailyAttendance({ absent }) {
 
     return `${year}-${month}-${day}`;
   }
+
+  const notPresent = () => {
+    let missingUser = [];
+
+    absentHours.forEach((absentee) => {
+      const currentLog = [];
+      attendanceLog.forEach((log) => {
+        if (log.shiftId === absentee._id) {
+          currentLog.push(log);
+        }
+      });
+      console.log(currentLog);
+
+      const notPresentUser = absent.usersJoin.filter(
+        (user) => !currentLog.some((log) => log.userId === user.userId)
+      );
+      console.log(notPresentUser);
+
+      // Mengumpulkan objek yang diinginkan untuk setiap user yang tidak hadir
+      notPresentUser.forEach((user) => {
+        const log = currentLog.find((log) => log.shiftId === absentee._id);
+        if (log) {
+          missingUser.push({
+            shiftId: log.shiftId,
+            userId: user.userId,
+            username: user.username,
+            shift: log.shift,
+            status: "Absent",
+            detail: "Absent",
+            checkInTime: "-",
+            checkOutTime: "-",
+            maps: "-",
+            date: "-",
+          });
+        } else {
+          missingUser.push({
+            shiftId: absentee._id,
+            userId: user.userId,
+            username: user.username,
+            shift: absentee.name,
+            status: "Absent",
+            detail: "Absent",
+            checkInTime: "-",
+            checkOutTime: "-",
+            date: "-",
+            maps: "-",
+          });
+        }
+      });
+    });
+    setAttendanceLog(missingUser);
+  };
+
+  const late = () => {
+    let newLog;
+    if (currentOption !== "") {
+      newLog = optionTemp.filter((log) => {
+        return log.detail === "Late";
+      });
+    } else {
+      newLog = tempAttendanceLog.filter((log) => {
+        return log.detail === "Late";
+      });
+    }
+    setAttendanceLog(newLog);
+  };
 
   return (
     <>
@@ -197,31 +232,37 @@ export default function DailyAttendance({ absent }) {
           <div className="border-2 w-fit border-black bg-white overflow-hidden rounded-[9px] flex">
             <button
               className="button-kehadiran"
-              onClick={() => filterType("all")}
+              onClick={() => {
+                if (currentOption === "") {
+                  setAttendanceLog(tempAttendanceLog);
+                } else {
+                  setAttendanceLog(optionTemp);
+                }
+              }}
             >
               All
             </button>
             <button
               className="button-kehadiran"
-              onClick={() => filterType("present")}
+              onClick={() => {
+                const newLog = filterAttendance("Present");
+                setAttendanceLog(newLog);
+              }}
             >
               Present
             </button>
-            <button
-              className="button-kehadiran"
-              onClick={() => filterType("notpresent")}
-            >
+            <button className="button-kehadiran" onClick={notPresent}>
               Not Present
             </button>
-            <button
-              className="button-kehadiran"
-              onClick={() => filterType("late")}
-            >
+            <button className="button-kehadiran" onClick={late}>
               Late
             </button>
             <button
               className="button-kehadiran"
-              onClick={() => filterType("permission")}
+              onClick={() => {
+                const newLog = filterAttendance("Permission");
+                setAttendanceLog(newLog);
+              }}
             >
               Permission
             </button>
