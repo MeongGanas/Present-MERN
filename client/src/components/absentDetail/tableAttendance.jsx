@@ -7,6 +7,7 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export default function TableAttendance({ absentHour, attendanceLog }) {
   return (
@@ -46,7 +47,18 @@ export default function TableAttendance({ absentHour, attendanceLog }) {
                 attendanceLog.map((log, i) => (
                   <Tr key={log._id}>
                     <Td>{i + 1}</Td>
-                    <Td textAlign="center">{log.username}</Td>
+                    <Td textAlign="center">
+                      {log.maps !== "-" && (
+                        <Link
+                          to={log.maps}
+                          target="_blank"
+                          className="underline"
+                        >
+                          {log.username}
+                        </Link>
+                      )}
+                      {log.maps === "-" && <h1>{log.username}</h1>}
+                    </Td>
                     <Td textAlign="center">{log.checkInTime}</Td>
                     <Td textAlign="center">{log.checkOutTime}</Td>
                     <Td textAlign="center">{log.status}</Td>
