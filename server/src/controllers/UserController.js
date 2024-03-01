@@ -40,6 +40,10 @@ const register = async (req, res) => {
       return res.status(404).json({ mssg: "Email telah digunakan" });
     }
 
+    if (password === "") {
+      return res.status(404).json({ mssg: "Password harus diisi" });
+    }
+
     const hashPassword = await bcrypt.hash(password, 12);
     const user = await User.create({ username, email, password: hashPassword });
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
 import { loginUser } from "../lib/actions";

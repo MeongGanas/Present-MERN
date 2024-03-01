@@ -19,18 +19,29 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const data = await registerUser(username, email, password);
-      swal
-        .fire({
-          title: "Register Success!",
-          icon: "success",
-          confirmButtonText: "Close",
-          timer: 1000,
-        })
-        .then(() => {
-          navigate("/login");
-          setLoading(false);
-        });
+      if (username !== "" && password !== "" && email !== "") {
+        const data = await registerUser(username, email, password);
+        swal
+          .fire({
+            title: "Register Success!",
+            icon: "success",
+            confirmButtonText: "Close",
+            timer: 1000,
+          })
+          .then(() => {
+            navigate("/login");
+            setLoading(false);
+          });
+      } else {
+        swal
+          .fire({
+            title: "Register Fail!",
+            text: "Semua data harus diisi",
+            icon: "error",
+            confirmButtonText: "Close",
+          })
+          .then(() => setLoading(false));
+      }
     } catch (err) {
       setLoading(false);
       swal.fire({

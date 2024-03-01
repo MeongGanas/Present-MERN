@@ -1,8 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../hooks/authContext";
 
 export default function Selection() {
   const navigate = useNavigate();
+
+  const { IsAuthenticated } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (IsAuthenticated) {
+      navigate("/home");
+    }
+  });
 
   return (
     <LayoutLogin>
@@ -26,7 +36,10 @@ export default function Selection() {
             <span>or login with</span>
             <span className="line"></span>
           </div>
-          <button className="flex border-2 border-black py-1 w-full rounded-xl justify-center items-center">
+          <button
+            className="flex border-2 border-black py-1 w-full rounded-xl justify-center items-center cursor-not-allowed"
+            disabled
+          >
             <img src={"/img/7123025_logo_google_g_icon 1.svg"} alt="" />
             <span className="mr-3">Google</span>
           </button>
