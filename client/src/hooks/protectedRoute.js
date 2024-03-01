@@ -1,23 +1,8 @@
-import { useContext, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "./authContext";
+import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      if (location.pathname !== "/register") {
-        navigate("/login");
-      }
-    } else {
-      navigate("/home");
-    }
-  }, [isAuthenticated]);
-
-  return children;
+  const isLoggedIn = localStorage.getItem("token");
+  return isLoggedIn ? <div>{children}</div> : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

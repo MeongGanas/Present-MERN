@@ -1,18 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../hooks/authContext";
 
 export default function Selection() {
   const navigate = useNavigate();
-
-  const { IsAuthenticated } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (IsAuthenticated) {
-      navigate("/home");
-    }
-  });
 
   return (
     <LayoutLogin>

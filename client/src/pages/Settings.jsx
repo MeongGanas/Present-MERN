@@ -4,19 +4,21 @@ import { logoutUser, updateUser } from "../lib/actions";
 import { DataContext } from "../hooks/dataContext";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
-import { AuthContext } from "../hooks/authContext";
 
 export default function Settings() {
   const { userData, setUserData } = useContext(DataContext);
-  const { setIsAuthenticated } = useContext(AuthContext);
   const { setLoading } = useContext(LoadingContext);
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editPhoto, setEditPhoto] = useState(false);
+  const [editPassword, setEditPassword] = useState(false);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [photo, setPhoto] = useState("");
+
+  const [prevPassword, setPrevPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   useEffect(() => {
     if (userData) {
@@ -28,7 +30,14 @@ export default function Settings() {
 
   const handleUpdate = async () => {
     setLoading(true);
-    await updateUser({ userId: userData._id, username, email, photo })
+    await updateUser({
+      userId: userData._id,
+      username,
+      email,
+      photo,
+      prevPassword,
+      newPassword,
+    })
       .then((response) => {
         localStorage.removeItem("userData");
         localStorage.setItem("userData", JSON.stringify(response));
@@ -150,10 +159,32 @@ export default function Settings() {
               </div>
             </div>
             <div className="mb-5">
-              <h1 className="font-bold">Password</h1>
-              <button className="flex gap-2">
-                <span className="underline">Change Password</span>
-              </button>
+              <div className="flex justify-between">
+                <h1 className="font-bold">Password</h1>
+                <button
+                  className="flex gap-2"
+                  onClick={() => setEditPassword(true)}
+                >
+                  <span className="underline">Change Password</span>
+                </button>
+              </div>
+
+              <input
+                type="password"
+                placeholder="Enter your previous password"
+                onChange={(e) => setPrevPassword(e.target.value)}
+                className={`input ${
+                  editPassword ? "block" : "hidden"
+                } max-w-sm mt-2`}
+              />
+              <input
+                type="text"
+                placeholder="Enter your new password"
+                onChange={(e) => setNewPassword(e.target.value)}
+                className={`input ${
+                  editPassword ? "block" : "hidden"
+                } max-w-sm mt-2`}
+              />
             </div>
 
             <div className="flex justify-end gap-5">
@@ -178,7 +209,7 @@ export default function Settings() {
           <div className="border-2 mx-auto mt-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 p-5 rounded-md max-w-screen-sm flex justify-end">
             <button
               className="bg-red-600 text-white py-2 px-7 rounded-md"
-              onClick={() => logoutUser(setUserData, setIsAuthenticated)}
+              onClick={() => logoutUser(setUserData)}
             >
               <Logout className="mr-2" />
               <span>Logout</span>

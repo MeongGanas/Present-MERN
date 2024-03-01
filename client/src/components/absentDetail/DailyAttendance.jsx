@@ -123,14 +123,11 @@ export default function DailyAttendance({ absent }) {
           currentLog.push(log);
         }
       });
-      console.log(currentLog);
 
       const notPresentUser = absent.usersJoin.filter(
         (user) => !currentLog.some((log) => log.userId === user.userId)
       );
-      console.log(notPresentUser);
 
-      // Mengumpulkan objek yang diinginkan untuk setiap user yang tidak hadir
       notPresentUser.forEach((user) => {
         const log = currentLog.find((log) => log.shiftId === absentee._id);
         if (log) {
@@ -144,7 +141,7 @@ export default function DailyAttendance({ absent }) {
             checkInTime: "-",
             checkOutTime: "-",
             maps: "-",
-            date: "-",
+            date: currentDay,
           });
         } else {
           missingUser.push({
@@ -156,7 +153,7 @@ export default function DailyAttendance({ absent }) {
             detail: "Absent",
             checkInTime: "-",
             checkOutTime: "-",
-            date: "-",
+            date: currentDay,
             maps: "-",
           });
         }

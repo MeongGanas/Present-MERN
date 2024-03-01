@@ -57,19 +57,26 @@ const updateUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
+    console.log(req.body);
     const existUser = await User.find({ email: req.body.email });
     if (existUser.length > 0 && existUser[0]._id != userId) {
       return res.status(404).json({ mssg: "Email telah digunakan" });
     }
 
-    const updateUserData = await User.findByIdAndUpdate(
-      { _id: userId },
-      { ...req.body }
-    );
-
-    const newUser = await User.find({ _id: userId });
-
-    res.status(200).json(newUser[0]);
+    if (req.body.newPass !== "" && req.body.prevPass !== "") {
+      const existUser = await User.findById(userId);
+      const isPassValid = await bcrypt.compare(
+        req.body.prevPass,
+        existUser.password
+      );
+      console.log(isPassValid);
+    }
+    // const updateUserData = await User.findByIdAndUpdate(
+    //   { _id: userId },
+    //   { ...req.body }
+    // );
+    // const newUser = await User.find({ _id: userId });
+    // res.status(200).json(newUser[0]);
   } catch (err) {
     return res.status(500).json(err);
   }

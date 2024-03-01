@@ -31,11 +31,13 @@ export async function registerUser(username, email, password) {
 export async function updateUser(data) {
   try {
     const response = await axios.patch(
-      `https://present-server-nine.vercel.app/api/user/update/${data.userId}`,
+      `http://localhost:4000/api/user/update/${data.userId}`,
       {
         username: data.username,
         email: data.email,
         photo: data.photo,
+        newPass: data.newPassword,
+        prevPass: data.prevPassword,
       }
     );
     return response.data;
@@ -44,12 +46,12 @@ export async function updateUser(data) {
   }
 }
 
-export function logoutUser(setUserData, setIsAuthenticated) {
+export function logoutUser(setUserData) {
   localStorage.removeItem("token");
   localStorage.removeItem("userData");
   localStorage.removeItem("userId");
   setUserData(null);
-  setIsAuthenticated(false);
+  window.location.reload();
 }
 
 export async function createAbsentee(name, ownerName, userId, username) {

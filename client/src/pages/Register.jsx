@@ -19,29 +19,18 @@ export default function Register() {
     setLoading(true);
 
     try {
-      if (username !== "" && password !== "" && email !== "") {
-        const data = await registerUser(username, email, password);
-        swal
-          .fire({
-            title: "Register Success!",
-            icon: "success",
-            confirmButtonText: "Close",
-            timer: 1000,
-          })
-          .then(() => {
-            navigate("/login");
-            setLoading(false);
-          });
-      } else {
-        swal
-          .fire({
-            title: "Register Fail!",
-            text: "Semua data harus diisi",
-            icon: "error",
-            confirmButtonText: "Close",
-          })
-          .then(() => setLoading(false));
-      }
+      const data = await registerUser(username, email, password);
+      swal
+        .fire({
+          title: "Register Success!",
+          icon: "success",
+          confirmButtonText: "Close",
+          timer: 1000,
+        })
+        .then(() => {
+          navigate("/login");
+          setLoading(false);
+        });
     } catch (err) {
       setLoading(false);
       swal.fire({
@@ -69,7 +58,7 @@ export default function Register() {
             <h1 className="text-primary mb-3 font-bold text-3xl">Present</h1>
             <p className="font-bold text-lg">Register</p>
           </div>
-          <form className="min-w-sm">
+          <form className="min-w-sm" onSubmit={register}>
             <div className="mb-5">
               <label htmlFor="name">Name</label>
               <input
@@ -108,11 +97,7 @@ export default function Register() {
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="button coloredButton"
-              onClick={register}
-            >
+            <button type="submit" className="button coloredButton">
               Register
             </button>
           </form>

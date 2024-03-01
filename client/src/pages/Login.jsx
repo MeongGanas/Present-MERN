@@ -5,7 +5,6 @@ import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
 import { loginUser } from "../lib/actions";
 import Loading from "../components/Loading";
-import { AuthContext } from "../hooks/authContext";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,7 +14,6 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const { setUserData } = useContext(DataContext);
-  const { setIsAuthenticated } = useContext(AuthContext);
 
   const login = async (e) => {
     e.preventDefault();
@@ -26,7 +24,6 @@ export default function Login() {
       const userData = await data.user;
       localStorage.setItem("token", data.token);
       localStorage.setItem("userData", JSON.stringify(userData));
-      setIsAuthenticated(true);
       setUserData(data.user);
       navigate("/home");
       setLoading(false);
@@ -54,7 +51,7 @@ export default function Login() {
             <h1 className="text-primary mb-3 font-bold text-3xl">Present</h1>
             <p className="font-bold text-lg">Login</p>
           </div>
-          <form className="min-w-sm">
+          <form className="min-w-sm" onSubmit={login}>
             <div>
               <label htmlFor="email">Email</label>
               <input
@@ -86,11 +83,7 @@ export default function Login() {
                 <span className="text-primary font-bold"> click here</span>
               </h4>
             </div>
-            <button
-              type="submit"
-              onClick={login}
-              className="button coloredButton mb-5"
-            >
+            <button type="submit" className="button coloredButton mb-5">
               Login
             </button>
           </form>
