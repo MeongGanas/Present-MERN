@@ -16,8 +16,6 @@ import ProtectedRoute from "./hooks/protectedRoute";
 import ProtectedRouteLogin from "./hooks/protectedRouteLogin";
 
 export default function App() {
-  const isLoggin = localStorage.getItem("token");
-
   return (
     <DataProvider>
       <LoadingProvider>
