@@ -39,7 +39,9 @@ const register = async (req, res) => {
     if (existUser) {
       return res.status(404).json({ mssg: "Email telah digunakan" });
     }
-    const user = await User.create({ username, email, password });
+
+    const hashPassword = await bcrypt.hash(password, 12);
+    const user = await User.create({ username, email, password: hashPassword });
 
     res.status(200).json(user);
   } catch (err) {
