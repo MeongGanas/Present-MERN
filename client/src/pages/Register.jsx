@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import LayoutLogin from "../Layout/layoutLogin";
 import swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { LoadingContext } from "../hooks/loadingContext";
-import { DataContext } from "../hooks/dataContext";
 import { registerUser } from "../lib/actions";
 import Loading from "../components/Loading";
 
@@ -15,14 +13,6 @@ export default function Register() {
   const [email, setEmail] = useState("");
 
   const [loading, setLoading] = useState(false);
-
-  const { token, userData } = useContext(DataContext);
-
-  useEffect(() => {
-    if (token && userData) {
-      navigate("/home");
-    }
-  }, [token]);
 
   const register = async (e) => {
     e.preventDefault();

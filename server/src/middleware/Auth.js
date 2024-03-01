@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const secretKey = process.env.SECRET_KEY;
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.headers.token;
 
   if (!token) {
     return res.status(401).json({ mssg: "Unauthorized" });

@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { DriveFileRenameOutline, Logout } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import { logoutUser, updateUser } from "../lib/actions";
 import { DataContext } from "../hooks/dataContext";
 import { LoadingContext } from "../hooks/loadingContext";
 import swal from "sweetalert2";
+import { AuthContext } from "../hooks/authContext";
 
 export default function Settings() {
-  const navigate = useNavigate();
-  const { token, userData, setToken, setUserData } = useContext(DataContext);
+  const { userData, setUserData } = useContext(DataContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
   const { setLoading } = useContext(LoadingContext);
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
@@ -17,12 +17,6 @@ export default function Settings() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [photo, setPhoto] = useState("");
-
-  useEffect(() => {
-    if (!token || !userData) {
-      navigate("/login");
-    }
-  }, [token]);
 
   useEffect(() => {
     if (userData) {
@@ -184,7 +178,7 @@ export default function Settings() {
           <div className="border-2 mx-auto mt-2 border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 p-5 rounded-md max-w-screen-sm flex justify-end">
             <button
               className="bg-red-600 text-white py-2 px-7 rounded-md"
-              onClick={() => logoutUser(setToken, setUserData)}
+              onClick={() => logoutUser(setUserData, setIsAuthenticated)}
             >
               <Logout className="mr-2" />
               <span>Logout</span>

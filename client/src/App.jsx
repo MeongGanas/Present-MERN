@@ -12,42 +12,48 @@ import { LoadingProvider } from "./hooks/loadingContext";
 import { DataProvider } from "./hooks/dataContext";
 import { ResourceProvider } from "./hooks/resourceContext";
 import { WaktuProvider } from "./hooks/waktuContext";
+import { AuthProvider } from "./hooks/authContext";
+import ProtectedRoute from "./hooks/protectedRoute";
 
 export default function App() {
   return (
-    <DataProvider>
-      <LoadingProvider>
-        <Routes>
-          <Route path="/" element={<Selection />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="*"
-            element={
-              <TabProvider>
-                <LayoutProvider>
-                  <ResourceProvider>
-                    <Layout>
-                      <Routes>
-                        <Route path="/home" element={<Home />} />
-                        <Route
-                          path="/detailAbsent/:absentId/:absentName"
-                          element={
-                            <WaktuProvider>
-                              <AbsentDetail />
-                            </WaktuProvider>
-                          }
-                        />
-                        <Route path="/settings" element={<Settings />} />
-                      </Routes>
-                    </Layout>
-                  </ResourceProvider>
-                </LayoutProvider>
-              </TabProvider>
-            }
-          />
-        </Routes>
-      </LoadingProvider>
-    </DataProvider>
+    <AuthProvider>
+      <ProtectedRoute>
+        <DataProvider>
+          <LoadingProvider>
+            <Routes>
+              <Route path="/" element={<Selection />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route
+                path="*"
+                element={
+                  <TabProvider>
+                    <LayoutProvider>
+                      <ResourceProvider>
+                        <Layout>
+                          <Routes>
+                            <Route path="/home" element={<Home />} />
+                            <Route
+                              path="/detailAbsent/:absentId/:absentName"
+                              element={
+                                <WaktuProvider>
+                                  <AbsentDetail />
+                                </WaktuProvider>
+                              }
+                            />
+                            <Route path="/settings" element={<Settings />} />
+                          </Routes>
+                        </Layout>
+                      </ResourceProvider>
+                    </LayoutProvider>
+                  </TabProvider>
+                }
+              />
+            </Routes>
+          </LoadingProvider>
+        </DataProvider>
+      </ProtectedRoute>
+    </AuthProvider>
   );
 }

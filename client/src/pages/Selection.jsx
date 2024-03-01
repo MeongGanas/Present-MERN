@@ -1,18 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import LayoutLogin from "../Layout/layoutLogin";
-import { useContext, useEffect } from "react";
-import { DataContext } from "../hooks/dataContext";
 
 export default function Selection() {
   const navigate = useNavigate();
-
-  const { token } = useContext(DataContext);
-
-  useEffect(() => {
-    if (token) {
-      navigate("/home");
-    }
-  }, [token]);
 
   return (
     <LayoutLogin>

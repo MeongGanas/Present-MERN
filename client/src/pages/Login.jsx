@@ -5,6 +5,7 @@ import swal from "sweetalert2";
 import { DataContext } from "../hooks/dataContext";
 import { loginUser } from "../lib/actions";
 import Loading from "../components/Loading";
+import { AuthContext } from "../hooks/authContext";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,13 +14,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const { token, setToken, userData, setUserData } = useContext(DataContext);
-
-  useEffect(() => {
-    if (token && userData) {
-      navigate("/home");
-    }
-  }, [token]);
+  const { setUserData } = useContext(DataContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
 
   const login = async (e) => {
     e.preventDefault();
@@ -30,7 +26,7 @@ export default function Login() {
       const userData = await data.user;
       localStorage.setItem("token", data.token);
       localStorage.setItem("userData", JSON.stringify(userData));
-      setToken(data.token);
+      setIsAuthenticated(true);
       setUserData(data.user);
       navigate("/home");
       setLoading(false);

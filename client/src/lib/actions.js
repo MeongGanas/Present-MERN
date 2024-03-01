@@ -44,12 +44,12 @@ export async function updateUser(data) {
   }
 }
 
-export function logoutUser(setUserData, setToken) {
+export function logoutUser(setUserData, setIsAuthenticated) {
   localStorage.removeItem("token");
   localStorage.removeItem("userData");
   localStorage.removeItem("userId");
-  setToken(null);
   setUserData(null);
+  setIsAuthenticated(false);
 }
 
 export async function createAbsentee(name, ownerName, userId, username) {

@@ -7,17 +7,12 @@ import { TabContext } from "../hooks/tabContext";
 import { ResourceContext } from "../hooks/resourceContext";
 
 export default function Home() {
-  const navigate = useNavigate();
-  const { token, userData } = useContext(DataContext);
   const { resource } = useContext(ResourceContext);
   const { setActiveIndex } = useContext(TabContext);
 
   useEffect(() => {
-    if (!token || !userData) {
-      navigate("/login");
-    }
     setActiveIndex(0);
-  }, [token]);
+  });
 
   return (
     <Suspense
