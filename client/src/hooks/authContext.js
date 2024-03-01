@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     const checkValidToken = async () => {
       await axios
-        .get("http://localhost:4000/middleware/secure-data", {
+        .get("https://present-client-green.vercel.app/middleware/secure-data", {
           headers: { token },
         })
         .then(() => setIsAuthenticated(true))
