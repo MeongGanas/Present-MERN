@@ -55,28 +55,36 @@ const register = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { userId } = req.params;
+  const { username, email, photo, newPass, prevPass } = req.body;
 
   try {
-    console.log(req.body);
-    const existUser = await User.find({ email: req.body.email });
+    const existUser = await User.find({ email });
     if (existUser.length > 0 && existUser[0]._id != userId) {
       return res.status(404).json({ mssg: "Email telah digunakan" });
     }
 
-    if (req.body.newPass !== "" && req.body.prevPass !== "") {
+    if (newPass !== "" && prevPass !== "") {
       const existUser = await User.findById(userId);
-      const isPassValid = await bcrypt.compare(
-        req.body.prevPass,
-        existUser.password
+      const isPassValid = await bcrypt.compare(prevPass, existUser.password);
+      if (isPassValid) {
+        const hashPassword = await bcrypt.hash(newPass, 12);
+        const updateUserData = await User.findByIdAndUpdate(
+          userId,
+          { username, email, photo, password: hashPassword },
+          { new: true }
+        );
+        res.status(200).json(updateUserData);
+      } else {
+        res.status(401).json({ mssg: "Prev password wrong" });
+      }
+    } else {
+      const updateUserData = await User.findByIdAndUpdate(
+        userId,
+        { username, email, photo },
+        { new: true }
       );
-      console.log(isPassValid);
+      res.status(200).json(updateUserData);
     }
-    // const updateUserData = await User.findByIdAndUpdate(
-    //   { _id: userId },
-    //   { ...req.body }
-    // );
-    // const newUser = await User.find({ _id: userId });
-    // res.status(200).json(newUser[0]);
   } catch (err) {
     return res.status(500).json(err);
   }

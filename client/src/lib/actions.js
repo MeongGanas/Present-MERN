@@ -31,7 +31,7 @@ export async function registerUser(username, email, password) {
 export async function updateUser(data) {
   try {
     const response = await axios.patch(
-      `http://localhost:4000/api/user/update/${data.userId}`,
+      `https://present-server-nine.vercel.app/api/user/update/${data.userId}`,
       {
         username: data.username,
         email: data.email,
