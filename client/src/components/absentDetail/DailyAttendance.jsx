@@ -28,6 +28,7 @@ export default function DailyAttendance({ absent }) {
     const absentHour = absent.absenteeHours.filter((absentHour) =>
       isCurrentDay(absentHour.selectedDay)
     );
+
     return absentHour;
   };
 
@@ -49,14 +50,26 @@ export default function DailyAttendance({ absent }) {
         return isTodayAttendance(attendance.date);
       });
     }
-    return attendance;
+
+    const missingUser = notPresent(attendance);
+    const res = [...attendance, ...missingUser];
+    res.sort((a, b) => {
+      const shiftA = a.shift;
+      const shiftB = b.shift;
+
+      return shiftA.localeCompare(shiftB);
+    });
+    return res;
   };
 
   useEffect(() => {
-    setAbsentHours(getCurrentDayAbsent());
-    setCurrentHours(getCurrentDayAbsent());
-    setAttendanceLog(getCurrentDayAttendance());
-    setTempAttendanceLog(getCurrentDayAttendance());
+    const absent = getCurrentDayAbsent();
+    setAbsentHours(absent);
+    setCurrentHours(absent);
+
+    const attendance = getCurrentDayAttendance();
+    setAttendanceLog(attendance);
+    setTempAttendanceLog(attendance);
   }, [absent, currentDay]);
 
   const filter = (currentOption) => {
@@ -113,12 +126,14 @@ export default function DailyAttendance({ absent }) {
     return `${year}-${month}-${day}`;
   }
 
-  const notPresent = () => {
+  const notPresent = (attendance) => {
     let missingUser = [];
+
+    const absentHours = getCurrentDayAbsent();
 
     absentHours.forEach((absentee) => {
       const currentLog = [];
-      attendanceLog.forEach((log) => {
+      attendance.forEach((log) => {
         if (log.shiftId === absentee._id) {
           currentLog.push(log);
         }
@@ -159,7 +174,7 @@ export default function DailyAttendance({ absent }) {
         }
       });
     });
-    setAttendanceLog(missingUser);
+    return missingUser;
   };
 
   const late = () => {
@@ -248,7 +263,13 @@ export default function DailyAttendance({ absent }) {
             >
               Present
             </button>
-            <button className="button-kehadiran" onClick={notPresent}>
+            <button
+              className="button-kehadiran"
+              onClick={() => {
+                const newLog = filterAttendance("Absent");
+                setAttendanceLog(newLog);
+              }}
+            >
               Not Present
             </button>
             <button className="button-kehadiran" onClick={late}>
