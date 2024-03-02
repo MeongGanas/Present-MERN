@@ -17,6 +17,8 @@ export default function Settings() {
   const [email, setEmail] = useState("");
   const [photo, setPhoto] = useState("");
 
+  const [imgPreview, setImgPreview] = useState(null);
+
   const [prevPassword, setPrevPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -24,9 +26,28 @@ export default function Settings() {
     if (userData) {
       setUsername(userData.username);
       setEmail(userData.email);
-      setPhoto(userData.photo);
     }
   }, [userData]);
+
+  const convertBase64 = async (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const base64 = await convertBase64(file);
+      setImgPreview(URL.createObjectURL(file));
+      setPhoto(base64);
+    }
+  };
 
   const handleUpdate = async () => {
     setLoading(true);
@@ -63,7 +84,12 @@ export default function Settings() {
             <h1 className="text-xl sm:text-2xl font-bold">Profile</h1>
             <div className="flex items-center gap-5 my-5">
               <div className="border-2 w-10 h-10 rounded-full flex items-center justify-center p-2 border-black">
-                <h1 className="uppercase font-bold">{userData.username[0]}</h1>
+                {userData.profile && <img src={userData.profile} alt="" />}
+                {!userData.profile && (
+                  <h1 className="uppercase font-bold">
+                    {userData.username[0]}
+                  </h1>
+                )}
               </div>
               <button className="flex gap-2" onClick={() => setEditPhoto(true)}>
                 <span className="font-bold">Change</span>
@@ -76,31 +102,42 @@ export default function Settings() {
                   htmlFor="dropzone-file"
                   className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
                 >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      className="w-8 h-8 mb-4 text-gray-500"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p className="mb-2 text-sm text-gray-5000">
-                      <span className="font-semibold">Click to upload</span> or
-                      drag and drop
-                    </p>
-                    <p className="text-xs text-gray-5000">
-                      SVG, PNG, JPG or GIF (MAX. 800x400px)
-                    </p>
-                  </div>
-                  <input id="dropzone-file" type="file" className="hidden" />
+                  {imgPreview && (
+                    <img src={imgPreview} alt="Image Preview" width={200} />
+                  )}
+                  {!imgPreview && (
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <svg
+                        className="w-8 h-8 mb-4 text-gray-500"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 16"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                        />
+                      </svg>
+                      <p className="mb-2 text-sm text-gray-5000">
+                        <span className="font-semibold">Click to upload</span>{" "}
+                        or drag and drop
+                      </p>
+                      <p className="text-xs text-gray-5000">
+                        SVG, PNG, JPG or GIF (MAX. 800x400px)
+                      </p>
+                    </div>
+                  )}
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={(e) => handleUpload(e)}
+                  />
                 </label>
               </div>
             </div>

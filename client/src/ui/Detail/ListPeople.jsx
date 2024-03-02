@@ -53,7 +53,12 @@ export function ListPeople({ absent, admin }) {
                   <div className="flex justify-between items-center">
                     <div className="flex gap-5 items-center">
                       <div className="circle flex items-center justify-center">
-                        <h1>{participant.username[0]}</h1>
+                        {participant.profile && (
+                          <img src={participant.profile} alt="" />
+                        )}
+                        {!participant.profile && (
+                          <h1>{participant.username[0]}</h1>
+                        )}
                       </div>
                       <h1 className="text-lg">{participant.username}</h1>
                     </div>

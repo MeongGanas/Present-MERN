@@ -2,6 +2,7 @@ require("dotenv").config();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { cloudinaryImageUploadMethod } = require("../api/cloudinary");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -58,6 +59,11 @@ const updateUser = async (req, res) => {
   const { username, email, photo, newPass, prevPass } = req.body;
 
   try {
+    let uploadPhoto;
+    if (photo !== "") {
+      uploadPhoto = await cloudinaryImageUploadMethod(photo);
+    }
+
     const existUser = await User.find({ email });
     if (existUser.length > 0 && existUser[0]._id != userId) {
       return res.status(404).json({ mssg: "Email telah digunakan" });
@@ -70,7 +76,12 @@ const updateUser = async (req, res) => {
         const hashPassword = await bcrypt.hash(newPass, 12);
         const updateUserData = await User.findByIdAndUpdate(
           userId,
-          { username, email, photo, password: hashPassword },
+          {
+            username,
+            email,
+            profile: uploadPhoto ? uploadPhoto.secure_url : existUser.profile,
+            password: hashPassword,
+          },
           { new: true }
         );
         res.status(200).json(updateUserData);
@@ -80,7 +91,11 @@ const updateUser = async (req, res) => {
     } else {
       const updateUserData = await User.findByIdAndUpdate(
         userId,
-        { username, email, photo },
+        {
+          username,
+          email,
+          profile: uploadPhoto ? uploadPhoto.secure_url : existUser.profile,
+        },
         { new: true }
       );
       res.status(200).json(updateUserData);
