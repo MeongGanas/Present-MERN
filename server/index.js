@@ -69,7 +69,7 @@ app.post("/reset/:id/:token", (req, res) => {
 
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (err) {
-      return res.json({ Status: "Error with token" });
+      return res.status(404).json({ mssg: "Not Valid Token" });
     } else {
       bcrypt
         .hash(password, 12)

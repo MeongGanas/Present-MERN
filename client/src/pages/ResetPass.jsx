@@ -3,6 +3,7 @@ import LayoutLogin from "../Layout/layoutLogin";
 import { useState } from "react";
 import Loading from "../components/Loading";
 import axios from "axios";
+import swal from "sweetalert2";
 
 export default function ResetPass() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function ResetPass() {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     axios
       .post(`https://present-server-nine.vercel.app/reset/${userId}/${token}`, {
@@ -22,7 +24,15 @@ export default function ResetPass() {
           navigate("/login");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        swal.fire({
+          title: "Reset Password Fail!",
+          text: err.response?.data?.mssg || "An error occurred",
+          icon: "error",
+          confirmButtonText: "Close",
+        });
+      });
   };
 
   return (
