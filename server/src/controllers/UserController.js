@@ -3,7 +3,6 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { cloudinaryImageUploadMethod } = require("../api/cloudinary");
-const Absentee = require("../models/Absentee");
 
 const login = async (req, res) => {
   const { email, password } = req.body;

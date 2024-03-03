@@ -69,8 +69,7 @@ export default function Settings() {
         setLoading(false);
         swal.fire({
           title: "Update User Fail!",
-          text:
-            err.response?.data?.mssg || "An error occurred during update data",
+          text: err.response?.data?.mssg || "File size too big!",
           icon: "error",
           confirmButtonText: "Close",
         });
@@ -84,8 +83,13 @@ export default function Settings() {
           <div className="border-2 mx-auto border-[#c4c4c4] bg-white min-w-80 w-full md:w-2/3 p-5 rounded-md max-w-screen-sm">
             <h1 className="text-xl sm:text-2xl font-bold">Profile</h1>
             <div className="flex items-center gap-5 my-5">
-              <div className="border-2 w-10 h-10 rounded-full flex items-center justify-center p-2 border-black">
-                {userData.profile && <img src={userData.profile} alt="" />}
+              <div className="border-2 w-11 h-11 border-black rounded-full flex items-center justify-center">
+                {userData.profile && (
+                  <img
+                    src={userData.profile}
+                    className="w-11 h-10 rounded-full"
+                  />
+                )}
                 {!userData.profile && (
                   <h1 className="uppercase font-bold">
                     {userData.username[0]}
@@ -136,7 +140,7 @@ export default function Settings() {
                     id="dropzone-file"
                     type="file"
                     className="hidden"
-                    accept="image/*"
+                    accept=".png,.jpg,.jpeg"
                     onChange={(e) => handleUpload(e)}
                   />
                 </label>

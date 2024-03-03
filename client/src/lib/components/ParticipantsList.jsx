@@ -35,10 +35,15 @@ export default function ParticipantsList({
             Admin
           </h1>
           <div className="flex gap-5 items-center">
-            <div className="circle p-1 flex justify-center items-center">
-              {ownerDetail.profile && <img src={ownerDetail.profile} alt="" />}
+            <div className="border-2 w-11 h-11 border-black rounded-full flex items-center justify-center">
+              {ownerDetail.profile && (
+                <img
+                  src={ownerDetail.profile}
+                  className="w-11 h-10 rounded-full"
+                />
+              )}
               {!ownerDetail.profile && (
-                <h1 className="font-bold">{absent.ownerName[0]}</h1>
+                <h1 className="uppercase font-bold">{absent.ownerName[0]}</h1>
               )}
             </div>
             <h1 className="text-lg">{absent.ownerName}</h1>
@@ -56,12 +61,17 @@ export default function ParticipantsList({
                 <li className="people" key={participant._id}>
                   <div className="flex justify-between items-center">
                     <div className="flex gap-5 items-center">
-                      <div className="circle p-1 flex items-center justify-center">
+                      <div className="border-2 w-11 h-11 border-black rounded-full flex items-center justify-center">
                         {participant.profile && (
-                          <img src={participant.profile} alt="" />
+                          <img
+                            src={participant.profile}
+                            className="w-11 h-10 rounded-full"
+                          />
                         )}
                         {!participant.profile && (
-                          <h1>{participant.username[0]}</h1>
+                          <h1 className="uppercase font-bold">
+                            {absent.usersJoin[i].username}
+                          </h1>
                         )}
                       </div>
                       <h1 className="text-lg">
