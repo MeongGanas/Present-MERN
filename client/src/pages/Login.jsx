@@ -80,7 +80,13 @@ export default function Login() {
             <div className="mb-5 flex justify-end mt-2">
               <h4 className="text-sm">
                 Forgot your password?
-                <span className="text-primary font-bold"> click here</span>
+                <span
+                  className="text-primary font-bold"
+                  onClick={() => navigate("/forgot")}
+                >
+                  {" "}
+                  click here
+                </span>
               </h4>
             </div>
             <button type="submit" className="button coloredButton mb-5">

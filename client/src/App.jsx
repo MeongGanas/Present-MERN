@@ -14,6 +14,8 @@ import { ResourceProvider } from "./hooks/resourceContext";
 import { WaktuProvider } from "./hooks/waktuContext";
 import ProtectedRoute from "./hooks/protectedRoute";
 import ProtectedRouteLogin from "./hooks/protectedRouteLogin";
+import ForgotPass from "./pages/ForgotPass";
+import ResetPass from "./pages/ResetPass";
 
 export default function App() {
   return (
@@ -41,6 +43,22 @@ export default function App() {
             element={
               <ProtectedRouteLogin>
                 <Register />
+              </ProtectedRouteLogin>
+            }
+          />
+          <Route
+            path="/forgot"
+            element={
+              <ProtectedRouteLogin>
+                <ForgotPass />
+              </ProtectedRouteLogin>
+            }
+          />
+          <Route
+            path="/reset/:userId/:token"
+            element={
+              <ProtectedRouteLogin>
+                <ResetPass />
               </ProtectedRouteLogin>
             }
           />
