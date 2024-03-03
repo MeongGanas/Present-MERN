@@ -3,6 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { cloudinaryImageUploadMethod } = require("../api/cloudinary");
+const Absentee = require("../models/Absentee");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -84,6 +85,7 @@ const updateUser = async (req, res) => {
           },
           { new: true }
         );
+
         res.status(200).json(updateUserData);
       } else {
         res.status(401).json({ mssg: "Prev password wrong" });
@@ -98,6 +100,7 @@ const updateUser = async (req, res) => {
         },
         { new: true }
       );
+
       res.status(200).json(updateUserData);
     }
   } catch (err) {
@@ -105,8 +108,22 @@ const updateUser = async (req, res) => {
   }
 };
 
+const getUsersData = async (req, res) => {
+  const { users } = req.body;
+  console.log(users);
+
+  try {
+    const usersDataPromises = users.map((user) => User.findById(user));
+    const usersData = await Promise.all(usersDataPromises);
+    res.status(200).json(usersData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   login,
   register,
   updateUser,
+  getUsersData,
 };

@@ -1,4 +1,5 @@
 import { getAbsentee } from "./absentee";
+import { getUsersDetail } from "./actions";
 
 export function wrapPromise(promise) {
   let status = "pending";
@@ -32,5 +33,11 @@ export function wrapPromise(promise) {
 export const getUserAbsentee = (userId) => {
   return {
     data: wrapPromise(getAbsentee(userId)),
+  };
+};
+
+export const getUsersData = (users) => {
+  return {
+    data: wrapPromise(getUsersDetail(users)),
   };
 };

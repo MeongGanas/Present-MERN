@@ -31,7 +31,7 @@ export async function registerUser(username, email, password) {
 export async function updateUser(data) {
   try {
     const response = await axios.patch(
-      `https://present-server-nine.vercel.app/api/user/update/${data.userId}`,
+      `http://localhost:4000/api/user/update/${data.userId}`,
       {
         username: data.username,
         email: data.email,
@@ -91,6 +91,18 @@ export async function leaveAbsentee(absentId, userId) {
   try {
     const response = await axios.patch(
       `https://present-server-nine.vercel.app/api/absentee/leave/${absentId}/${userId}`
+    );
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getUsersDetail(users) {
+  try {
+    const response = await axios.post(
+      "https://present-server-nine.vercel.app/api/user/getusersdata",
+      { users }
     );
     return response;
   } catch (err) {
