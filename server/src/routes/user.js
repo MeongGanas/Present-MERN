@@ -7,7 +7,12 @@ const {
 } = require("../controllers/UserController");
 const router = express.Router();
 const multer = require("multer");
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 20 * 1024 * 1024,
+  },
+});
 
 router.post("/getusersdata", getUsersData);
 router.post("/login", login);
