@@ -52,7 +52,7 @@ export default function ParticipantsList({
           </div>
           <ul>
             {participants &&
-              participants.map((participant) => (
+              participants.map((participant, i) => (
                 <li className="people" key={participant._id}>
                   <div className="flex justify-between items-center">
                     <div className="flex gap-5 items-center">
@@ -64,12 +64,14 @@ export default function ParticipantsList({
                           <h1>{participant.username[0]}</h1>
                         )}
                       </div>
-                      <h1 className="text-lg">{participant.username}</h1>
+                      <h1 className="text-lg">
+                        {absent.usersJoin[i].username}
+                      </h1>
                     </div>
                     {admin && (
                       <button
                         className="text-red-700"
-                        value={participant.userId}
+                        value={participant._id}
                         onClick={(e) => kick(e.target.value)}
                       >
                         Remove

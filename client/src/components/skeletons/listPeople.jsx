@@ -19,7 +19,7 @@ export default function ListPeopleSkeleton({ users, owner, admin }) {
         <ul>
           {users &&
             users.map((participant) => (
-              <li className="people" key={participant._id}>
+              <li className="people" key={participant.userId}>
                 <div className="flex justify-between items-center">
                   <div className="flex gap-5 items-center">
                     <div className="circle p-1 flex items-center justify-center animate-pulse bg-gray-500"></div>

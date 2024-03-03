@@ -78,11 +78,15 @@ const leaveAbsent = async (req, res) => {
 
   try {
     const absentee = await Absentee.findById(id);
-    const usersJoin = absentee[0].usersJoin.filter(
+    const usersJoin = absentee.usersJoin.filter(
       (user) => user.userId !== userId
     );
 
-    const newAbsentee = await Absentee.findByIdAndUpdate(id, { usersJoin });
+    const newAbsentee = await Absentee.findByIdAndUpdate(
+      id,
+      { usersJoin },
+      { new: true }
+    );
 
     res.status(200).json(newAbsentee);
   } catch (err) {
@@ -95,7 +99,7 @@ const editAsPaticipant = async (req, res) => {
 
   try {
     const absentee = await Absentee.findById(absentId);
-    const updatedUsersJoin = absentee[0].usersJoin.map((user) => {
+    const updatedUsersJoin = absentee.usersJoin.map((user) => {
       if (user.userId === userId) {
         return { ...user, username: req.body.newUsername };
       }
