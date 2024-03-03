@@ -25,7 +25,13 @@ export function ListPeople({ absent, admin }) {
         participantsTemp={participantsTemp}
         setParticipants={setParticipants}
       />
-      <Suspense fallback={<Loading />}>
+      <Suspense
+        fallback={
+          <div className="mt-5">
+            <Loading />
+          </div>
+        }
+      >
         <ParticipantsList
           absent={absent}
           ownerResource={ownerResource}
