@@ -69,7 +69,8 @@ export default function Settings() {
         setLoading(false);
         swal.fire({
           title: "Update User Fail!",
-          text: err.response?.data?.mssg || "An error occurred during login",
+          text:
+            err.response?.data?.mssg || "An error occurred during update data",
           icon: "error",
           confirmButtonText: "Close",
         });
