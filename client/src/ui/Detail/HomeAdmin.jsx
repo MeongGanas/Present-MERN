@@ -123,7 +123,7 @@ export function ListHomeAsAdmin({ setActiveIndex, absent }) {
                     >
                       <td className="p-5 w-1/3" align="left">
                         <div className="flex gap-5 items-center">
-                          <div className="circle min-w-6"></div>
+                          <div className="circle min-w-8"></div>
                           <h1 className="font-bold text-sm md:text-base">
                             {log.username}
                           </h1>

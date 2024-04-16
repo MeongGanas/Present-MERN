@@ -70,7 +70,7 @@ export default function ParticipantsList({
                         )}
                         {!participant.profile && (
                           <h1 className="uppercase font-bold">
-                            {absent.usersJoin[i].username}
+                            {absent.usersJoin[i].username[0]}
                           </h1>
                         )}
                       </div>
