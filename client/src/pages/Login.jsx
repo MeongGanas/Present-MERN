@@ -81,7 +81,7 @@ export default function Login() {
               <h4 className="text-sm">
                 Forgot your password?
                 <span
-                  className="text-primary font-bold"
+                  className="text-primary font-bold cursor-pointer"
                   onClick={() => navigate("/forgot")}
                 >
                   {" "}

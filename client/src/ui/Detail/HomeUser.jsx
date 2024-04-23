@@ -88,7 +88,7 @@ export function ListHomeAsUser({ absent }) {
       (log) =>
         log.userId === userData._id &&
         log.shiftId === shiftId &&
-        log.checkOutTime !== "-"
+        (log.checkOutTime !== "-" || log.status === "Permission")
     );
   };
 
