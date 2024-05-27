@@ -90,9 +90,6 @@ export default function MonthlyAttendance({ absent }) {
             className="border-2 border-black rounded-md px-5 min-h-11"
           />
         </div>
-        <button className="coloredButton py-2 px-4 font-bold rounded-[9px] border-2 border-black">
-          Export to Excel
-        </button>
       </div>
 
       <TableAttendance

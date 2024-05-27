@@ -7,6 +7,7 @@ import { LayoutContext } from "../hooks/dialogContext";
 import { ResourceContext } from "../hooks/resourceContext";
 import Skeleton from "../components/skeletons/skeletons";
 import Dialog from "../components/dialog/HomeDialog";
+import { DataContext } from "../hooks/dataContext";
 
 export default function Layout({ children }) {
   const location = useParams();
@@ -17,6 +18,7 @@ export default function Layout({ children }) {
   const { joinActive, createActive, setCreateActive, setJoinActive } =
     useContext(LayoutContext);
   const { resource } = useContext(ResourceContext);
+  const { userData } = useContext(DataContext);
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -113,7 +115,16 @@ export default function Layout({ children }) {
         </div>
         <div className="flex items-center gap-2">
           <Link to="/settings" className="iconbutton">
-            <img src={"/img/4836491 1.svg"} alt="" width={26} />
+            {userData && userData.profile ? (
+              <img
+                src={userData.profile}
+                alt=""
+                width={26}
+                className="h-[26px] w-[26px] rounded-full"
+              />
+            ) : (
+              <img src={"/img/4836491 1.svg"} alt="" width={26} />
+            )}
           </Link>
         </div>
       </nav>
