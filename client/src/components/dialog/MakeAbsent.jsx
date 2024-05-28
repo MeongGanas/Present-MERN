@@ -90,7 +90,7 @@ export default function MakeAbsenteeDialog({ absentId }) {
         absentHour ? "scale-100" : "scale-0"
       } transition-all duration-200 overflow-hidden`}
     >
-      <div className="bg-white p-8 rounded-md w-full max-w-screen-md h-screen overflow-y-auto relative">
+      <div className="bg-white px-5 pb-5 rounded-md w-full max-w-screen-md overflow-y-auto relative">
         <h1 className="font-bold text-xl my-5">Add absentee hour</h1>
         <div className="w-full block md:flex gap-5 mb-5">
           <div className="w-full mb-2 md:mb-0">
@@ -116,16 +116,13 @@ export default function MakeAbsenteeDialog({ absentId }) {
                 type="time"
                 name="late"
                 id="late"
-                className="border-2 w-full border-[#D9D9D9] focus:outline-none block p-2 rounded-s-md"
+                className="border-2 w-full border-[#D9D9D9] focus:outline-none block p-2 rounded-md"
                 required
                 onChange={(e) => {
                   const newTime = handleTimeChange(e.target.value);
                   setTolerance(newTime);
                 }}
               />
-              <div className="bg-[#D9D9D9] p-2 min-h-fit flex items-center rounded-e-md">
-                <h1>Minutes</h1>
-              </div>
             </div>
           </div>
         </div>
